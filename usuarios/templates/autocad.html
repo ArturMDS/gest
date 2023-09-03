@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% block titulo %}
+{{ object }}
+{% endblock %}
+{% block main %}
+<div class="midde_cont">
+    <div class="container-fluid">
+        <div class="row column_title">
+            <div class="col-md-12">
+                <div class="page_title">
+                    {% if object.militar %}
+                    <h2>Perfil de {{ object.militar.nome_guerra }}</h2>
+                    {% else %}
+                    <h2>Perfil de {{ object }}</h2>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- row -->
+        <div class="row">
+            {% if not object.documento.rg %}
+            <div class="col-md-3">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <a href="{% url 'usuarios:autocaddocumento' %}">
+                                <button class="btn btn-outline-secondary btn-lg float-left"
+                                    type="submit"><i class="fa fa-plus-circle"></i> Documento</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if not object.endereco.logadouro %}
+            <div class="col-md-3">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <a href="{% url 'usuarios:autocadendereco' %}">
+                                <button class="btn btn-outline-secondary btn-lg float-left"
+                                    type="submit"><i class="fa fa-plus-circle"></i> Endereço</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if not object.contato.email %}
+            <div class="col-md-3">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <a href="{% url 'usuarios:autocadcontato' %}">
+                                <button class="btn btn-outline-secondary btn-lg float-left"
+                                    type="submit"><i class="fa fa-plus-circle"></i> Contato</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if not object.militar.nome_guerra %}
+            <div class="col-md-3">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <a href="{% url 'usuarios:autocadmilitar' %}">
+                                <button class="btn btn-outline-secondary btn-lg float-left"
+                                    type="submit"><i class="fa fa-plus-circle"></i> Dados Militares</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <!-- table section -->
+            <div class="col-md-6">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Dados Pessoais</h2>
+                        </div>
+                    </div>
+                    <div class="table_section padding_infor_info">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome:</td>
+                                        <td>{{ pessoa }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nascimento:</td>
+                                        <td>{{ pessoa.data_nasc }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nome do Pai: </td>
+                                        <td>{{ pessoa.nome_pai }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nome da Mãe:</td>
+                                        <td>{{ pessoa.nome_mae }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- table section -->
+            {% if object.documento.rg %}
+            <div class="col-md-6">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Documentos</h2>
+                        </div>
+                    </div>
+                    <div class="table_section padding_infor_info">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>RG:</td>
+                                        <td>{{ pessoa.documento.rg }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CPF:</td>
+                                        <td>{{ pessoa.documento.cpf }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Título de Eleitor: </td>
+                                        <td>{{ pessoa.documento.titulo_eleitor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CNH:</td>
+                                        <td>{{ pessoa.documento.cnh }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Categoria CNH:</td>
+                                        <td>{{ pessoa.documento.cat_cnh }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <!-- table section -->
+            {% if object.endereco.logadouro %}
+            <div class="col-md-6">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Endereço</h2>
+                        </div>
+                    </div>
+                    <div class="table_section padding_infor_info">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Logadouro:</td>
+                                        <td>{{ pessoa.endereco.logadouro }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Complemento:</td>
+                                        <td>{{ pessoa.endereco.complemento }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bairro: </td>
+                                        <td>{{ pessoa.endereco.bairro }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CEP:</td>
+                                        <td>{{ pessoa.endereco.cep }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cidade:</td>
+                                        <td>{{ pessoa.endereco.cidade }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            <!-- table section -->
+            {% if object.contato.email %}
+            <div class="col-md-6">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Contato</h2>
+                        </div>
+                    </div>
+                    <div class="table_section padding_infor_info">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td>{{ pessoa.contato.email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Telefone:</td>
+                                        <td>{{ pessoa.contato.telefone }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Celular: </td>
+                                        <td>{{ pessoa.contato.celular }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            <!-- table section -->
+            {% if object.militar.nome_guerra %}
+            <div class="col-md-6">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Dados Militares</h2>
+                        </div>
+                    </div>
+                    <div class="table_section padding_infor_info">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome de Guerra:</td>
+                                        <td>{{ pessoa.militar.nome_guerra }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Posto/Grad: </td>
+                                        <td>{{ pessoa.militar.posto_grad }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Identidade:</td>
+                                        <td>{{ pessoa.militar.identidade }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Número: </td>
+                                        <td>{{ pessoa.militar.numero }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Subunidade: </td>
+                                        <td>{{ pessoa.militar.subunidade.nome }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Qualificação: </td>
+                                        <td>{{ pessoa.militar.qualificacao }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</div>
+
+
+{% endblock %}

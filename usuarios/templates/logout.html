@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+Logout
+{% endblock %}
+{% block main %}
+<body class="inner_page error_404">
+    <div class="full_container">
+        <div class="container">
+            <div class="center verticle_center full_height">
+                <div class="error_page">
+                    <div class="center">
+                        <div class="error_icon">
+                            <img class="img-responsive" src="{% static 'images/moeda.png' %}" alt="#">
+                        </div>
+                    </div>
+                    {% if frase %}
+                    <br>
+                    <h3>{{ frase }}</h3>
+                    {% else %}
+                    <br>
+                    <h3>Você saiu da sua conta!</h3>
+                    {% endif %}
+                    <div class="center"><a class="main_bt" href="{% url 'usuarios:login' %}">Fazer login</a></div>
+                    <br>
+                    <div class="center"><a class="main_bt" href="{% url 'usuarios:criarusuario' %}">Criar uma conta</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

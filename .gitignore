@@ -1,0 +1,4 @@
+venvGest
+.idea
+*.sqlite3
+*pyc

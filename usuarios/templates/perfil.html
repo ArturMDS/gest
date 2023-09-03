@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% block titulo %}
+{% if pessoa.militar %}
+Perfil de {{ pessoa.militar.nome_guerra }}
+{% else %}
+Perfil de {{ pessoa }}
+{% endif %}
+{% endblock %}
+{% block main %}
+
+{% include 'sidebar.html' %}
+<div id="content">
+    {% include 'topbar.html' %}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        {% if usuario.pessoas.militar %}
+                        <h2>Perfil de {{ usuario.pessoas.militar.nome_guerra }}</h2>
+                        {% else %}
+                        <h2>Perfil de {{ usuario.pessoas }}</h2>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row">
+                <!-- table section -->
+                <div class="col-md-6">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Dados Pessoais</h2>
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Nome:</td>
+                                            <td>{{ usuario.pessoas }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nascimento:</td>
+                                            <td>{{ usuario.pessoas.data_nasc }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nome do Pai: </td>
+                                            <td>{{ usuario.pessoas.nome_pai }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nome da Mãe:</td>
+                                            <td>{{ usuario.pessoas.nome_mae }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="price_table_bottom">
+                                <div class="center"><a class="main_bt" href="{% url 'pessoas:perfilpessoa' usuario.pessoas.id %}">Atualizar</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- table section -->
+                <div class="col-md-6">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Dados Usuário</h2>
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Nome do usuário:</td>
+                                            <td>{{ usuario.pessoas.usuario }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>{{ usuario.pessoas.usuario.email }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="price_table_bottom">
+                                <div class="center"><a class="main_bt" href="{% url 'usuarios:perfilusuario' user.id %}">Atualizar</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- table section -->
+                <div class="col-md-6">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Documentos</h2>
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>RG:</td>
+                                            <td>{{ usuario.pessoas.documento.rg }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CPF:</td>
+                                            <td>{{ usuario.pessoas.documento.cpf }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Título de Eleitor: </td>
+                                            <td>{{ usuario.pessoas.documento.titulo_eleitor }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CNH:</td>
+                                            <td>{{ usuario.pessoas.documento.cnh }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Categoria CNH:</td>
+                                            <td>{{ usuario.pessoas.documento.cat_cnh }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="price_table_bottom">
+                                <div class="center"><a class="main_bt" href="{% url 'documentos:perfildocumento' usuario.pessoas.documento.id %}">Atualizar</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- table section -->
+                <div class="col-md-6">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Endereço</h2>
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Logadouro:</td>
+                                            <td>{{ usuario.pessoas.endereco.logadouro }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Complemento:</td>
+                                            <td>{{ usuario.pessoas.endereco.complemento }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bairro: </td>
+                                            <td>{{ usuario.pessoas.endereco.bairro }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CEP:</td>
+                                            <td>{{ usuario.pessoas.endereco.cep }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cidade:</td>
+                                            <td>{{ usuario.pessoas.endereco.cidade }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="price_table_bottom">
+                                <div class="center"><a class="main_bt" href="{% url 'enderecos:perfilendereco' usuario.pessoas.endereco.id %}">Atualizar</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- table section -->
+                <div class="col-md-6">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Contato</h2>
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>{{ usuario.pessoas.contato.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Telefone:</td>
+                                            <td>{{ usuario.pessoas.contato.telefone }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Celular: </td>
+                                            <td>{{ usuario.pessoas.contato.celular }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="price_table_bottom">
+                                <div class="center"><a class="main_bt" href="{% url 'contatos:perfilcontato' usuario.pessoas.contato.id %}">Atualizar</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- table section -->
+                <div class="col-md-6">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Dados Militares</h2>
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Nome de Guerra:</td>
+                                            <td>{{ usuario.pessoas.militar.nome_guerra }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Posto/Grad: </td>
+                                            <td>{{ usuario.pessoas.militar.posto_grad }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Identidade:</td>
+                                            <td>{{ usuario.pessoas.militar.identidade }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Número: </td>
+                                            <td>{{ usuario.pessoas.militar.numero }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subunidade: </td>
+                                            <td>{{ usuario.pessoas.militar.subunidade }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Seção: </td>
+                                            <td>{{ usuario.pessoas.militar.secao }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Qualificação: </td>
+                                            <td>{{ usuario.pessoas.militar.qualificacao }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="price_table_bottom">
+                                <div class="center"><a class="main_bt" href="{% url 'militares:perfilmilitar' usuario.pessoas.militar.id %}">Atualizar</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+{% endblock %}

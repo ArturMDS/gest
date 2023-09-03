@@ -1,0 +1,100 @@
+{% load static %}
+    <nav id="sidebar">
+        <div class="sidebar_blog_1">
+            <div class="sidebar-header">
+                <div class="logo_section">
+                    <a href="#"><img class="logo_icon img-responsive" src="{% static 'images/gac.png' %}" alt="#" /></a>
+                </div>
+            </div>
+            <div class="sidebar_user_info">
+                <div class="icon_setting"></div>
+                <div class="user_profle_side">
+                    <div class="user_img">
+                        {% if user.pessoas.foto %}
+                            <img class="img-responsive" src="{{ user.pessoas.foto.url }}" alt="#" />
+                        {% else %}
+                            <img class="img-responsive" src="{% static 'images/sem_img.png' %}" alt="#"/>
+                        {% endif %}
+                    </div>
+                    <div class="user_info">
+                        {% if user.pessoas.militar %}
+                        <h6>{{ user.pessoas.militar.nome_guerra }}</h6>
+                        {% else %}
+                        <h6>{{ user.pessoas.nome_completo }}</h6>
+                        {% endif %}
+                        <p><span class="online_animation"></span> Online</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar_blog_2">
+            <h4>Conteúdo Geral</h4>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#usuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-users green_color"></i> <span>Usuários</span></a>
+                    <ul class="collapse list-unstyled" id="usuarios">
+                        <li><a href="{% url 'usuarios:gestusuario' %}">> <span>Novos Usuários</span></a></li>
+                        <li><a href="#">> <span>Todos Usuários</span></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pessoal" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-tags yellow_color"></i> <span>Pessoal</span></a>
+                    <ul class="collapse list-unstyled" id="pessoal">
+                        <li><a href="{% url 'pessoas:cadastro' %}">> <span>Cadastro</span></a></li>
+                        <li><a href="{% url 'militares:fatosobservados' %}">> <span>Fatos Observados</span></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#logistica" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-gears red_color"></i> <span>Logística</span></a></li>
+                    <ul class="collapse list-unstyled" id="logistica">
+                        <li><a href="{% url 'viaturas:viatura' %}"> <span>Viaturas</span></a></li>
+                        <li><a href="#">> <span>Media Gallery</span></a></li>
+                        <li><a href="#">> <span>Icons</span></a></li>
+                        <li><a href="#">> <span>Invoice</span></a></li>
+                    </ul>
+                <li>
+                    <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
+                    <ul class="collapse list-unstyled" id="element">
+                        <li><a href="#">> <span>General Elements</span></a></li>
+                        <li><a href="#">> <span>Media Gallery</span></a></li>
+                        <li><a href="#">> <span>Icons</span></a></li>
+                        <li><a href="#">> <span>Invoice</span></a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
+                <li>
+                    <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
+                    <ul class="collapse list-unstyled" id="apps">
+                        <li><a href="">> <span>Email</span></a></li>
+                        <li><a href="">> <span>Calendar</span></a></li>
+                        <li><a href="">> <span>Media Gallery</span></a></li>
+                    </ul>
+                </li>
+                <li><a href=""><i class="fa fa-briefcase blue1_color"></i> <span>Pricing Tables</span></a></li>
+                <li>
+                    <a href=""><i class="fa fa-paper-plane red_color"></i> <span>Contact</span></a>
+                </li>
+                <li class="active">
+                    <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Additional Pages</span></a>
+                    <ul class="collapse list-unstyled" id="additional_page">
+                        <li>
+                            <a href="#">> <span>Profile</span></a>
+                        </li>
+                        <li>
+                            <a href="#">> <span>Projects</span></a>
+                        </li>
+                        <li>
+                            <a href="#">> <span>Login</span></a>
+                        </li>
+                        <li>
+                            <a href="#">> <span>404 Error</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fa fa-map purple_color2"></i> <span>Map</span></a></li>
+                <li><a href="#"><i class="fa fa-bar-chart-o green_color"></i> <span>Charts</span></a></li>
+                <li><a href="#"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>
+            </ul>
+        </div>
+    </nav>
+

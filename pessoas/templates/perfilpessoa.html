@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block titulo %}
+{% if pessoa.militar %}
+Dados Pessoais de {{ pessoa.militar.nome_guerra }}
+{% else %}
+Dados Pessoais de {{ pessoa }}
+{% endif %}
+{% endblock %}
+{% block main %}
+
+{% include 'sidebar.html' %}
+<div id="content">
+    {% include 'topbar.html' %}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        {% if pessoa.militar %}
+                        <h2>Perfil de {{ pessoa.militar.nome_guerra }}</h2>
+                        {% else %}
+                        <h2>Perfil de {{ pessoa }}</h2>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row column1">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                {% if pessoa.militar %}
+                                <h2>Dados Pessoais de {{ pessoa.militar.nome_guerra }}</h2>
+                                {% else %}
+                                <h2>Dados Pessoais de {{ pessoa }}</h2>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="full price_table padding_infor_info">
+                            <div class="row">
+                                <!-- user profile section -->
+                                <!-- profile image -->
+                                <div class="col-lg-12">
+                                    <div class="full dis_flex center_text">
+                                        <div class="profile_img">
+                                            {% if pessoa.foto %}
+                                            <img width="180" class="rounded-circle" src="{{ object.foto.url }}" alt="#" />
+                                            {% else %}
+                                            <img width="180" class="rounded-circle" src="{% static 'images/sem_img.png' %}" alt="#" />
+                                            {% endif %}
+                                        </div>
+                                        <div class="profile_contant">
+                                             <div class="contact_inner">
+                                                 <form method="post" enctype="multipart/form-data">
+                                                     {% csrf_token %}
+                                                     <fieldset class="form-group">
+                                                         {{ form|crispy }}
+                                                     </fieldset>
+                                                     {% if object.id == user.pessoa.id %}
+                                                         <a class="btn btn-outline-secondary btn-lg float-left"
+                                                            href="{% url 'usuarios:perfil' object.id %}"
+                                                            role="button">Voltar</a>
+                                                     {% else %}
+                                                         <a class="btn btn-outline-secondary btn-lg float-left"
+                                                            href="{% url 'pessoas:cadastropessoa' object.id %}"
+                                                            role="button">Voltar</a>
+                                                     {% endif %}
+                                                     <button class="btn btn-outline-secondary btn-lg float-right"
+                                                             type="submit">Atualizar
+                                                     </button>
+                                                 </form>
+                                             </div>
+                                        </div>
+                                    </div>
+                                    <!-- profile contant section -->
+                                </div>
+                                    <!-- end user profile section -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+                <!-- end row -->
+        </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block titulo %}
+{% if pessoa.militar %}
+Perfil de {{ pessoa.militar.nome_guerra }}
+{% else %}
+Perfil de {{ pessoa }}
+{% endif %}
+{% endblock %}
+{% block main %}
+
+{% include 'sidebar.html' %}
+<div id="content">
+    {% include 'topbar.html' %}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        {% if pessoa.militar %}
+                        <h2>Perfil de {{ pessoa.militar.nome_guerra }}</h2>
+                        {% else %}
+                        <h2>Perfil de {{ pessoa }}</h2>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row column1">
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                {% if pessoa.militar %}
+                                <h2>Fatos Observados de {{ pessoa.militar.nome_guerra }}</h2>
+                                {% else %}
+                                <h2>Fatos Observados de {{ pessoa }}</h2>
+                                {% endif %}
+                            </div>
+                            <div class="bottom_list">
+                                <div class="right_button">
+                                    <a href="{% url 'militares:fatosobservados' %}">
+                                        <button type="button" class="btn btn-primary btn-xs">Voltar
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full price_table padding_infor_info">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive-sm">
+                                        <table class="table table-striped projects">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th style="width: 2%">Nr</th>
+                                                <th style="width: 30%">Relato do Fato</th>
+                                                <th style="width: 5%">Data</th>
+                                                <th>Participante</th>
+                                                <th>Solução</th>
+                                                <th style="width: 5%">Dias</th>
+                                                <th>Publicação</th>
+                                                <th>Atualizar</th>
+                                                <th>Gerar FATD</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for obs in observacoes %}
+                                                {% if object == obs.arrolado.pessoa %}
+                                                    <tr>
+                                                        <td>{{ obs.nr_processo }}</td>
+                                                        <td>
+                                                            <a>{{ obs.relato_fato }}</a>
+                                                        </td>
+                                                        <td>{{ obs.data }}</td>
+                                                        <td>{{ obs.participante }}</td>
+                                                        <td>{{ obs.solucao }}</td>
+                                                        {% if obs.dias %}
+                                                            <td>{{ obs.dias }}</td>
+                                                        {% else %}
+                                                            <td>-</td>
+                                                        {% endif %}
+                                                        {% if obs.publicacao_bi %}
+                                                            <td>{{ obs.publicacao_bi }}</td>
+                                                        {% else %}
+                                                            <td>-</td>
+                                                        {% endif %}
+                                                        <td>
+                                                            <a href="{% url 'militares:updateobservacao' obs.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
+                                                            </button></a>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger btn-xs">FATD
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+{% endblock %}

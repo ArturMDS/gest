@@ -1,0 +1,36 @@
+{{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block titulo %}
+Criar Usuário
+{% endblock %}
+{% block main %}
+<body class="inner_page login">
+    <div class="full_container">
+        <div class="center verticle_center full_height">
+            <div class="login_section">
+                <div class="logo_login">
+                    <div class="center">
+                        <img width="75" src="{% static 'images/gac.png' %}" alt="#" />
+                    </div>
+                </div>
+                <div class="login_form">
+                    <form method="post">
+                        {% csrf_token %}
+                        <fieldset>
+                            <legend class="border-bottom mb-4">Crie um usuário para continuar</legend>
+                            {{ form|crispy }}
+
+                            <div class="field margin_0">
+                                <label class="label_field hidden">hidden label</label>
+                                <button class="main_bt" data-placement="left">Criar uma conta</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
