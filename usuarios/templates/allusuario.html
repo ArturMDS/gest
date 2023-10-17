@@ -35,37 +35,25 @@ Gestão de Usuários
                                             <tr>
                                                 <th style="width: 60%">Nome Completo</th>
                                                 <th style="width: 20%">Nome de Guerra</th>
-                                                <th style="width: 20%">Autorizar</th>
+                                                <th style="width: 20%">Acesso</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% if request.user.acesso == 'EM' %}
+                                            {% if request.user.acesso == 'Estado Maior' %}
                                                 {% for militar in militares_om %}
-                                                    {% if militar.pessoa.usuario.acesso == 'novo' and militar.pessoa.usuario.numero == 5 %}
-                                                        <tr>
-                                                            <td>{{ militar.pessoa.nome_completo }}</td>
-                                                            <td>{{ militar.nome_guerra }}</td>
-                                                            <td>
-                                                                <a href="{% url 'usuarios:confirmusuario' militar.pessoa.usuario.id %}">
-                                                                    <button class="btn btn-outline-success btn-lg float-left">Autorizar</button>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endif %}
+                                                    <tr>
+                                                        <td>{{ militar.pessoa.nome_completo }}</td>
+                                                        <td>{{ militar.nome_guerra }}</td>
+                                                        <td>{{ militar.pessoa.usuario.acesso }}</td>
+                                                    </tr>
                                                 {% endfor %}
                                             {% else %}
                                                 {% for militar in militares_su %}
-                                                    {% if militar.pessoa.usuario.acesso == 'novo' and militar.pessoa.usuario.numero == 5 %}
-                                                        <tr>
-                                                            <td>{{ militar.pessoa.nome_completo }}</td>
-                                                            <td>{{ militar.nome_guerra }}</td>
-                                                            <td>
-                                                                <a href="{% url 'usuarios:confirmusuario' militar.pessoa.usuario.id %}">
-                                                                    <button class="btn btn-outline-success btn-lg float-left">Autorizar</button>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endif %}
+                                                    <tr>
+                                                        <td>{{ militar.pessoa.nome_completo }}</td>
+                                                        <td>{{ militar.nome_guerra }}</td>
+                                                        <td>{{ militar.pessoa.usuario.acesso }}</td>
+                                                    </tr>
                                                 {% endfor %}
                                             {% endif %}
                                             </tbody>

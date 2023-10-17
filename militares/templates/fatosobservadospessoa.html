@@ -6,6 +6,13 @@ Perfil de {{ pessoa.militar.nome_guerra }}
 Perfil de {{ pessoa }}
 {% endif %}
 {% endblock %}
+{% block head %}
+    <style type="text/css">
+        #bot {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
 {% block main %}
 
 {% include 'sidebar.html' %}
@@ -53,51 +60,88 @@ Perfil de {{ pessoa }}
                                         <table class="table table-striped projects">
                                             <thead class="thead-dark">
                                             <tr>
-                                                <th style="width: 2%">Nr</th>
-                                                <th style="width: 30%">Relato do Fato</th>
+                                                <th style="width: 60%">Relato do Fato</th>
                                                 <th style="width: 5%">Data</th>
-                                                <th>Participante</th>
-                                                <th>Solução</th>
+                                                <th style="width: 10%">Solução</th>
                                                 <th style="width: 5%">Dias</th>
-                                                <th>Publicação</th>
-                                                <th>Atualizar</th>
-                                                <th>Gerar FATD</th>
+                                                <th style="width: 10%">Atualizar</th>
+                                                <th style="width: 10%">Gerar FATD</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             {% for obs in observacoes %}
                                                 {% if object == obs.arrolado.pessoa %}
-                                                    <tr>
-                                                        <td>{{ obs.nr_processo }}</td>
-                                                        <td>
-                                                            <a>{{ obs.relato_fato }}</a>
-                                                        </td>
-                                                        <td>{{ obs.data }}</td>
-                                                        <td>{{ obs.participante }}</td>
-                                                        <td>{{ obs.solucao }}</td>
-                                                        {% if obs.dias %}
-                                                            <td>{{ obs.dias }}</td>
-                                                        {% else %}
+                                                    {% if obs.tipo == 'negativa' %}
+                                                        <tr class="table-danger">
+                                                            <td>
+                                                                <a>{{ obs.relato_fato }}</a>
+                                                            </td>
+                                                            <td>{{ obs.data.day }}/{{ obs.data.month }}/{{ obs.data.year }}</td>
+                                                            <td>{{ obs.solucao }}</td>
+                                                            {% if obs.dias %}
+                                                                <td>{{ obs.dias }}</td>
+                                                            {% else %}
+                                                                <td>-</td>
+                                                            {% endif %}
+                                                            <td>
+                                                                <a href="{% url 'militares:updateobservacao' obs.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
+                                                                </button></a>
+                                                            </td>
+
+                                                            <td>
+                                                                <a type="button" class="btn btn-danger btn-xs" href="{% url 'militares:fatd' obs.id %}">FATD
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% elif obs.tipo == 'positiva' %}
+                                                        <tr class="table-info">
+                                                            <td>
+                                                                <a>{{ obs.relato_fato }}</a>
+                                                            </td>
+                                                            <td>{{ obs.data.day }}/{{ obs.data.month }}/{{ obs.data.year }}</td>
+                                                            <td>{{ obs.solucao }}</td>
+                                                            {% if obs.dias %}
+                                                                <td>{{ obs.dias }}</td>
+                                                            {% else %}
+                                                                <td>-</td>
+                                                            {% endif %}
+                                                            <td>
+                                                                <a href="{% url 'militares:updateobservacao' obs.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
+                                                                </button></a>
+                                                            </td>
+
                                                             <td>-</td>
-                                                        {% endif %}
-                                                        {% if obs.publicacao_bi %}
-                                                            <td>{{ obs.publicacao_bi }}</td>
-                                                        {% else %}
+                                                        </tr>
+                                                    {% else %}
+                                                        <tr class="table-warning">
+                                                            <td>
+                                                                <a>{{ obs.relato_fato }}</a>
+                                                            </td>
+                                                            <td>{{ obs.data.day }}/{{ obs.data.month }}/{{ obs.data.year }}</td>
+                                                            <td>{{ obs.solucao }}</td>
+                                                            {% if obs.dias %}
+                                                                <td>{{ obs.dias }}</td>
+                                                            {% else %}
+                                                                <td>-</td>
+                                                            {% endif %}
+                                                            <td>
+                                                                <a href="{% url 'militares:updateobservacao' obs.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
+                                                                </button></a>
+                                                            </td>
+
                                                             <td>-</td>
-                                                        {% endif %}
-                                                        <td>
-                                                            <a href="{% url 'militares:updateobservacao' obs.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
-                                                            </button></a>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger btn-xs">FATD
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                        </tr>
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endfor %}
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <br>
+                                    <div id="bot">
+                                        <a type="button" class="btn cur-p btn-secondary"
+                                           href="{% url 'militares:fdi' pessoa.militar.id %}">Ficha Disciplinar
+                                        </a>
                                     </div>
                                 </div>
                             </div>

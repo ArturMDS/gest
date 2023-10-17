@@ -21,7 +21,7 @@ class Criarviatura(LoginRequiredMixin, CreateView):
     fields = '__all__'
 
     def get_success_url(self):
-        return reverse('usuarios:viatura')
+        return reverse('viaturas:viatura')
 
 
 class Updateviatura(LoginRequiredMixin, UpdateView):
@@ -30,4 +30,4 @@ class Updateviatura(LoginRequiredMixin, UpdateView):
     fields = '__all__'
 
     def get_success_url(self):
-        return reverse('usuarios:viatura')
+        return reverse('viaturas:viatura')

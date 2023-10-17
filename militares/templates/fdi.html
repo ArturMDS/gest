@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #cabecalho {
+            text-align: center;
+            border: 1px solid #000;
+            font-weight: bold;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+            bottom: 0px;
+        }
+
+        #idt {
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #idt1 {
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #idt2 {
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #idt3 {
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        table, th, td {
+            border:1px solid #000;
+            text-align: left;
+        }
+
+        #QuebraAqui {page-break-before: always}
+
+    </style>
+</head>
+<body>
+    <div id="cabecalho">
+        <p><img src="C:\Users\Meu Computador\PycharmProjects\Djangprojects\Gest\static\images\brasao.png"><br>
+            MINISTÉRIO DA DEFESA<br>
+            EXÉRCITO BRASILEIRO<br>
+            {{militar.unidade.nome.upper}}<br>
+            {{militar.unidade.nome_historico.upper}}<br><br>
+            FICHA DISCIPLINAR INDIVIDUAL</p>
+    </div>
+    <div id="idt">
+        <table style="width:100%">
+            <tr><th style="width:100%"><b>1. IDENTIFICAÇÃO DO MILITAR</b></th></tr>
+        </table>
+        <table style="width:100%">
+            <tr>
+                <td style="width:60%">Nome Completo: {{militar.pessoa.nome_completo.upper}}<br>
+            Filiação: {{militar.pessoa.nome_pai}} e {{militar.pessoa.nome_mae}}</td>
+                <td style="width:40%">Idt: {{militar.identidade}}<br>
+            Subunidade: {{militar.subunidade}}</td>
+            </tr>
+        </table>
+    </div>
+    <div id="idt1">
+        <table style="width:100%">
+            <tr><th style="width:100%"><b>2. PUNIÇÕES DISCIPLINARES</b></th></tr>
+        </table>
+        <table style="width:100%">
+            <tr>
+                <th style="width:10%">DATA</th>
+                <th style="width:13%">PUNIÇÃO</th>
+                <th style="width:7%">Nr de DIAS</th>
+                <th style="width:30%">ENQUADRAMENTO</th>
+                <th style="width:15%">BI e OM</th>
+                <th style="width:15%">Comportamento</th>
+                <th style="width:10%">Rubrica<br>Cmt OM/SU</th>
+            </tr>
+            {% for observacao in observacoes_neg %}
+            <tr>
+                <td style="width:10%">{{ observacao.data.day }}/{{ observacao.data.month }}/{{ observacao.data.year }}</td>
+                <td style="width:13%">{{ observacao.solucao }}</td>
+                <td style="width:7%">{{ observacao.dias }}</td>
+                <td style="width:30%">{{ observacao.enquadramento }}</td>
+                <td style="width:15%">{{ observacao.publicacao_bi }}</td>
+                <td style="width:15%"> - </td>
+                <td style="width:10%"></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="idt2">
+        <table style="width:100%">
+            <tr><th style="width:100%"><b>5. RECOMPENSAS</b></th></tr>
+        </table>
+        <table style="width:100%">
+            <tr>
+                <th style="width:10%">DATA</th>
+                <th style="width:40%">RECOMPENSA</th>
+                <th style="width:10%">Nr de DIAS</th>
+                <th style="width:30%">BI e OM</th>
+                <th style="width:10%">Rubrica<br>Cmt OM/SU</th>
+            </tr>
+            {% for observacao in observacoes_pos %}
+            <tr>
+                <td style="width:10%">{{ observacao.data.day }}/{{ observacao.data.month }}/{{ observacao.data.year }}</td>
+                <td style="width:40%">{{ observacao.solucao }}</td>
+                <td style="width:10%">{{ observacao.dias }}</td>
+                <td style="width:30%">{{ observacao.publicacao_bi }}</td>
+                <td style="width:10%"></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div id="idt3">
+        <table style="width:100%">
+            <tr><th style="width:100%"><b>6. PRESCRIÇÕES DIVERSAS</b></th></tr>
+        </table>
+        <table style="width:100%">
+            <tr>
+                <th style="width:10%">DATA</th>
+                <th style="width:80%">OBSERVAÇÃO</th>
+                <th style="width:10%">Rubrica<br>Cmt OM/SU</th>
+            </tr>
+            {% for observacao in observacoes_neu %}
+            <tr>
+                <td style="width:10%">{{ observacao.data.day }}/{{ observacao.data.month }}/{{ observacao.data.year }}</td>
+                <td style="width:80%">{{ observacao.relato_fato }}</td>
+                <td style="width:10%"></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

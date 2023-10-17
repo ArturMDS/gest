@@ -14,7 +14,7 @@ class Criarendereco(LoginRequiredMixin, CreateView):
         context = super(Criarendereco, self).get_context_data(**kwargs)
         data = {'id': self.request.GET['novo_id']}
         pessoa = Pessoa.objects.get(id=data['id'])
-        context["pessoas"] = pessoa
+        context["pessoa"] = pessoa
         return context
 
     def form_valid(self, form):

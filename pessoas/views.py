@@ -31,7 +31,7 @@ class Cadastropessoa(LoginRequiredMixin, DetailView):
 class Criarpessoa(LoginRequiredMixin, CreateView):
     template_name = "criarpessoa.html"
     model = Pessoa
-    fields = ['nome_completo', 'data_nasc', 'foto', 'nome_pai', 'nome_mae']
+    fields = ['nome_completo', 'data_nasc', 'foto', 'nome_pai', 'nome_mae', 'peso', 'fator_rh', 'tipo_sanguineo']
 
     def form_valid(self, form):
         form.instance.situacao = "Ativo"
@@ -60,7 +60,7 @@ class Delete(LoginRequiredMixin, UpdateView):
 class Perfilpessoa(LoginRequiredMixin, UpdateView):
     template_name = "perfilpessoa.html"
     model = Pessoa
-    fields = ['nome_completo', 'data_nasc', 'foto', 'nome_pai', 'nome_mae']
+    fields = ['nome_completo', 'data_nasc', 'foto', 'nome_pai', 'nome_mae', 'peso', 'fator_rh', 'tipo_sanguineo']
 
     def get_success_url(self):
         if self.get_object().id == self.request.user.pessoas.id:

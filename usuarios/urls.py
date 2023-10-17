@@ -2,7 +2,7 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_view
 from .views import Perfilusuario, Criarusuario, Perfil, ChangeDone, Novo, \
     AutoCad, AutoCadDocumento, AutoCadEndereco, AutoCadContato, AutoCadMilitar, AutoCadDone, \
-    GestUsuario, ConfirmUsuario
+    GestUsuario, ConfirmUsuario, AllUsuario
 
 app_name = 'usuarios'
 
@@ -24,4 +24,5 @@ urlpatterns = [
     path('autocad/done', AutoCadDone.as_view(), name='autocaddone'),
     path('gestusuario', GestUsuario.as_view(), name='gestusuario'),
     path('confirmusuario/<int:pk>', ConfirmUsuario.as_view(), name='confirmusuario'),
+    path('allusuario', AllUsuario.as_view(), name='allusuario'),
 ]

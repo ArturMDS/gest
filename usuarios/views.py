@@ -7,7 +7,7 @@ from contatos.models import Contato
 from pessoas.models import Pessoa
 from documentos.models import Documento
 from enderecos.models import Endereco
-from militares.models import Militar
+from militares.models import Militar, Atributos
 
 
 class Homepage(LoginRequiredMixin, TemplateView):
@@ -25,7 +25,7 @@ class Homepage(LoginRequiredMixin, TemplateView):
 class Novo(LoginRequiredMixin, CreateView):
     template_name = "novo.html"
     model = Pessoa
-    fields = ['nome_completo', 'data_nasc', 'foto', 'nome_pai', 'nome_mae']
+    fields = ['nome_completo', 'data_nasc', 'foto', 'nome_pai', 'nome_mae', 'peso', 'fator_rh', 'tipo_sanguineo']
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous:
@@ -124,7 +124,12 @@ class AutoCadMilitar(LoginRequiredMixin, CreateView):
         usuario.save()
         return super().form_valid(form)
 
+    #TODO: testar
     def get_success_url(self):
+        militar = Militar.objects.last()
+        atrib = Atributos.objects.create()
+        atrib.militar = militar
+        atrib.save()
         return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
 
 
@@ -148,7 +153,7 @@ class Perfilusuario(LoginRequiredMixin, UpdateView):
     fields = ['username', 'email']
 
     def get_success_url(self):
-        return reverse('usuarios:perfil', kwargs={"pk": self.request.user.pessoas.pk})
+        return reverse('usuarios:perfil', kwargs={"pk": self.request.user.pk})
 
 
 class Criarusuario(FormView):
@@ -180,8 +185,10 @@ class GestUsuario(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GestUsuario, self).get_context_data(**kwargs)
-        usuarios = Usuario.objects.filter(acesso='novo', numero=5)
-        context["usuarios"] = usuarios
+        militares_om = Militar.objects.filter(unidade=self.request.user.pessoas.militar.unidade)
+        militares_su = Militar.objects.filter(subunidade=self.request.user.pessoas.militar.subunidade)
+        context["militares_om"] = militares_om
+        context["militares_su"] = militares_su
         return context
 
 
@@ -199,4 +206,15 @@ class ConfirmUsuario(LoginRequiredMixin, UpdateView):
         usuario.pessoas.save()
         return reverse('usuarios:gestusuario')
 
+
+class AllUsuario(LoginRequiredMixin, TemplateView):
+    template_name = "allusuario.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AllUsuario, self).get_context_data(**kwargs)
+        militares_om = Militar.objects.filter(unidade=self.request.user.pessoas.militar.unidade)
+        militares_su = Militar.objects.filter(subunidade=self.request.user.pessoas.militar.subunidade)
+        context["militares_om"] = militares_om
+        context["militares_su"] = militares_su
+        return context
 

@@ -28,7 +28,7 @@ Viaturas
                             </div>
                             <div class="bottom_list">
                                 <div class="right_button">
-                                    <a href="{% url 'gac:criarviatura' %}">
+                                    <a href="{% url 'viaturas:criarviatura' %}">
                                         <button type="button" class="btn btn-primary btn-xs">
                                             <i class="fa fa-car"></i>Nova Viatura
                                         </button>
@@ -63,7 +63,7 @@ Viaturas
                                                     <td>{{ viatura.combustivel }}</td>
                                                     <td>{{ viatura.situacao }}</td>
                                                     <td>
-                                                        <a href="{% url 'gac:updateviatura' viatura.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
+                                                        <a href="{% url 'viaturas:updateviatura' viatura.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
                                                         </button></a>
                                                     </td>
                                                 </tr>

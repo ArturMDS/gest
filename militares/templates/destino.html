@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block titulo %}
+Destinos da {{ request.user.pessoas.militar.subunidade }}
+{% endblock %}
+{% block head %}
+    <style type="text/css">
+        #bot {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+
+{% include 'sidebar.html' %}
+<div id="content">
+    {% include 'topbar.html' %}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Destinos da {{ request.user.pessoas.militar.subunidade }}</h2>
+                    </div>
+
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row column1">
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>{{ request.user.pessoas.militar.subunidade }}</h2>
+                            </div>
+                            <div class="bottom_list">
+                                <div class="right_button">
+                                    <a href="{% url 'militares:criardestino' %}">
+                                        <button type="button" class="btn btn-primary btn-xs">Criar Destino
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full price_table padding_infor_info">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive-sm">
+                                        <table class="table table-striped projects">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th style="width: 10%">Militar</th>
+                                                <th style="width: 10%">Início</th>
+                                                <th style="width: 10%">Final</th>
+                                                <th style="width: 60%">Motivo</th>
+                                                <th style="width: 10%">Atualizar</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if request.user.acesso == 'Estado Maior' %}
+                                                    {% for destino in destinos %}
+                                                        {% if destino.militar.unidade == request.user.pessoas.militar.subunidade.OM %}
+                                                            <tr>
+                                                                <td>{{ destino.militar.nome_guerra }}</td>
+                                                                <td>{{ destino.check_in }}</td>
+                                                                <td>{{ destino.check_out }}</td>
+                                                                <td>{{ destino.motivo }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'militares:updatedestino' destino.id %}">
+                                                                        <button type="button" class="btn btn-success btn-xs">Atualizar
+                                                                    </button></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {% if request.user.acesso == 'Comandante' %}
+                                                    {% for destino in destinos %}
+                                                        {% if destino.militar.unidade == request.user.pessoas.militar.subunidade %}
+                                                            <tr>
+                                                                <td>{{ destino.militar.nome_guerra }}</td>
+                                                                <td>{{ destino.check_in }}</td>
+                                                                <td>{{ destino.check_out }}</td>
+                                                                <td>{{ destino.motivo }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'militares:updatedestino' destino.id %}">
+                                                                        <button type="button" class="btn btn-success btn-xs">Atualizar
+                                                                    </button></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {% if request.user.acesso == 'Sargenteante' %}
+                                                    {% for destino in destinos %}
+                                                        {% if destino.militar.unidade == request.user.pessoas.militar.subunidade %}
+                                                            <tr>
+                                                                <td>{{ destino.militar.nome_guerra }}</td>
+                                                                <td>{{ destino.check_in }}</td>
+                                                                <td>{{ destino.check_out }}</td>
+                                                                <td>{{ destino.motivo }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'militares:updatedestino' destino.id %}">
+                                                                        <button type="button" class="btn btn-success btn-xs">Atualizar
+                                                                    </button></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <div id="bot">
+                                        <a type="button" class="btn cur-p btn-secondary"
+                                           href="#">Mapa da Força
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+{% endblock %}

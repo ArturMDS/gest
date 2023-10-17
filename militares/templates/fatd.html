@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #cabecalho {
+            text-align: center;
+            border: 1px solid #000;
+            font-weight: bold;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+            bottom: 0px;
+            position: relative;
+        }
+
+        #proc {
+            border: 1px solid #000;
+            font-weight: bold;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+            top: 0px;
+            bottom: 0px;
+        }
+
+        #arrolado {
+            border: 1px solid #000;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #participante {
+            border: 1px solid #000;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #fato {
+            border: 1px solid #000;
+            text-align: center;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #ciente {
+            border: 1px solid #000;
+            text-align: center;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #justificativa {
+            border: 1px solid #000;
+            text-align: center;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #decisao {
+            border: 1px solid #000;
+            text-align: center;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #QuebraAqui {page-break-before: always}
+
+    </style>
+</head>
+<body>
+    <div id="cabecalho">
+        <p><img src="C:\Users\Meu Computador\PycharmProjects\Djangprojects\Gest\static\images\brasao.png"><br>
+            MINISTÉRIO DA DEFESA<br>
+            EXÉRCITO BRASILEIRO<br>
+            {{observacao.arrolado.unidade.nome.upper}}<br>
+            {{observacao.arrolado.unidade.nome_historico.upper}}<br><br>
+            FORMULÁRIO DE APURAÇÃO DE TRANSGRESSÃO DISCIPLINAR</p>
+    </div>
+    <div id="proc">
+        <p>PROCESSO Nº {{observacao.nr_processo}}/{{hoje.year}} <br/>
+            DATA: {{observacao.data.day}}/{{observacao.data.month}}/{{observacao.data.year}}</p>
+    </div>
+
+    <div id="arrolado">
+        <p><b>IDENTIFICAÇÃO DO MILITAR</b><br>
+            Grau hierárquico: {{observacao.arrolado.posto_grad}}<br>
+            Nome Completo: {{observacao.arrolado.pessoa.nome_completo.upper}} -
+            Idt: {{observacao.arrolado.identidade}}<br>
+            Subunidade OM: {{observacao.arrolado.subunidade}}</p>
+    </div>
+
+    <div id="participante">
+        <p><b>IDENTIFICAÇÃO DO PARTICIPANTE</b><br>
+        Grau hierárquico: {{observacao.participante.posto_grad}}<br>
+        Nome Completo: {{observacao.participante.pessoa.nome_completo.upper}} -
+        Idt: {{observacao.participante.identidade}}<br>
+        Subunidade OM: {{observacao.participante.subunidade}}</p>
+    </div>
+
+    <div id="fato">
+        <p><b>RELATO DO FATO</b><br><br>{{observacao.relato_fato}}<br><br><br>
+        _________________________________________<br>
+        {{observacao.participante.pessoa.nome_completo.upper}} – {{observacao.participante.posto_grad}}</p>
+    </div>
+
+    <div id="ciente">
+        <p><b>CIENTE DO MILITAR ARROLADO</b><br><br><br>
+        _________________________________________<br>
+        {{observacao.arrolado.pessoa.nome_completo.upper}} – {{observacao.arrolado.posto_grad}}<br><br>
+        {{observacao.arrolado.pessoa.militar.unidade.cidade}}-{{observacao.arrolado.pessoa.militar.unidade.estado}},
+            {{hoje}}.</p>
+    </div>
+    <P id="QuebraAqui">
+    <div id="justificativa">
+        <p><b>JUSTIFICATIVAS / RAZÕES DE DEFESA</b><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            {{observacao.arrolado.pessoa.militar.unidade.cidade}}-{{observacao.arrolado.pessoa.militar.unidade.estado}},
+            ______, de ______________ de {{hoje.year}}.<br><br><br>
+        _________________________________________<br>
+        {{observacao.arrolado.pessoa.nome_completo.upper}} – {{observacao.arrolado.posto_grad}}</p>
+    </div>
+    <div id="decisao">
+        <p><b>DECISÃO DA AUTORIDADE COMPETENTE</b><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            {{observacao.arrolado.pessoa.militar.unidade.cidade}}-{{observacao.arrolado.pessoa.militar.unidade.estado}},
+            ______, de ______________ de {{hoje.year}}.<br><br><br>
+        _________________________________________<br>
+        XXXXXXXXXXXXXX – Cap</p>
+    </div>
+
+</body>
+</html>

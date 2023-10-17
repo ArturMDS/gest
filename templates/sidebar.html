@@ -34,7 +34,7 @@
                     <a href="#usuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-users green_color"></i> <span>Usuários</span></a>
                     <ul class="collapse list-unstyled" id="usuarios">
                         <li><a href="{% url 'usuarios:gestusuario' %}">> <span>Novos Usuários</span></a></li>
-                        <li><a href="#">> <span>Todos Usuários</span></a></li>
+                        <li><a href="{% url 'usuarios:allusuario' %}">> <span>Todos Usuários</span></a></li>
                     </ul>
                 </li>
                 <li>
@@ -42,6 +42,7 @@
                     <ul class="collapse list-unstyled" id="pessoal">
                         <li><a href="{% url 'pessoas:cadastro' %}">> <span>Cadastro</span></a></li>
                         <li><a href="{% url 'militares:fatosobservados' %}">> <span>Fatos Observados</span></a></li>
+                        <li><a href="{% url 'militares:destino' %}">> <span>Destinos</span></a></li>
                     </ul>
                 </li>
                 <li>
@@ -53,18 +54,17 @@
                         <li><a href="#">> <span>Invoice</span></a></li>
                     </ul>
                 <li>
-                    <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
-                    <ul class="collapse list-unstyled" id="element">
+                    <a href="#inteligencia" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-info-circle yellow_color"></i> <span>Inteligência</span></a>
+                    <ul class="collapse list-unstyled" id="inteligencia">
                         <li><a href="#">> <span>General Elements</span></a></li>
                         <li><a href="#">> <span>Media Gallery</span></a></li>
                         <li><a href="#">> <span>Icons</span></a></li>
                         <li><a href="#">> <span>Invoice</span></a></li>
                     </ul>
                 </li>
-                <li><a href="#"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
                 <li>
-                    <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
-                    <ul class="collapse list-unstyled" id="apps">
+                    <a href="#emprego" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-crosshairs green_color"></i> <span>Emprego</span></a>
+                    <ul class="collapse list-unstyled" id="emprego">
                         <li><a href="">> <span>Email</span></a></li>
                         <li><a href="">> <span>Calendar</span></a></li>
                         <li><a href="">> <span>Media Gallery</span></a></li>

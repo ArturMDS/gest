@@ -47,8 +47,8 @@ Dados do Usuário {{ user.pessoa }}
                                 <div class="col-lg-12">
                                     <div class="full dis_flex center_text">
                                         <div class="profile_img">
-                                            {% if user.pessoa.foto %}
-                                            <img width="180" class="rounded-circle" src="{{ user.pessoa.foto.url }}" alt="#" />
+                                            {% if user.pessoas.foto %}
+                                            <img width="180" class="rounded-circle" src="{{ user.pessoas.foto.url }}" alt="#" />
                                             {% else %}
                                             <img width="180" class="rounded-circle" src="{% static 'images/sem_img.png' %}" alt="#" />
                                             {% endif %}
@@ -61,7 +61,7 @@ Dados do Usuário {{ user.pessoa }}
                                                          {{ form|crispy }}
                                                      </fieldset>
                                                      <a class="btn btn-outline-secondary btn-lg float-left"
-                                                        href="{% url 'usuarios:perfil' user.pessoas.id %}" role="button">Voltar</a>
+                                                        href="{% url 'usuarios:perfil' user.id %}" role="button">Voltar</a>
                                                      <button class="btn btn-outline-secondary btn-lg float-right"
                                                              type="submit">Atualizar
                                                      </button>
