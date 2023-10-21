@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn Gest.wsgi --log-file
+web: python manage.py migrate && gunicorn Gest.wsgi --log-file -
