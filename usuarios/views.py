@@ -124,7 +124,6 @@ class AutoCadMilitar(LoginRequiredMixin, CreateView):
         usuario.save()
         return super().form_valid(form)
 
-    #TODO: testar
     def get_success_url(self):
         militar = Militar.objects.last()
         atrib = Atributos.objects.create()
@@ -141,7 +140,6 @@ class ChangeDone(LoginRequiredMixin, TemplateView):
     template_name = "change_done.html"
 
 
-# FIXME: colocar o dispatch depois de testá-lo
 class Perfil(LoginRequiredMixin, DetailView):
     template_name = "perfil.html"
     model = Usuario

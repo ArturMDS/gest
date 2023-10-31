@@ -31,7 +31,7 @@ else:
     SECRET_KEY = 'django-insecure-n^=h!2xfir6i#ih1#&k&z^xk)ct*$6*3snxrhknt72ry)sfb+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['gest-production.up.railway.app', 'localhost', '127.0.0.1']
 
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'viaturas',
     'quarteis',
     'subunidades',
+    'questionarios',
     'bootstrapform',
     'crispy_forms',
     'crispy_bootstrap5'
@@ -61,7 +62,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

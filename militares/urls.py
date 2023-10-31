@@ -14,9 +14,7 @@ urlpatterns = [
     path('cadastro/', Criarmilitar.as_view(), name='criarmilitar'),
     path('perfil/<int:pk>', Perfilmilitar.as_view(), name='perfilmilitar'),
     path('fatosobservados/fatd/<int:pk>', Fatd.as_view(), name='fatd'),
-    # TODO: terminar a fdi para finalizar essa funcionalidade
     path('fatosobservados/fdi/<int:pk>', Fdi.as_view(), name='fdi'),
-    # TODO: testar
     path('destino', Verdestino.as_view(), name='destino'),
     path('destino/update/<int:pk>', Updatedestino.as_view(), name='updatedestino'),
     path('destino/novo', Criardestino.as_view(), name='criardestino'),

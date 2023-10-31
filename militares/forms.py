@@ -10,7 +10,7 @@ class CriarMilitarForm(ModelForm):
 
     class Meta:
         model = Militar
-        fields = ['nome_guerra', 'identidade', 'numero', 'subunidade', 'qualificacao', 'posto_grad']
+        fields = ['nome_guerra', 'identidade', 'numero', 'subunidade', 'qualificacao', 'posto_grad', 'data_praca']
 
 
 class CriarObservacaoForm(ModelForm):
@@ -40,7 +40,7 @@ class PerfilMilitarForm(ModelForm):
 
     class Meta:
         model = Militar
-        fields = ['nome_guerra', 'identidade', 'numero', 'subunidade', 'qualificacao', 'posto_grad']
+        fields = ['nome_guerra', 'identidade', 'numero', 'subunidade', 'qualificacao', 'posto_grad', 'data_praca']
 
 
 class CriarDestinoForm(ModelForm):

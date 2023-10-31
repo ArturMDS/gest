@@ -8,7 +8,8 @@ from pessoas.models import Pessoa
 class Criardocumento(LoginRequiredMixin, CreateView):
     template_name = "criardocumento.html"
     model = Documento
-    fields = ['rg', 'cpf', 'titulo_eleitor', 'cnh', 'cat_cnh']
+    fields = ['rg', 'cpf', 'titulo_eleitor', 'zona_eleitoral', 'secao_eleitoral',
+              'cnh', 'cat_cnh', 'data_primeira_habilitacao']
 
     def get_context_data(self, **kwargs):
         context = super(Criardocumento, self).get_context_data(**kwargs)
@@ -32,7 +33,8 @@ class Criardocumento(LoginRequiredMixin, CreateView):
 class Perfildocumento(LoginRequiredMixin, UpdateView):
     template_name = "perfildocumento.html"
     model = Documento
-    fields = ['rg', 'cpf', 'titulo_eleitor', 'cnh', 'cat_cnh']
+    fields = ['rg', 'cpf', 'titulo_eleitor', 'zona_eleitoral', 'secao_eleitoral',
+              'cnh', 'cat_cnh', 'data_primeira_habilitacao']
 
     def get_success_url(self):
         if self.get_object().id == self.request.user.pessoas.documento.id:

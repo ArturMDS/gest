@@ -262,6 +262,7 @@ class Militar(models.Model):
     nome_guerra = models.CharField(max_length=80)
     identidade = models.CharField(max_length=15, null=True, blank=True)
     numero = models.CharField(max_length=8, blank=True, null=True)
+    data_praca = models.DateField(blank=True, null=True)
     subunidade = models.ForeignKey(Subunidade, related_name="mil_su", on_delete=models.PROTECT)
     unidade = models.ForeignKey(Quartel, related_name="mil_om", on_delete=models.PROTECT)
     qualificacao = models.ForeignKey('Qualificacao', related_name="mil_qualif",
