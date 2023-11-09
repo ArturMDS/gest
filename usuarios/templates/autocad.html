@@ -16,7 +16,18 @@
                 </div>
             </div>
         </div>
+        {% if request.user.numero == 8 %}
+        <div class="row column_title">
+            <div class="col-md-12">
+                <div class="page_title">
+                    <a class="btn btn-outline-danger btn-lg text-align-center"
+                       href="{% url 'usuarios:autocaddone' %}"
+                       role="button">Finalizar Cadastro</a>
 
+                </div>
+            </div>
+        </div>
+        {% endif %}
         <!-- row -->
         <div class="row">
             {% if not object.documento.rg %}
@@ -71,6 +82,20 @@
                 </div>
             </div>
             {% endif %}
+            {% if not object.questionario_um.get_queryset %}
+            <div class="col-md-3">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <a href="{% url 'questionarios:create_questionario_um' %}">
+                                <button class="btn btn-outline-secondary btn-lg float-left"
+                                    type="submit"><i class="fa fa-plus-circle"></i> Questionário</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             <!-- table section -->
             <div class="col-md-6">
                 <div class="white_shd full margin_bottom_30">
@@ -121,6 +146,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <a class="btn btn-outline-secondary btn-lg float-center"
+                                           href="{% url 'usuarios:update_autocadpessoa' object.id %}"
+                                           role="button">Alterar dados</a>
                         </div>
                     </div>
                 </div>
@@ -147,19 +175,23 @@
                                         <td>{{ pessoa.documento.cpf }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Título de Eleitor: </td>
-                                        <td>{{ pessoa.documento.titulo_eleitor }}</td>
+                                        <td>Título de Eleitor/Zona/Seção: </td>
+                                        <td>{{ pessoa.documento.titulo_eleitor }}/
+                                            {{ pessoa.documento.zona_eleitoral }}/{{ pessoa.documento.secao_eleitoral }}</td>
                                     </tr>
                                     <tr>
-                                        <td>CNH:</td>
-                                        <td>{{ pessoa.documento.cnh }}</td>
+                                        <td>CNH/Categoria:</td>
+                                        <td>{{ pessoa.documento.cnh }}/{{ pessoa.documento.cat_cnh }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Categoria CNH:</td>
-                                        <td>{{ pessoa.documento.cat_cnh }}</td>
+                                        <td>Data da Primeira Habilitação:</td>
+                                        <td>{{ pessoa.documento.data_primeira_habilitacao }}</td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <a class="btn btn-outline-secondary btn-lg float-center"
+                                           href="{% url 'usuarios:update_autocaddocumento' object.documento.id %}"
+                                           role="button">Alterar dados</a>
                         </div>
                     </div>
                 </div>
@@ -200,6 +232,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <a class="btn btn-outline-secondary btn-lg float-center"
+                                           href="{% url 'usuarios:update_autocadendereco' object.endereco.id %}"
+                                           role="button">Alterar dados</a>
                         </div>
                     </div>
                 </div>
@@ -233,6 +268,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <a class="btn btn-outline-secondary btn-lg float-center"
+                                           href="{% url 'usuarios:update_autocadcontato' object.contato.id %}"
+                                           role="button">Alterar dados</a>
                         </div>
                     </div>
                 </div>
@@ -278,6 +316,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <a class="btn btn-outline-secondary btn-lg float-center"
+                                           href="{% url 'usuarios:update_autocadmilitar' object.militar.id %}"
+                                           role="button">Alterar dados</a>
                         </div>
                     </div>
                 </div>

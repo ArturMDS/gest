@@ -2,22 +2,16 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block titulo %}
-Cadastrar Dados Militares
+{{ user }}
 {% endblock %}
 {% block main %}
 <div class="midde_cont">
     <div class="container-fluid">
         <div class="row column_title">
             <div class="col-md-12">
-                {% if not object %}
                 <div class="page_title">
-                    <h2>Cadastrar Dados Militares</h2>
+                    <h2>Questionário</h2>
                 </div>
-                {% else %}
-                <div class="heading1 margin_0">
-                    <h2>Atualizar dados</h2>
-                </div>
-                {% endif %}
             </div>
         </div>
         <!-- row -->
@@ -26,7 +20,7 @@ Cadastrar Dados Militares
                 <div class="white_shd full margin_bottom_30">
                     <div class="full graph_head">
                         <div class="heading1 margin_0">
-                            <h2>Cadastro</h2>
+                            <h2>Segundo Questionário</h2>
                         </div>
                     </div>
                     <div class="full price_table padding_infor_info">
@@ -35,11 +29,19 @@ Cadastrar Dados Militares
                             <form method="post">
                                 {% csrf_token %}
                                 <fieldset class="form-group">
-                                    <legend class="border-bottom mb-4">Cadastrar Dados Militares</legend>
+                                    <legend class="border-bottom mb-4">
+                                        Caso o senhor seja convocado pelo Exército,
+                                        o cumprimento do serviço militar será obrigatório.
+                                        Antes dos integrantes da Seleção Complementar
+                                        decidirem quem será convocado, eles tentam compatibilizar
+                                        os anseios e habilidades dos conscritos com as necessidades
+                                        de incorporação da Organização Militar.
+                                    </legend>
                                     {{ form|crispy }}
                                 </fieldset>
                                 <a class="btn btn-outline-secondary btn-lg float-left"
-                                   href="{% url 'usuarios:autocad' request.user.pessoas.id %}" role="button">Voltar</a>
+                                           href="{% url 'questionarios:create_questionario_um' %}"
+                                           role="button">Voltar</a>
                                 <button class="btn btn-outline-secondary btn-lg float-right" type="submit">
                                     Cadastrar
                                 </button>

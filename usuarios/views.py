@@ -2,7 +2,7 @@ from django.shortcuts import reverse, redirect
 from django.views.generic import TemplateView, FormView, UpdateView, DetailView, CreateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Usuario
-from .forms import CriarUsuarioForm
+from .forms import CriarUsuarioForm, CriarAutoCadMilitarForm
 from contatos.models import Contato
 from pessoas.models import Pessoa
 from documentos.models import Documento
@@ -16,7 +16,7 @@ class Homepage(LoginRequiredMixin, TemplateView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return super(Homepage, self).dispatch(request, *args, **kwargs)
-        elif request.user.numero <= 5:
+        elif request.user.numero <= 9:
             return redirect('usuarios:novo')
         else:
             return super(Homepage, self).dispatch(request, *args, **kwargs)
@@ -25,7 +25,10 @@ class Homepage(LoginRequiredMixin, TemplateView):
 class Novo(LoginRequiredMixin, CreateView):
     template_name = "novo.html"
     model = Pessoa
-    fields = ['nome_completo', 'data_nasc', 'foto', 'nome_pai', 'nome_mae', 'peso', 'fator_rh', 'tipo_sanguineo']
+    fields = ['nome_completo', 'data_nasc', 'foto',
+              'nome_pai', 'nome_mae', 'peso',
+              'fator_rh', 'tipo_sanguineo', 'altura',
+              'escolaridade', 'religiao']
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous:
@@ -53,7 +56,7 @@ class AutoCad(LoginRequiredMixin, DetailView):
     model = Pessoa
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.numero == 5:
+        if request.user.numero == 9:
             return redirect('usuarios:autocaddone')
         else:
             return super(AutoCad, self).dispatch(request, *args, **kwargs)
@@ -80,7 +83,9 @@ class AutoCadContato(LoginRequiredMixin, CreateView):
 class AutoCadDocumento(LoginRequiredMixin, CreateView):
     template_name = "autocaddocumento.html"
     model = Documento
-    fields = ['rg', 'cpf', 'titulo_eleitor', 'cnh', 'cat_cnh']
+    fields = ['rg', 'cpf', 'titulo_eleitor',
+              'zona_eleitoral', 'secao_eleitoral',
+              'cnh', 'cat_cnh', 'data_primeira_habilitacao']
 
     def form_valid(self, form):
         form.instance.pessoa = self.request.user.pessoas
@@ -114,7 +119,7 @@ class AutoCadEndereco(LoginRequiredMixin, CreateView):
 class AutoCadMilitar(LoginRequiredMixin, CreateView):
     template_name = "autocadmilitar.html"
     model = Militar
-    fields = ['nome_guerra', 'identidade', 'numero', 'subunidade', 'qualificacao', 'posto_grad', 'unidade']
+    form_class = CriarAutoCadMilitarForm
 
     def form_valid(self, form):
         form.instance.pessoa = self.request.user.pessoas
@@ -126,14 +131,20 @@ class AutoCadMilitar(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         militar = Militar.objects.last()
-        atrib = Atributos.objects.create()
-        atrib.militar = militar
+        militar.posto_grad = "Conscrito"
+        atrib = Atributos.objects.create(militar=militar)
         atrib.save()
         return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
 
 
 class AutoCadDone(LoginRequiredMixin, TemplateView):
     template_name = "autocaddone.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        usuario = Usuario.objects.get(id=self.request.user.id)
+        usuario.numero += 1
+        usuario.save()
+        return super(AutoCadDone, self).dispatch(request, *args, **kwargs)
 
 
 class ChangeDone(LoginRequiredMixin, TemplateView):
@@ -215,4 +226,54 @@ class AllUsuario(LoginRequiredMixin, TemplateView):
         context["militares_om"] = militares_om
         context["militares_su"] = militares_su
         return context
+
+
+class UpdateAutoCadPessoa(LoginRequiredMixin, UpdateView):
+    template_name = "novo.html"
+    model = Pessoa
+    fields = ['nome_completo', 'data_nasc', 'foto',
+              'nome_pai', 'nome_mae', 'peso',
+              'fator_rh', 'tipo_sanguineo', 'altura',
+              'escolaridade', 'religiao']
+
+    def get_success_url(self):
+        return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
+
+
+class UpdateAutoCadContato(LoginRequiredMixin, UpdateView):
+    template_name = "autocadcontato.html"
+    model = Contato
+    fields = ['telefone', 'celular']
+
+    def get_success_url(self):
+        return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
+
+
+class UpdateAutoCadEndereco(LoginRequiredMixin, UpdateView):
+    template_name = "autocadendereco.html"
+    model = Endereco
+    fields = ['logadouro', 'complemento', 'bairro', 'cep', 'cidade']
+
+    def get_success_url(self):
+        return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
+
+
+class UpdateAutoCadDocumento(LoginRequiredMixin, UpdateView):
+    template_name = "autocaddocumento.html"
+    model = Documento
+    fields = ['rg', 'cpf', 'titulo_eleitor',
+              'zona_eleitoral', 'secao_eleitoral',
+              'cnh', 'cat_cnh', 'data_primeira_habilitacao']
+
+    def get_success_url(self):
+        return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
+
+
+class UpdateAutoCadMilitar(LoginRequiredMixin, UpdateView):
+    template_name = "autocadmilitar.html"
+    model = Militar
+    form_class = CriarAutoCadMilitarForm
+
+    def get_success_url(self):
+        return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
 

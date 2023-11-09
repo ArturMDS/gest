@@ -21,7 +21,8 @@ LISTA_PG = (
     ("3º Sargento", "3º Sgt"),
     ("Cabo", "Cabo"),
     ("Solcado NB", "Sd NB"),
-    ("Soldado EV", "Sd EV")
+    ("Soldado EV", "Sd EV"),
+    ("Conscrito", "Conscrito")
 )
 
 LISTA_TIPO = (
@@ -263,7 +264,7 @@ class Militar(models.Model):
     identidade = models.CharField(max_length=15, null=True, blank=True)
     numero = models.CharField(max_length=8, blank=True, null=True)
     data_praca = models.DateField(blank=True, null=True)
-    subunidade = models.ForeignKey(Subunidade, related_name="mil_su", on_delete=models.PROTECT)
+    subunidade = models.ForeignKey(Subunidade, related_name="mil_su", on_delete=models.PROTECT, null=True, blank=True)
     unidade = models.ForeignKey(Quartel, related_name="mil_om", on_delete=models.PROTECT)
     qualificacao = models.ForeignKey('Qualificacao', related_name="mil_qualif",
                                      on_delete=models.PROTECT, null=True, blank=True)
@@ -290,6 +291,7 @@ class Atributos(models.Model):
     dedicacao = models.IntegerField(default=100)
     resistencia_fisica = models.IntegerField(default=100)
     conhecimento_tecnico = models.IntegerField(default=100)
+    ranking_inicial = models.IntegerField(default=0)
     militar = models.OneToOneField(Militar, related_name="atributos", on_delete=models.CASCADE)
 
     def __str__(self):

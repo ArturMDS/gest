@@ -2,7 +2,9 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth import views as auth_view
 from .views import Perfilusuario, Criarusuario, Perfil, ChangeDone, Novo, \
     AutoCad, AutoCadDocumento, AutoCadEndereco, AutoCadContato, AutoCadMilitar, AutoCadDone, \
-    GestUsuario, ConfirmUsuario, AllUsuario
+    GestUsuario, ConfirmUsuario, AllUsuario, \
+    UpdateAutoCadPessoa, UpdateAutoCadContato, UpdateAutoCadDocumento, UpdateAutoCadEndereco, \
+    UpdateAutoCadMilitar
 
 app_name = 'usuarios'
 
@@ -25,4 +27,9 @@ urlpatterns = [
     path('gestusuario', GestUsuario.as_view(), name='gestusuario'),
     path('confirmusuario/<int:pk>', ConfirmUsuario.as_view(), name='confirmusuario'),
     path('allusuario', AllUsuario.as_view(), name='allusuario'),
+    path('autocad/update/pessoa/<int:pk>', UpdateAutoCadPessoa.as_view(), name='update_autocadpessoa'),
+    path('autocad/update/contato/<int:pk>', UpdateAutoCadContato.as_view(), name='update_autocadcontato'),
+    path('autocad/update/endereco/<int:pk>', UpdateAutoCadEndereco.as_view(), name='update_autocadendereco'),
+    path('autocad/update/documento/<int:pk>', UpdateAutoCadDocumento.as_view(), name='update_autocaddocumento'),
+    path('autocad/update/militar/<int:pk>', UpdateAutoCadMilitar.as_view(), name='update_autocadmilitar'),
 ]
