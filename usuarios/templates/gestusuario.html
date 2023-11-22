@@ -41,7 +41,7 @@ Gestão de Usuários
                                             <tbody>
                                             {% if request.user.acesso == 'EM' %}
                                                 {% for militar in militares_om %}
-                                                    {% if militar.pessoa.usuario.acesso == 'novo' and militar.pessoa.usuario.numero == 5 %}
+                                                    {% if militar.pessoa.usuario.acesso == 'novo' and militar.pessoa.usuario.numero >= 5 %}
                                                         <tr>
                                                             <td>{{ militar.pessoa.nome_completo }}</td>
                                                             <td>{{ militar.nome_guerra }}</td>
@@ -55,7 +55,7 @@ Gestão de Usuários
                                                 {% endfor %}
                                             {% else %}
                                                 {% for militar in militares_su %}
-                                                    {% if militar.pessoa.usuario.acesso == 'novo' and militar.pessoa.usuario.numero == 5 %}
+                                                    {% if militar.pessoa.usuario.acesso == 'novo' and militar.pessoa.usuario.numero >= 5 %}
                                                         <tr>
                                                             <td>{{ militar.pessoa.nome_completo }}</td>
                                                             <td>{{ militar.nome_guerra }}</td>

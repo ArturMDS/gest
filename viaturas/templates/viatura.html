@@ -43,11 +43,14 @@ Viaturas
                                         <table class="table table-striped projects">
                                             <thead class="thead-dark">
                                             <tr>
-                                                <th style="width: 2%">Nr</th>
+                                                <th style="width: 4%">Odômetro</th>
                                                 <th>Nr Patrimônio</th>
                                                 <th>Marca</th>
                                                 <th>Modelo</th>
                                                 <th>Combustível</th>
+                                                <th>Consumo</th>
+                                                <th>Capacidade Tanque</th>
+                                                <th>Qtde Passageiros</th>
                                                 <th>Situação</th>
                                                 <th>Atualizar</th>
 
@@ -56,14 +59,18 @@ Viaturas
                                             <tbody>
                                             {% for viatura in viaturas %}
                                                 <tr>
-                                                    <td>{{ viatura.id }}</td>
+                                                    <td>{{ viatura.odometro }}</td>
                                                     <td>{{ viatura.patrimonio }}</td>
                                                     <td>{{ viatura.marca }}</td>
                                                     <td>{{ viatura.modelo }}</td>
                                                     <td>{{ viatura.combustivel }}</td>
+                                                    <td>{{ viatura.consumo_plan }}</td>
+                                                    <td>{{ viatura.capacidade_combustivel }}</td>
+                                                    <td>{{ viatura.capacidade_passageiro }}</td>
                                                     <td>{{ viatura.situacao }}</td>
                                                     <td>
-                                                        <a href="{% url 'viaturas:updateviatura' viatura.id %}"><button type="button" class="btn btn-success btn-xs">Atualizar
+                                                        <a href="{% url 'viaturas:updateviatura' viatura.id %}">
+                                                            <button type="button" class="btn btn-success btn-xs">Atualizar
                                                         </button></a>
                                                     </td>
                                                 </tr>
@@ -83,4 +90,3 @@ Viaturas
 </div>
 
 {% endblock %}
-

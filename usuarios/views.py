@@ -8,6 +8,9 @@ from pessoas.models import Pessoa
 from documentos.models import Documento
 from enderecos.models import Endereco
 from militares.models import Militar, Atributos
+from questionarios.models import Questionarioum, \
+    Questionariodois, \
+    Questionariotres
 
 
 class Homepage(LoginRequiredMixin, TemplateView):
@@ -16,10 +19,12 @@ class Homepage(LoginRequiredMixin, TemplateView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return super(Homepage, self).dispatch(request, *args, **kwargs)
-        elif request.user.numero <= 9:
+        elif request.user.numero >= 6 and request.user.acesso != 'novo':
+            return super(Homepage, self).dispatch(request, *args, **kwargs)
+        elif request.user.numero <= 9 and request.user.acesso == 'novo':
             return redirect('usuarios:novo')
         else:
-            return super(Homepage, self).dispatch(request, *args, **kwargs)
+            return redirect('usuarios:autocaddone')
 
 
 class Novo(LoginRequiredMixin, CreateView):
@@ -123,6 +128,7 @@ class AutoCadMilitar(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.pessoa = self.request.user.pessoas
+        form.instance.posto_grad = "Conscrito"
         form.save()
         usuario = Usuario.objects.get(id=self.request.user.id)
         usuario.numero += 1

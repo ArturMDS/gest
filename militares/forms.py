@@ -6,7 +6,7 @@ from subunidades.models import Subunidade
 class CriarMilitarForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(CriarMilitarForm, self).__init__(*args, **kwargs)
-        self.fields['subunidade'].queryset = Subunidade.objects.filter(OM=user.pessoas.militar.subunidade.OM)
+        self.fields['subunidade'].queryset = Subunidade.objects.filter(OM=user.pessoas.militar.unidade)
 
     class Meta:
         model = Militar
@@ -16,7 +16,7 @@ class CriarMilitarForm(ModelForm):
 class CriarObservacaoForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(CriarObservacaoForm, self).__init__(*args, **kwargs)
-        self.fields['arrolado'].queryset = Militar.objects.filter(unidade=user.pessoas.militar.subunidade.OM)
+        self.fields['arrolado'].queryset = Militar.objects.filter(unidade=user.pessoas.militar.unidade)
 
     class Meta:
         model = Observacao
@@ -26,7 +26,7 @@ class CriarObservacaoForm(ModelForm):
 class UpdateObservacaoForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(UpdateObservacaoForm, self).__init__(*args, **kwargs)
-        self.fields['arrolado'].queryset = Militar.objects.filter(unidade=user.pessoas.militar.subunidade.OM)
+        self.fields['arrolado'].queryset = Militar.objects.filter(unidade=user.pessoas.militar.unidade)
 
     class Meta:
         model = Observacao
@@ -36,7 +36,7 @@ class UpdateObservacaoForm(ModelForm):
 class PerfilMilitarForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(PerfilMilitarForm, self).__init__(*args, **kwargs)
-        self.fields['subunidade'].queryset = Subunidade.objects.filter(OM=user.pessoas.militar.subunidade.OM)
+        self.fields['subunidade'].queryset = Subunidade.objects.filter(OM=user.pessoas.militar.unidade)
 
     class Meta:
         model = Militar

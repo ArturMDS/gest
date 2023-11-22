@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block titulo %}
+Armamentos
+{% endblock %}
+{% block main %}
+
+{% include 'sidebar.html' %}
+<div id="content">
+    {% include 'topbar.html' %}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Armamentos</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row column1">
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Armamentos</h2>
+                            </div>
+                        </div>
+                        <div class="full price_table padding_infor_info">
+                            <div class="row">
+                                <!-- column contact -->
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <fieldset class="form-group">
+                                        <legend class="border-bottom mb-4">Atualizar Armamento</legend>
+                                        {{ form|crispy }}
+                                    </fieldset>
+                                    <a class="btn btn-outline-secondary btn-lg float-left"
+                                       href="{% url 'viaturas:armamento' %}" role="button">Voltar</a>
+                                    <button class="btn btn-outline-secondary btn-lg float-right" type="submit">
+                                        Atualizar
+                                    </button>
+                                </form>
+                                <!-- end column contact blog -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+{% endblock %}
+{% block modal %}
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Atenção!</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                     Tem certeza que deseja deletar?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

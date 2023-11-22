@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block titulo %}
+Conscritos
+{% endblock %}
+{% block main %}
+
+{% include 'sidebar.html' %}
+<div id="content">
+    {% include 'topbar.html' %}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Conscritos</h2>
+                    </div>
+
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row column1">
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Gestão de Conscritos</h2>
+                            </div>
+                        </div>
+                        <div class="full price_table padding_infor_info">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive-sm">
+                                        <table class="table table-striped projects">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th style="width: 20%">Nome Completo</th>
+                                                <th style="width: 5%">Pontuação</th>
+                                                <th style="width: 5%">Sugestão</th>
+                                                <th style="width: 10%">Ver Entrevista</th>
+                                                <th style="width: 10%">Realizar Observação</th>
+                                                <th style="width: 10%">Entrevista</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% if request.user.acesso == 'Estado Maior' %}
+                                                {% for conscrito in conscritos %}
+                                                    <tr>
+                                                        <td>{{ conscrito.pessoa.nome_completo }}</td>
+                                                        <td>{{ conscrito.atributos.ranking_inicial }}</td>
+                                                        <td>{{ conscrito.pessoa.relatorio_cs.sugestao }}</td>
+                                                        <td>
+                                                            {% if conscrito.pessoa.questionario_um %}
+                                                            <div class="button_block"><a href="{% url 'questionarios:update_um' conscrito.pessoa.questionario_um.id %}">
+                                                                <button class="btn cur-p btn-dark">Questionário 1</button>
+                                                            </a></div><br>
+                                                            {% endif %}
+                                                            {% if conscrito.pessoa.questionario_dois %}
+                                                            <div class="button_block"><a href="{% url 'questionarios:update_dois' conscrito.pessoa.questionario_dois.id %}">
+                                                                <button class="btn cur-p btn-dark">Questionário 2</button>
+                                                            </a></div><br>
+                                                            {% endif %}
+                                                            {% if conscrito.pessoa.questionario_tres %}
+                                                            <div class="button_block"><a href="{% url 'questionarios:update_tres' conscrito.pessoa.questionario_tres.id %}">
+                                                                <button class="btn cur-p btn-dark">Questionário 3</button>
+                                                            </a></div>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if conscrito.pessoa.relatorio_cs %}
+                                                            <div class="button_block"><a href="{% url 'pessoas:readconscrito' conscrito.pessoa.relatorio_cs.id %}">
+                                                                <button class="btn cur-p btn-dark">Obs</button>
+                                                            </a></div>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <div class="button_block"><a href="{% url 'pessoas:formulario' conscrito.pessoa.id %}">
+                                                                <button class="btn cur-p btn-dark">Baixar</button>
+                                                            </a></div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+{% endblock %}

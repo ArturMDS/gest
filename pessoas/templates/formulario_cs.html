@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #cabecalho {
+            text-align: center;
+            border: 1px solid #000;
+            font-weight: bold;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            padding: 5px, 5px, 0px, 5px;
+            bottom: 0px;
+        }
+
+        #formulario {
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #formulario1 {
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #formulario2 {
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        #assinatura {
+            text-align: center;
+            font-family: "Times New Roman";
+            font-size: 13px;
+            padding: 5px, 5px, 0px, 5px;
+        }
+
+        table, th, td {
+            border:1px solid #000;
+        }
+
+        #QuebraAqui {page-break-before: always}
+
+    </style>
+</head>
+<body>
+    <div id="cabecalho">
+        <p><img src="C:\Users\Meu Computador\PycharmProjects\Djangprojects\Gest\static\images\brasao.png"><br>
+            MINISTÉRIO DA DEFESA<br>
+            EXÉRCITO BRASILEIRO<br>
+            {{pessoa.militar.unidade.nome.upper}}<br>
+            {{pessoa.militar.unidade.nome_historico.upper}}<br><br>
+            FORMULÁRIO DA COMISSÃO DE SELEÇÃO</p>
+    </div>
+    <div id="formulario">
+        <table style="width:100%">
+            <tr><th style="width:100%">Questionário do Sr. {{ pessoa.nome_completo }}</th></tr>
+        </table>
+        <table style="width:100%">
+            <tr><td style="width:100%">1) Atualmente, com quem o senhor reside?<br>
+            {{ pessoa.questionario_um.pergunta_um }}<br><br>
+            2) Durante sua infância ou adolescência, o senhor foi criado junto,
+                perto ou longe dos seus pais?<br>
+            {{ pessoa.questionario_um.pergunta_dois }}<br><br>
+            3) Caso convocado para cumprir o serviço militar obrigatório, do local onde reside
+                atualmente, quanto tempo o senhor demora para chegar neste quartel?<br>
+            {{ pessoa.questionario_um.pergunta_tres }}<br><br>
+            4) O senhor possui quantos irmãos e irmãs no total? (sem contar o senhor)<br>
+            {{ pessoa.questionario_um.pergunta_quatro }}<br><br>
+            5) O senhor já tem filho(s)? (O senhor é pai?)<br>
+            {{ pessoa.questionario_um.pergunta_cinco }}<br><br>
+            6) O senhor já apresentou problemas na coluna, joelho ou tornozelo?<br>
+            {{ pessoa.questionario_um.pergunta_seis }}<br><br>
+            7) O senhor já trabalhou ou trabalha atualmente?<br>
+            {{ pessoa.questionario_um.pergunta_sete }}<br><br>
+            8) Qual é o nome da Empresa?<br>
+            {{ pessoa.questionario_um.pergunta_oito }}<br><br>
+            9) Qual era a sua função?<br>
+            {{ pessoa.questionario_um.pergunta_nove }}<br><br>
+            10) Endereço e/ou Telefone da Empresa?<br>
+            {{ pessoa.questionario_um.pergunta_dez }}<br><br>
+            11) O senhor é voluntário para servir?<br>
+            {{ pessoa.questionario_dois.pergunta_um }}<br><br>
+            12) O senhor tem namorada?<br>
+            {{ pessoa.questionario_dois.pergunta_dois }}<br><br>
+        </table>
+    </div>
+    <div id="formulario1">
+        <table style="width:100%">
+            <tr><td style="width:100%">
+            13) O senhor usa brinco? Possui piercing no corpo?<br>
+            {{ pessoa.questionario_dois.pergunta_tres }}<br><br>
+            14) O senhor apresenta ou já apresentou episódios de depressão,
+                intenção suicida ou transtornos psicológicos?<br>
+            {{ pessoa.questionario_dois.pergunta_quatro }}<br><br>
+            15) O senhor pratica algum esporte?<br>
+            {{ pessoa.questionario_dois.pergunta_cinco }}<br><br>
+            16) Que tipo de esporte o senhor pratica?<br>
+            {{ pessoa.questionario_dois.pergunta_seis }}<br><br>
+            17) O senhor tem tatuagem pelo corpo?<br>
+            {{ pessoa.questionario_dois.pergunta_sete }}<br><br>
+            18) O senhor costuma sair à noite?<br>
+            {{ pessoa.questionario_dois.pergunta_oito }}<br><br>
+            19) Que locais o senhor costuma frequentar?<br>
+            {{ pessoa.questionario_dois.pergunta_nove }}<br><br>
+            20) O senhor possui alguma alteração corporal (body mod)?<br>
+            {{ pessoa.questionario_dois.pergunta_dez }}<br><br>
+            21) Ao longo do último ano, quantos livros o senhor leu?<br>
+            {{ pessoa.questionario_dois.pergunta_onze }}<br><br>
+            22) O senhor participa de algum grupo, sociedade, torcida ou agremiação?<br>
+            {{ pessoa.questionario_dois.pergunta_doze }}<br><br>
+            23) O senhor toca algum instrumento?<br>
+            {{ pessoa.questionario_dois.pergunta_treze }}<br><br>
+            24) O senhor já experimentou bebida alcoólica?<br>
+            {{ pessoa.questionario_dois.pergunta_quatorze }}<br><br>
+            25) O senhor senhor fuma algum tipo de cigarro?<br>
+            {{ pessoa.questionario_dois.pergunta_quinze }}<br><br>
+            26) O senhor já usou arma de fogo (revólver, pistola, fuzil, etc)?<br>
+            {{ pessoa.questionario_dois.pergunta_dezesseis }}<br><br>
+            27) O senhor já ficou embriagado?<br>
+            {{ pessoa.questionario_dois.pergunta_dezessete }}<br><br>
+            28) O senhor já experimentou algum tipo de droga (maconha, cocaína, etc)?<br>
+            {{ pessoa.questionario_dois.pergunta_dezoito }}<br><br>
+            29) O senhor possui quantos amigos que consomem bebida alcoólica?<br>
+            {{ pessoa.questionario_dois.pergunta_dezenove }}<br><br>
+        </table>
+    </div>
+    <div id="formulario2">
+        <table style="width:100%">
+            <tr><td style="width:100%">
+            30) O senhor já se envolveu em briga?<br>
+            {{ pessoa.questionario_dois.pergunta_vinte }}<br><br>
+            31) O senhor possui algum amigo que tenha arma de fogo?<br>
+            {{ pessoa.questionario_dois.pergunta_vinteum }}<br><br>
+            32) O senhor já teve que comparecer em uma delegacia como vítima de algum crime?<br>
+            {{ pessoa.questionario_dois.pergunta_vintedois }}<br><br>
+            33) O senhor possui algum amigo que consuma drogas (maconha, cocaína, etc)? Quantos?<br>
+            {{ pessoa.questionario_dois.pergunta_vintetres }}<br><br>
+            34) O senhor já teve que comparecer em uma delegacia por estar sendo acusado de algum crime?<br>
+            {{ pessoa.questionario_dois.pergunta_vintequatro }}<br><br>
+            35) O senhor possui algum amigo de etnia diferente da sua?<br>
+            {{ pessoa.questionario_dois.pergunta_vintecinco }}<br><br>
+            36) O senhor seria capaz de fazer amizade com uma pessoa com etnia diferente da sua?<br>
+            {{ pessoa.questionario_dois.pergunta_vinteseis }}<br><br>
+            37) O senhor julga que tenha algum motivo que o possa atrapalhar, ou impedir, de servir?<br>
+            {{ pessoa.questionario_dois.pergunta_vintesete }}<br><br>
+            38) Caso incorporado, o senhor pretende morar no quartel?<br>
+            {{ pessoa.questionario_tres.pergunta_um }}<br><br>
+            39) O senhor sabe falar algum outro idioma, além do português?<br>
+            {{ pessoa.questionario_tres.pergunta_dois }}<br><br>
+            40) Caso incorporado, quais são as expectativas do senhor para o serviço militar?<br>
+            {{ pessoa.questionario_tres.pergunta_tres }}<br><br>
+            41) O senhor possui algum parente que seja militar?<br>
+            {{ pessoa.questionario_tres.pergunta_quatro }}<br><br>
+            42) O senhor possui alguma habilidade profissional, curso técnico ou área de interesse?<br>
+            {{ pessoa.questionario_tres.pergunta_cinco }}<br><br>
+            43) Que habilidades profissionais (ou área de interesse) o senhor julga possuir?<br>
+            {{ pessoa.questionario_tres.pergunta_seis }}<br><br>
+            <p id="assintura">{{ pessoa.militar.unidade.cidade }}-{{ pessoa.militar.unidade.estado }},
+            {{ hoje.day }}/{{ hoje.month }}/{{ hoje.year }}.<br><br><br>
+            _________________________________________<br>
+            {{ pessoa.nome_completo }}<br>
+            Entrevistado<br><br><br>
+            _________________________________________<br>
+            {{ pessoa.relatorio_cs.entrevistador.pessoa.nome_completo }} -
+            {{ pessoa.relatorio_cs.entrevistador.posto_grad }}<br>
+            Entrevistador</p></td></tr>
+        </table>
+    </div>
+</body>
+</html>

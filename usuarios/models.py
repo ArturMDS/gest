@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from quarteis.models import Quartel
 
 """class Operacao(models.Model):
     nome = models.CharField(max_length=100)

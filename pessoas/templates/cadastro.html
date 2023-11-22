@@ -40,7 +40,7 @@ Pessoal
                             <div class="row">
                                 <!-- column contact -->
                                 {% for militar in militares %}
-                                    {% if militar.pessoa.situacao == 'Ativo' %}
+                                    {% if militar.pessoa.situacao == 'Ativo' and militar.posto_grad != 'Conscrito' %}
                                         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 profile_details margin_bottom_30">
                                             <div class="contact_blog">
                                                 <h4 class="brief">{{ militar.qualificacao }}</h4>

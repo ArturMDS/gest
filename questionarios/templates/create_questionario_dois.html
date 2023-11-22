@@ -5,54 +5,74 @@
 {{ user }}
 {% endblock %}
 {% block main %}
-<div class="midde_cont">
-    <div class="container-fluid">
-        <div class="row column_title">
-            <div class="col-md-12">
-                <div class="page_title">
-                    <h2>Questionário</h2>
+    {% if self.request.usuario.acesso == 'Estado Maior' %}
+        {% include 'sidebar.html' %}
+        <div id="content">
+        {% include 'topbar.html' %}
+    {% endif %}
+            <div class="midde_cont">
+                <div class="container-fluid">
+                    <div class="row column_title">
+                        <div class="col-md-12">
+                            <div class="page_title">
+                                <h2>Questionário</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                    <div class="row column1">
+                        <div class="col-md-12">
+                            <div class="white_shd full margin_bottom_30">
+                                <div class="full graph_head">
+                                    <div class="heading1 margin_0">
+                                        <h2>Segundo Questionário</h2>
+                                    </div>
+                                </div>
+                                <div class="full price_table padding_infor_info">
+                                    <div class="row">
+                                        <!-- column contact -->
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <fieldset class="form-group">
+                                                <legend class="border-bottom mb-4">
+                                                    Caso o senhor seja convocado pelo Exército,
+                                                    o cumprimento do serviço militar será obrigatório.
+                                                    Antes dos integrantes da Seleção Complementar
+                                                    decidirem quem será convocado, eles tentam compatibilizar
+                                                    os anseios e habilidades dos conscritos com as necessidades
+                                                    de incorporação da Organização Militar.
+                                                </legend>
+                                                {{ form|crispy }}
+                                            </fieldset>
+                                            {% if not object %}
+                                                <a class="btn btn-outline-secondary btn-lg float-left"
+                                                           href="{% url 'questionarios:create_questionario_um' %}"
+                                                           role="button">Voltar</a>
+                                            {% else %}
+                                                <a class="btn btn-outline-secondary btn-lg float-left"
+                                                           href="{% url 'usuarios:autocad' object.pessoa.id %}"
+                                                           role="button">Voltar</a>
+                                            {% endif %}
+                                            {% if not object %}
+                                                <button class="btn btn-outline-secondary btn-lg float-right" type="submit">
+                                                    Cadastrar
+                                                </button>
+                                            {% else %}
+                                                <button class="btn btn-outline-secondary btn-lg float-right" type="submit">
+                                                    Atualizar
+                                                </button>
+                                            {% endif %}
+                                        </form>
+                                        <!-- end column contact blog -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+                {% include 'footer.html' %}
                 </div>
             </div>
         </div>
-        <!-- row -->
-        <div class="row column1">
-            <div class="col-md-12">
-                <div class="white_shd full margin_bottom_30">
-                    <div class="full graph_head">
-                        <div class="heading1 margin_0">
-                            <h2>Segundo Questionário</h2>
-                        </div>
-                    </div>
-                    <div class="full price_table padding_infor_info">
-                        <div class="row">
-                            <!-- column contact -->
-                            <form method="post">
-                                {% csrf_token %}
-                                <fieldset class="form-group">
-                                    <legend class="border-bottom mb-4">
-                                        Caso o senhor seja convocado pelo Exército,
-                                        o cumprimento do serviço militar será obrigatório.
-                                        Antes dos integrantes da Seleção Complementar
-                                        decidirem quem será convocado, eles tentam compatibilizar
-                                        os anseios e habilidades dos conscritos com as necessidades
-                                        de incorporação da Organização Militar.
-                                    </legend>
-                                    {{ form|crispy }}
-                                </fieldset>
-                                <a class="btn btn-outline-secondary btn-lg float-left"
-                                           href="{% url 'questionarios:create_questionario_um' %}"
-                                           role="button">Voltar</a>
-                                <button class="btn btn-outline-secondary btn-lg float-right" type="submit">
-                                    Cadastrar
-                                </button>
-                            </form>
-                            <!-- end column contact blog -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end row -->
-        </div>
-    {% include 'footer.html' %}
-</div>
+
 {% endblock %}

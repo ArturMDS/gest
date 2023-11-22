@@ -1,4 +1,4 @@
-from django.shortcuts import reverse, redirect
+from django.shortcuts import reverse
 from django.views.generic import ListView, \
     CreateView, \
     DetailView, \
@@ -26,7 +26,7 @@ class Fatosobservados(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(Fatosobservados, self).get_context_data(**kwargs)
         if self.request.user.acesso == 'Estado Maior':
-            om_logada = self.request.user.pessoas.militar.subunidade.OM
+            om_logada = self.request.user.pessoas.militar.unidade
             militares = Militar.objects.filter(unidade=om_logada).order_by("-posto_grad")
             context["militares"] = militares
             return context
@@ -407,7 +407,7 @@ class Perfilmilitar(LoginRequiredMixin, UpdateView):
             return reverse('pessoas:cadastropessoa', kwargs={"pk": self.get_object().pessoas.pk})
 
 
-# TODO: template e url
+# TODO: mapa da força
 class Verdestino(LoginRequiredMixin, ListView):
     template_name = "destino.html"
     model = Militar
@@ -436,7 +436,6 @@ class Verdestino(LoginRequiredMixin, ListView):
         return context
 
 
-# TODO: template, url
 class Criardestino(LoginRequiredMixin, CreateView):
     template_name = "criardestino.html"
     model = Destino
@@ -464,7 +463,6 @@ class Criardestino(LoginRequiredMixin, CreateView):
         return reverse('militares:destino')
 
 
-# TODO: template, url
 class Updatedestino(LoginRequiredMixin, UpdateView):
     template_name = "updatedestino.html"
     model = Destino

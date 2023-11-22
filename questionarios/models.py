@@ -1,5 +1,13 @@
 from django.db import models
 from pessoas.models import Pessoa
+from militares.models import Militar
+
+LISTA_SUGESTAO = (
+    ("Sem Sugestão", "Sem Sugestão"),
+    ("Não deve Servir", "Não deve Servir"),
+    ("Pode Servir", "Pode Servir"),
+    ("Deve Servir", "Deve Servir")
+)
 
 
 class Questionarioum(models.Model):
@@ -13,7 +21,14 @@ class Questionarioum(models.Model):
     pergunta_oito = models.CharField(max_length=100, null=True, blank=True)
     pergunta_nove = models.CharField(max_length=100, null=True, blank=True)
     pergunta_dez = models.CharField(max_length=200, null=True, blank=True)
-    pessoa = models.ForeignKey(Pessoa, related_name="questionario_um", on_delete=models.PROTECT)
+    pontos = models.IntegerField(default=0)
+    obs = models.TextField(default="")
+    parcial = models.CharField(
+        max_length=50,
+        choices=LISTA_SUGESTAO,
+        default="Sem Sugestão"
+    )
+    pessoa = models.OneToOneField(Pessoa, related_name="questionario_um", on_delete=models.PROTECT)
 
     def __str__(self):
         return self.pessoa.nome_completo
@@ -47,7 +62,14 @@ class Questionariodois(models.Model):
     pergunta_vintecinco = models.CharField(max_length=3)
     pergunta_vinteseis = models.CharField(max_length=3)
     pergunta_vintesete = models.CharField(max_length=3)
-    pessoa = models.ForeignKey(Pessoa, related_name="questionario_dois", on_delete=models.PROTECT)
+    pontos = models.IntegerField(default=0)
+    obs = models.TextField(default="")
+    parcial = models.CharField(
+        max_length=50,
+        choices=LISTA_SUGESTAO,
+        default="Sem Sugestão"
+    )
+    pessoa = models.OneToOneField(Pessoa, related_name="questionario_dois", on_delete=models.PROTECT)
 
     def __str__(self):
         return self.pessoa.nome_completo
@@ -60,7 +82,32 @@ class Questionariotres(models.Model):
     pergunta_quatro = models.CharField(max_length=3)
     pergunta_cinco = models.CharField(max_length=3)
     pergunta_seis = models.CharField(max_length=300)
-    pessoa = models.ForeignKey(Pessoa, related_name="questionario_tres", on_delete=models.PROTECT)
+    pontos = models.IntegerField(default=0)
+    obs = models.TextField(default="")
+    parcial = models.CharField(
+        max_length=50,
+        choices=LISTA_SUGESTAO,
+        default="Sem Sugestão"
+    )
+    pessoa = models.OneToOneField(Pessoa, related_name="questionario_tres", on_delete=models.PROTECT)
 
     def __str__(self):
         return self.pessoa.nome_completo
+
+
+class RelatorioCS(models.Model):
+    obs_questionario = models.TextField("Observações dos Questinários",
+                                        default="Perguntas a serem feitas ao entrevistado:")
+    obs_entrevistador = models.TextField("Observações do Entrevistador", null=True, blank=True)
+    sugestao = models.CharField(
+        max_length=50,
+        choices=LISTA_SUGESTAO,
+        default="Sem Sugestão"
+    )
+    pessoa = models.OneToOneField(Pessoa, related_name="relatorio_cs", on_delete=models.PROTECT)
+    entrevistador = models.ForeignKey(Militar, related_name="entrevistador",
+                                      on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return self.pessoa.nome_completo
+

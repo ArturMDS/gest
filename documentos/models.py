@@ -9,7 +9,7 @@ class Documento(models.Model):
     zona_eleitoral = models.CharField(max_length=10, default=0000)
     secao_eleitoral = models.CharField(max_length=10, default=0000)
     cnh = models.CharField(max_length=20, null=True, blank=True)
-    cat_cnh = models.CharField("Categoria da CNH", max_length=1, null=True, blank=True)
+    cat_cnh = models.CharField("Categoria da CNH", max_length=2, null=True, blank=True)
     data_primeira_habilitacao = models.DateField("Primeira Habilitação", null=True, blank=True)
     pessoa = models.OneToOneField(Pessoa, related_name="documento", on_delete=models.CASCADE)
 

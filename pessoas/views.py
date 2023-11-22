@@ -2,7 +2,11 @@ from django.shortcuts import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from .models import Pessoa
+from militares.views import Render
 from militares.models import Militar
+from questionarios.models import RelatorioCS
+from datetime import datetime, date
+from math import ceil
 
 
 class Cadastro(LoginRequiredMixin, ListView):
@@ -12,8 +16,8 @@ class Cadastro(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(Cadastro, self).get_context_data(**kwargs)
         if self.request.user.acesso == 'Estado Maior':
-            om_logada = self.request.user.pessoas.militar.subunidade.OM
-            militares = Militar.objects.filter(unidade=om_logada)
+            om_logada = self.request.user.pessoas.militar.unidade
+            militares = Militar.objects.filter(unidade=om_logada).order_by("-posto_grad")
             context["militares"] = militares
             return context
         else:
@@ -69,3 +73,64 @@ class Perfilpessoa(LoginRequiredMixin, UpdateView):
             return reverse('usuarios:perfil', kwargs={"pk": self.request.user.pessoas.pk})
         else:
             return reverse('pessoas:cadastropessoa', kwargs={"pk": self.get_object().pk})
+
+
+class ListConscrito(LoginRequiredMixin, ListView):
+    template_name = "list_conscrito.html"
+    model = Pessoa
+
+    def get_context_data(self, **kwargs):
+        context = super(ListConscrito, self).get_context_data(**kwargs)
+        if self.request.user.acesso == 'Estado Maior':
+            om_logada = self.request.user.pessoas.militar.unidade
+            c = Militar.objects.filter(unidade=om_logada, posto_grad='Conscrito')
+            conscritos = c.order_by('-atributos__ranking_inicial')
+            context["conscritos"] = conscritos
+            return context
+        elif self.request.user.acesso == 'Sargenteante' or self.request.user.acesso == 'Comandante':
+            su_logada = self.request.user.pessoas.militar.subunidade
+            c = Militar.objects.filter(subunidade=su_logada, posto_grad='Conscrito')
+            conscritos = c.order_by('-atributos__ranking_inicial')
+            context["conscritos"] = conscritos
+            return context
+
+
+# TODO: falta o PDF da entrevista.
+class ReadConscrito(LoginRequiredMixin, UpdateView):
+    template_name = 'read_conscrito.html'
+    model = RelatorioCS
+    fields = ['obs_entrevistador']
+
+    def form_valid(self, form):
+        militar = Militar.objects.get(id=self.request.user.pessoas.militar.id)
+        relatorio = form.save(commit=False)
+        relatorio.entrevistador = militar
+        relatorio.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(ReadConscrito, self).get_context_data(**kwargs)
+        pessoa = Pessoa.objects.get(id=self.object.pessoa.id)
+        ri = pessoa.militar.atributos.ranking_inicial
+        numero = ceil(ri/3)
+        context["numero"] = numero
+        return context
+
+    def get_success_url(self):
+        return reverse('pessoas:listconscrito')
+
+
+class Formulario(DetailView):
+    template_name = "formulario_cs.html"
+    model = Pessoa
+
+    def get(self, request, *args, **kwargs):
+        pessoa = Pessoa.objects.get(id=self.kwargs['pk'])
+        hoje = datetime.now()
+        params = {
+            'pessoa': pessoa,
+            'hoje': hoje,
+            'request': request,
+        }
+        return Render.render('formulario_cs.html', params, f'formulario_{pessoa.id}')
+

@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import Cadastro, Cadastropessoa, Criarpessoa, Delete, Perfilpessoa
+from .views import Cadastro, \
+    Cadastropessoa, \
+    Criarpessoa, \
+    Delete, \
+    Perfilpessoa, \
+    ListConscrito, \
+    ReadConscrito, \
+    Formulario
 
 app_name = 'pessoas'
 
@@ -9,4 +16,7 @@ urlpatterns = [
     path('cadastro/novo', Criarpessoa.as_view(), name='criarpessoa'),
     path('cadastro/delete/<int:pk>', Delete.as_view(), name='delete'),
     path('perfil/<int:pk>', Perfilpessoa.as_view(), name='perfilpessoa'),
+    path('cadastro/listconscrito', ListConscrito.as_view(), name='listconscrito'),
+    path('cadastro/readconscrito/<int:pk>', ReadConscrito.as_view(), name='readconscrito'),
+    path('cadastro/formulario/<int:pk>', Formulario.as_view(), name='formulario'),
 ]

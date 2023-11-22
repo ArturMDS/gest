@@ -3,7 +3,7 @@
         <div class="sidebar_blog_1">
             <div class="sidebar-header">
                 <div class="logo_section">
-                    <a href="#"><img class="logo_icon img-responsive" src="{% static 'images/gac.png' %}" alt="#" /></a>
+                    <a href="#"><img class="logo_icon img-responsive" src="{{ user.pessoas.militar.unidade.logo.url }}" alt="#" /></a>
                 </div>
             </div>
             <div class="sidebar_user_info">
@@ -31,24 +31,30 @@
             <h4>Conteúdo Geral</h4>
             <ul class="list-unstyled components">
                 <li>
-                    <a href="#usuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-users green_color"></i> <span>Usuários</span></a>
+                    <a href="#usuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-users green_color"></i> <span>Usuários</span></a>
                     <ul class="collapse list-unstyled" id="usuarios">
                         <li><a href="{% url 'usuarios:gestusuario' %}">> <span>Novos Usuários</span></a></li>
                         <li><a href="{% url 'usuarios:allusuario' %}">> <span>Todos Usuários</span></a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#pessoal" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-tags yellow_color"></i> <span>Pessoal</span></a>
+                    <a href="#pessoal" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-tags yellow_color"></i> <span>Pessoal</span></a>
                     <ul class="collapse list-unstyled" id="pessoal">
                         <li><a href="{% url 'pessoas:cadastro' %}">> <span>Cadastro</span></a></li>
                         <li><a href="{% url 'militares:fatosobservados' %}">> <span>Fatos Observados</span></a></li>
                         <li><a href="{% url 'militares:destino' %}">> <span>Destinos</span></a></li>
+                        <li><a href="{% url 'pessoas:listconscrito' %}">> <span>Comissão de Seleção</span></a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#logistica" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-gears red_color"></i> <span>Logística</span></a>
+                    <a href="#logistica" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-gears red_color"></i> <span>Logística</span></a>
                     <ul class="collapse list-unstyled" id="logistica">
-                        <li><a href="{% url 'viaturas:viatura' %}"> <span>Viaturas</span></a></li>
+                        <li><a href="{% url 'viaturas:viatura' %}">> <span>Viaturas</span></a></li>
+                        <li><a href="{% url 'viaturas:armamento' %}">> <span>Armamentos</span></a></li>
+                        <li><a href="{% url 'viaturas:municao' %}">> <span>Munições</span></a></li>
                     </ul>
                 </li>
             </ul>

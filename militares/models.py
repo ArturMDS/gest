@@ -3,6 +3,8 @@ from django.utils import timezone
 from pessoas.models import Pessoa
 from subunidades.models import Subunidade
 from quarteis.models import Quartel
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 LISTA_PG = (
     ("General de Exército", "Gen Ex"),
@@ -337,3 +339,4 @@ class Destino(models.Model):
 
     def __str__(self):
         return str(self.militar) + " - " + str(self.check_in)
+
