@@ -46,8 +46,28 @@ LISTA_MUN = (
     ("Outros", "Outros")
 )
 
+LISTA_VTR = (
+    ("Vtr 3/4 Ton", "Vtr 3/4 Ton"),
+    ("Vtr 5 Ton", "Vtr 5 Ton"),
+    ("Vtr 7 Ton", "Vtr 7 Ton"),
+    ("Vtr Bld", "Vtr Bld"),
+    ("Ambulância", "Ambulância"),
+    ("Vtr Adm", "Vtr Adm"),
+    ("Reboque Cistena", "Reboque Cistena"),
+    ("Vtr Cisterna", "Vtr Cisterna"),
+    ("Ônibus", "Ônibus"),
+    ("Cozinha de Campanha", "Cozinha de Campanha"),
+    ("Vtr Basculante", "Vtr Basculante"),
+    ("Outros", "Outros")
+)
+
 
 class Viatura(models.Model):
+    classificacao = models.CharField(
+        max_length=50,
+        choices=LISTA_VTR,
+        default="Outros",
+    )
     marca = models.CharField(max_length=50)
     modelo = models.CharField(max_length=50, blank=True, null=True)
     placa = models.CharField(max_length=50, blank=True, null=True)
@@ -109,6 +129,7 @@ class Municao(models.Model):
     )
     tipo = models.CharField(max_length=100)
     lote = models.CharField(max_length=20)
+    quantidade = models.IntegerField(default=0)
     codigo_virola = models.CharField(max_length=20)
     vencimento = models.DateField(blank=True, null=True)
     unidade = models.ForeignKey(Quartel, related_name="municao", on_delete=models.PROTECT)
