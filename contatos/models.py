@@ -5,7 +5,7 @@ from pessoas.models import Pessoa
 class Contato(models.Model):
     email = models.EmailField(max_length=100)
     telefone = models.CharField(max_length=20, null=True, blank=True, help_text='Telefone Residencial')
-    celular = models.CharField(max_length=20)
+    celular = models.CharField(max_length=100)
     pessoa = models.OneToOneField(Pessoa, related_name="contato", on_delete=models.CASCADE)
 
     def __str__(self):
