@@ -39,3 +39,4 @@ class Perfilcontato(LoginRequiredMixin, UpdateView):
             return reverse('usuarios:perfil', kwargs={"pk": self.request.user.pessoas.pk})
         else:
             return reverse('pessoas:cadastropessoa', kwargs={"pk": self.get_object().pessoas.pk})
+

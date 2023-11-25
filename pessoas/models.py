@@ -38,7 +38,7 @@ class Pessoa(models.Model):
     data_nasc = models.DateField()
     foto = models.ImageField(upload_to='fotos', blank=True, null=True)
     nome_pai = models.CharField(max_length=250, blank=True, null=True)
-    nome_mae = models.CharField(max_length=250)
+    nome_mae = models.CharField(max_length=250, blank=True, null=True)
     tipo_sanguineo = models.CharField(
         "Tipo Sanguíneo",
         max_length=2,

@@ -15,6 +15,7 @@ class Quartel(models.Model):
     nome_historico = models.CharField(max_length=70, help_text='Nome por Extenso', null=True, blank=True)
     cidade = models.CharField(max_length=70, help_text='Cidade da OM', null=True, blank=True)
     estado = models.CharField(max_length=2, help_text='Sigla do Estado da OM', null=True, blank=True)
+    dados = models.FileField(upload_to="uploads/", null=True, blank=True)
     cmt = models.OneToOneField(Usuario, related_name="quartel_cmt", on_delete=models.PROTECT, null=True, blank=True)
     s1 = models.OneToOneField(Usuario, related_name="quartel_s1", on_delete=models.PROTECT, null=True, blank=True)
     s2 = models.OneToOneField(Usuario, related_name="quartel_s2", on_delete=models.PROTECT, null=True, blank=True)

@@ -5,7 +5,7 @@ from .models import Pessoa
 from militares.views import Render
 from militares.models import Militar
 from questionarios.models import RelatorioCS
-from datetime import datetime, date
+from datetime import datetime
 from math import ceil
 
 

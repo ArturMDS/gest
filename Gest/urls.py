@@ -16,6 +16,7 @@ urlpatterns = [
     path('enderecos/', include('enderecos.urls', namespace='enderecos')),
     path('viaturas/', include('viaturas.urls', namespace='viaturas')),
     path('questionarios/', include('questionarios.urls', namespace='questionarios')),
+    path('quarteis/', include('quarteis.urls', namespace='quarteis')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
