@@ -182,6 +182,7 @@ class Criarusuario(FormView):
         for contato in contatos:
             if contato.email == form.instance.email:
                 form.instance.acesso = 'básico'
+                form.instance.numero = 7
                 form.save()
                 contato.pessoa.usuario = Usuario.objects.last()
                 contato.pessoa.save()

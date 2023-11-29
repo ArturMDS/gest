@@ -24,7 +24,7 @@ def create_dados(request):
     Pessoa.objects.bulk_create(list_pessoas)
     for dado in d_records:
         pessoa = Pessoa.objects.get(nome_completo=dado['NOME'])
-        c = Contato(email=dado['EMAIL_PESSOAL'], celular=dado['FONE_CELULAR'],
+        c = Contato(email=dado['EMAIL_PESSOAL'].strip(), celular=dado['FONE_CELULAR'],
                     telefone=dado['FONE_RESIDENCIAL'], pessoa=pessoa)
         e = Endereco(logadouro=dado['Logadouro'], complemento=dado['Complemento'],
                      bairro=dado['Bairros'], cep=dado['CEP'],
@@ -34,7 +34,7 @@ def create_dados(request):
                       cnh=dado['Nr CNH'], cat_cnh=dado['CNH_CAT'], pessoa=pessoa)
         m = Militar(nome_guerra=dado['NOME_GUERRA'], identidade=dado['IDENTIDADE'],
                     data_praca=dado['DT_PRACA'], unidade=quartel, pessoa=pessoa,
-                    posto_grad=dado['PGRAD'])
+                    posto_grad=dado['PGRAD'].strip())
         list_contatos.append(c)
         list_enderecos.append(e)
         list_documentos.append(d)
