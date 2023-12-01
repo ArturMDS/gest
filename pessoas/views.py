@@ -27,6 +27,25 @@ class Cadastro(LoginRequiredMixin, ListView):
             return context
 
 
+class Pesquisacadastro(LoginRequiredMixin, ListView):
+    template_name = "pesquisacadastro.html"
+    model = Militar
+
+    def get_queryset(self):
+        pesquisa = self.request.GET.get("query")
+        if pesquisa:
+            if self.request.user.acesso == 'Estado Maior':
+                om_logada = self.request.user.pessoas.militar.unidade
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, unidade=om_logada)
+                return object_list
+            else:
+                su_logada = self.request.user.pessoas.militar.subunidade
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, subunidade=su_logada)
+                return object_list
+        else:
+            return None
+
+
 class Cadastropessoa(LoginRequiredMixin, DetailView):
     template_name = "cadastropessoa.html"
     model = Pessoa

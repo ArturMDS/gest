@@ -6,12 +6,14 @@ from .views import Cadastro, \
     Perfilpessoa, \
     ListConscrito, \
     ReadConscrito, \
-    Formulario
+    Formulario, \
+    Pesquisacadastro
 
 app_name = 'pessoas'
 
 urlpatterns = [
     path('cadastro', Cadastro.as_view(), name='cadastro'),
+    path('cadastro/pesquisa', Pesquisacadastro.as_view(), name='pesquisacadastro'),
     path('cadastro/<int:pk>', Cadastropessoa.as_view(), name='cadastropessoa'),
     path('cadastro/novo', Criarpessoa.as_view(), name='criarpessoa'),
     path('cadastro/delete/<int:pk>', Delete.as_view(), name='delete'),

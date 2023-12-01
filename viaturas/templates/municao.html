@@ -48,6 +48,7 @@ Munição
                                                 <th>Lote</th>
                                                 <th>Vencimento</th>
                                                 <th>Código Virola</th>
+                                                <th>Quantidade</th>
                                                 <th>Atualizar</th>
                                             </tr>
                                             </thead>
@@ -59,6 +60,7 @@ Munição
                                                     <td>{{ municao.lote }}</td>
                                                     <td>{{ municao.vencimento }}</td>
                                                     <td>{{ municao.codigo_virola }}</td>
+                                                    <td>{{ municao.quantidade }}</td>
                                                     <td>
                                                         <a href="{% url 'viaturas:updatemunicao' municao.id %}">
                                                             <button type="button" class="btn btn-success btn-xs">Atualizar

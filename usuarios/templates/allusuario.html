@@ -41,19 +41,23 @@ Gestão de Usuários
                                             <tbody>
                                             {% if request.user.acesso == 'Estado Maior' %}
                                                 {% for militar in militares_om %}
-                                                    <tr>
-                                                        <td>{{ militar.pessoa.nome_completo }}</td>
-                                                        <td>{{ militar.nome_guerra }}</td>
-                                                        <td>{{ militar.pessoa.usuario.acesso }}</td>
-                                                    </tr>
+                                                    {% if militar.pessoa.usuario %}
+                                                        <tr>
+                                                            <td>{{ militar.pessoa.nome_completo }}</td>
+                                                            <td>{{ militar.nome_guerra }}</td>
+                                                            <td>{{ militar.pessoa.usuario.acesso }}</td>
+                                                        </tr>
+                                                    {% endif %}
                                                 {% endfor %}
                                             {% else %}
                                                 {% for militar in militares_su %}
-                                                    <tr>
-                                                        <td>{{ militar.pessoa.nome_completo }}</td>
-                                                        <td>{{ militar.nome_guerra }}</td>
-                                                        <td>{{ militar.pessoa.usuario.acesso }}</td>
-                                                    </tr>
+                                                    {% if militar.pessoa.usuario %}
+                                                        <tr>
+                                                            <td>{{ militar.pessoa.nome_completo }}</td>
+                                                            <td>{{ militar.nome_guerra }}</td>
+                                                            <td>{{ militar.pessoa.usuario.acesso }}</td>
+                                                        </tr>
+                                                    {% endif %}
                                                 {% endfor %}
                                             {% endif %}
                                             </tbody>
