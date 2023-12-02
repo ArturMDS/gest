@@ -39,6 +39,12 @@
             padding: 5px, 5px, 0px, 5px;
         }
 
+        p {
+            text-align: center;
+            font-family: "Times New Roman";
+            font-size: 13px;
+        }
+
         table, th, td {
             border:1px solid #000;
         }
@@ -159,13 +165,13 @@
             42) O senhor possui alguma habilidade profissional, curso técnico ou área de interesse?<br>
             {{ pessoa.questionario_tres.pergunta_cinco }}<br><br>
             43) Que habilidades profissionais (ou área de interesse) o senhor julga possuir?<br>
-            {{ pessoa.questionario_tres.pergunta_seis }}<br><br>
-            <p id="assintura">{{ pessoa.militar.unidade.cidade }}-{{ pessoa.militar.unidade.estado }},
-            {{ hoje.day }}/{{ hoje.month }}/{{ hoje.year }}.<br><br><br>
-            _________________________________________<br>
+            {{ pessoa.questionario_tres.pergunta_seis }}<br>
+            <p id="assintura"><p>{{ pessoa.militar.unidade.cidade }}-{{ pessoa.militar.unidade.estado }},
+                {{ data }}.</p><br>
+            <p>____________________________________________________________<br>
             {{ pessoa.nome_completo }}<br>
-            Entrevistado<br><br><br>
-            _________________________________________<br>
+            Entrevistado</p><br>
+            <p>____________________________________________________________<br>
             {{ pessoa.relatorio_cs.entrevistador.pessoa.nome_completo }} -
             {{ pessoa.relatorio_cs.entrevistador.posto_grad }}<br>
             Entrevistador</p></td></tr>

@@ -6,7 +6,6 @@ from django.views.generic import ListView, \
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Observacao, Militar, Atributos, Destino
 from .forms import CriarMilitarForm, \
-    CriarObservacaoForm, \
     UpdateObservacaoForm, \
     PerfilMilitarForm, \
     UpdateDestinoForm, \
@@ -37,6 +36,25 @@ class Fatosobservados(LoginRequiredMixin, ListView):
             return context
 
 
+class Pesquisafatosobs(LoginRequiredMixin, ListView):
+    template_name = "pesquisafatosobs.html"
+    model = Militar
+
+    def get_queryset(self):
+        pesquisa = self.request.GET.get("query")
+        if pesquisa:
+            if self.request.user.acesso == 'Estado Maior':
+                om_logada = self.request.user.pessoas.militar.unidade
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, unidade=om_logada)
+                return object_list
+            else:
+                su_logada = self.request.user.pessoas.militar.subunidade
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, subunidade=su_logada)
+                return object_list
+        else:
+            return None
+
+
 class Fatosobservadospessoa(LoginRequiredMixin, DetailView):
     template_name = "fatosobservadospessoa.html"
     model = Pessoa
@@ -65,7 +83,6 @@ class Criarmilitar(LoginRequiredMixin, CreateView):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-# TODO: testar unidade
     def form_valid(self, form):
         data = {'id': self.request.GET['novo_id']}
         form.instance.pessoa = Pessoa.objects.get(id=data['id'])
@@ -85,24 +102,27 @@ class Criarmilitar(LoginRequiredMixin, CreateView):
 class Criarobservacao(LoginRequiredMixin, CreateView):
     template_name = "criarobservacao.html"
     model = Observacao
-    form_class = CriarObservacaoForm
-
-    def get_form_kwargs(self):
-        kwargs = super(Criarobservacao, self).get_form_kwargs()
-        kwargs.update({'user': self.request.user})
-        return kwargs
+    fields = ['tipo', 'relato_fato']
 
     def form_valid(self, form):
         militar = Militar.objects.get(id=self.request.user.pessoas.militar.id)
+        arrolado = Militar.objects.get(id=self.request.GET.get("arrolado"))
         form.instance.participante = militar
+        form.instance.arrolado = arrolado
         form.save()
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(Criarobservacao, self).get_context_data(**kwargs)
+        militar = Militar.objects.get(id=self.request.GET.get("arrolado"))
+        context["militar"] = militar
+        return context
 
     def get_success_url(self):
         observacao = Observacao.objects.all().last()
         observacao.nr_processo = int(observacao.id) + 1
         observacao.save()
-        return reverse('militares:fatosobservados')
+        return reverse('militares:fatosobservadospessoa', kwargs={"pk": observacao.arrolado.pessoa.id})
 
 
 class Updateobservacao(LoginRequiredMixin, UpdateView):
@@ -419,19 +439,28 @@ class Verdestino(LoginRequiredMixin, ListView):
         for militar in militares:
             destinos = militar.destino.all()
             for destino in destinos:
-                if (hoje > destino.check_out) or (hoje < destino.check_in):
-                    destino.in_force = False
-                    militar.is_present = True
+                if (hoje < destino.check_out) and (hoje > destino.check_in):
+                    if destino.in_force and not militar.is_present:
+                        pass
+                    else:
+                        destino.in_force = True
+                        militar.is_present = False
+                        destino.save()
+                        militar.save()
                 else:
-                    destino.in_force = True
-                    militar.is_present = False
-                destino.save()
-            militar.save()
+                    if not destino.in_force and militar.is_present:
+                        pass
+                    else:
+                        destino.in_force = False
+                        militar.is_present = True
+                        destino.save()
+                        militar.save()
         return super(Verdestino, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(Verdestino, self).get_context_data(**kwargs)
-        destinos = Destino.objects.filter(in_force=True)
+        om_logada = self.request.user.pessoas.militar.unidade
+        destinos = Militar.objects.filter(unidade=om_logada, destino__in_force=True)
         context["destinos"] = destinos
         return context
 

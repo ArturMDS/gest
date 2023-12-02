@@ -5,6 +5,7 @@ from .models import Pessoa
 from militares.views import Render
 from militares.models import Militar
 from questionarios.models import RelatorioCS
+import locale
 from datetime import datetime
 from math import ceil
 
@@ -114,7 +115,6 @@ class ListConscrito(LoginRequiredMixin, ListView):
             return context
 
 
-# TODO: falta o PDF da entrevista.
 class ReadConscrito(LoginRequiredMixin, UpdateView):
     template_name = 'read_conscrito.html'
     model = RelatorioCS
@@ -144,11 +144,14 @@ class Formulario(DetailView):
     model = Pessoa
 
     def get(self, request, *args, **kwargs):
+        locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
         pessoa = Pessoa.objects.get(id=self.kwargs['pk'])
         hoje = datetime.now()
+        data = hoje.strftime("%d de %B de %Y")
         params = {
             'pessoa': pessoa,
             'hoje': hoje,
+            'data': data,
             'request': request,
         }
         return Render.render('formulario_cs.html', params, f'formulario_{pessoa.id}')

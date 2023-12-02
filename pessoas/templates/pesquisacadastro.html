@@ -27,16 +27,15 @@ Pessoal
                                 <h2>Militares do {{ request.user.pessoas.militar.unidade.abreviatura }}</h2>
                             </div>
                             <div class="bottom_list">
-                                <div class="mb-6">
-                                    <form method="get" action="{% url 'pessoas:pesquisacadastro' %}">
-                                        <input type="text" class="textinput form-control mb-3 float-left" name="query"
-                                               value="{{ request.GET.query }}" placeholder="Pesquisar...">
-                                        <button type="submit" class="btn btn-primary btn-xs float-left">
-                                            <i class="fa fa-search"></i>Pesquisar
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="right_button">
+                                <form method="get" action="{% url 'pessoas:pesquisacadastro' %}"
+                                      class="pull-right position search_inbox">
+                                    <div class="input-append">
+                                        <input type="text" class="sr-input" value="{{ request.GET.query }}"
+                                               placeholder="Pesquisar..." name="query">
+                                        <button class="btn sr-btn" type="submit"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </form>
+                                <div class="left_button">
                                     <a href="{% url 'pessoas:criarpessoa' %}">
                                         <button type="button" class="btn btn-primary btn-xs">
                                             <i class="fa fa-male"></i><i class="fa fa-female"></i>Criar Novo

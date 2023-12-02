@@ -36,7 +36,6 @@ Conscritos
                                             <thead class="thead-dark">
                                             <tr>
                                                 <th style="width: 20%">Nome Completo</th>
-                                                <th style="width: 5%">Pontuação</th>
                                                 <th style="width: 5%">Sugestão</th>
                                                 <th style="width: 10%">Ver Entrevista</th>
                                                 <th style="width: 10%">Realizar Observação</th>
@@ -48,7 +47,6 @@ Conscritos
                                                 {% for conscrito in conscritos %}
                                                     <tr>
                                                         <td>{{ conscrito.pessoa.nome_completo }}</td>
-                                                        <td>{{ conscrito.atributos.ranking_inicial }}</td>
                                                         <td>{{ conscrito.pessoa.relatorio_cs.sugestao }}</td>
                                                         <td>
                                                             {% if conscrito.pessoa.questionario_um %}
@@ -70,13 +68,13 @@ Conscritos
                                                         <td>
                                                             {% if conscrito.pessoa.relatorio_cs %}
                                                             <div class="button_block"><a href="{% url 'pessoas:readconscrito' conscrito.pessoa.relatorio_cs.id %}">
-                                                                <button class="btn cur-p btn-dark">Obs</button>
+                                                                <button class="btn cur-p btn-dark"><i class="fa fa-pencil-square-o yellow_color"></i></button>
                                                             </a></div>
                                                             {% endif %}
                                                         </td>
                                                         <td>
                                                             <div class="button_block"><a href="{% url 'pessoas:formulario' conscrito.pessoa.id %}">
-                                                                <button class="btn cur-p btn-dark">Baixar</button>
+                                                                <button class="btn cur-p btn-dark"><i class="fa fa-file-o yellow_color"></i> Baixar</button>
                                                             </a></div>
                                                         </td>
                                                     </tr>
