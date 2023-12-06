@@ -48,44 +48,42 @@ Pessoal
                             <div class="row">
                                 <!-- column contact -->
                                 {% for militar in object_list %}
-                                    {% if militar.pessoa.situacao == 'Ativo' and militar.posto_grad != 'Conscrito' %}
-                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 profile_details margin_bottom_30">
-                                            <div class="contact_blog">
-                                                <h4 class="brief">{{ militar.qualificacao }}</h4>
-                                                <div class="contact_inner">
-                                                    <div class="left">
-                                                        <h3>{{ militar.nome_guerra }}</h3>
-                                                        <p><strong>Posto/Grad: </strong>{{ militar.posto_grad }}</p>
-                                                        <ul class="list-unstyled">
-                                                            <li><i class="fa fa-envelope-o"></i> : {{ militar.pessoa.contato.email }}</li>
-                                                            <li><i class="fa fa-phone"></i> : {{ militar.pessoa.contato.celular }}</li>
-                                                            <li><i class="fa fa-tag"></i> : {{ militar.identidade }}</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="right">
-                                                        <div class="profile_contacts">
-                                                        {% if militar.pessoa.foto %}
-                                                            <img class="img-responsive" src="{{ militar.pessoa.foto.url }}" alt="#"/>
-                                                        {% else %}
-                                                            <img class="img-responsive" src="{% static 'images/sem_img.png' %}" alt="#"/>
-                                                        {% endif %}
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 profile_details margin_bottom_30">
+                                        <div class="contact_blog">
+                                            <h4 class="brief">{{ militar.qualificacao }}</h4>
+                                            <div class="contact_inner">
+                                                <div class="left">
+                                                    <h3>{{ militar.nome_guerra }}</h3>
+                                                    <p><strong>Posto/Grad: </strong>{{ militar.posto_grad }}</p>
+                                                    <ul class="list-unstyled">
+                                                        <li><i class="fa fa-envelope-o"></i> : {{ militar.pessoa.contato.email }}</li>
+                                                        <li><i class="fa fa-phone"></i> : {{ militar.pessoa.contato.celular }}</li>
+                                                        <li><i class="fa fa-tag"></i> : {{ militar.identidade }}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="profile_contacts">
+                                                    {% if militar.pessoa.foto %}
+                                                        <img class="img-responsive" src="{{ militar.pessoa.foto.url }}" alt="#"/>
+                                                    {% else %}
+                                                        <img class="img-responsive" src="{% static 'images/sem_img.png' %}" alt="#"/>
+                                                    {% endif %}
 
-                                                        </div>
                                                     </div>
-                                                    <div class="bottom_list">
-                                                        <div class="right_button">
-                                                            <a href="{% url 'pessoas:delete' militar.pessoa.id %}">
-                                                                <button type="button" class="btn cur-p btn-danger">
-                                                                    <i class="fa fa-eraser"></i>Deletar</button></a>
-                                                            <a href="{% url 'pessoas:cadastropessoa' militar.pessoa.id %}">
-                                                                <button type="button" class="btn btn-primary btn-xs">
-                                                                    <i class="fa fa-user"> </i>Ver Perfil</button></a>
-                                                        </div>
+                                                </div>
+                                                <div class="bottom_list">
+                                                    <div class="right_button">
+                                                        <a href="{% url 'pessoas:delete' militar.pessoa.id %}">
+                                                            <button type="button" class="btn cur-p btn-danger">
+                                                                <i class="fa fa-eraser"></i>Deletar</button></a>
+                                                        <a href="{% url 'pessoas:cadastropessoa' militar.pessoa.id %}">
+                                                            <button type="button" class="btn btn-primary btn-xs">
+                                                                <i class="fa fa-user"> </i>Ver Perfil</button></a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    {% endif %}
+                                    </div>
                                 {% endfor %}
                                 <!-- end column contact blog -->
                             </div>

@@ -30,14 +30,16 @@
         <div class="sidebar_blog_2">
             <h4>Conteúdo Geral</h4>
             <ul class="list-unstyled components">
-                <li>
-                    <a href="#usuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fa fa-users green_color"></i> <span>Usuários</span></a>
-                    <ul class="collapse list-unstyled" id="usuarios">
-                        <li><a href="{% url 'usuarios:gestusuario' %}">> <span>Novos Usuários</span></a></li>
-                        <li><a href="{% url 'usuarios:allusuario' %}">> <span>Todos Usuários</span></a></li>
-                    </ul>
-                </li>
+                {% if request.user.pessoas == request.user.pessoas.militar.unidade.s1 or request.user.pessoas == request.user.pessoas.militar.subunidade.cmt or request.user.pessoas == request.user.pessoas.militar.subunidade.sgte %}
+                    <li>
+                        <a href="#usuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-users green_color"></i> <span>Usuários</span></a>
+                        <ul class="collapse list-unstyled" id="usuarios">
+                            <li><a href="{% url 'usuarios:gestusuario' %}">> <span>Novos Usuários</span></a></li>
+                            <li><a href="{% url 'usuarios:allusuario' %}">> <span>Todos Usuários</span></a></li>
+                        </ul>
+                    </li>
+                {% endif %}
                 <li>
                     <a href="#pessoal" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fa fa-tags yellow_color"></i> <span>Pessoal</span></a>

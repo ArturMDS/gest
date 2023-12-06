@@ -10,20 +10,27 @@ from datetime import datetime
 from math import ceil
 
 
+# TODO: Verificar e testar tudão
 class Cadastro(LoginRequiredMixin, ListView):
     template_name = "cadastro.html"
     model = Pessoa
 
     def get_context_data(self, **kwargs):
         context = super(Cadastro, self).get_context_data(**kwargs)
-        if self.request.user.acesso == 'Estado Maior':
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        aux_s1 = self.request.user.pessoas.militar.unidade.acesso_s1.all()
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        aux_sgte = self.request.user.pessoas.militar.subunidade.acesso_sgte.all()
+        if (pessoa == s1) or (pessoa in aux_s1):
             om_logada = self.request.user.pessoas.militar.unidade
-            militares = Militar.objects.filter(unidade=om_logada).order_by("-posto_grad")
+            militares = Militar.objects.filter(unidade=om_logada, pessoa__situacao="Ativo").order_by("-posto_grad")
             context["militares"] = militares
             return context
-        else:
+        if (pessoa == cmt_su) or (pessoa == sgte) or (pessoa in aux_sgte):
             su_logada = self.request.user.pessoas.militar.subunidade
-            militares = Militar.objects.filter(subunidade=su_logada).order_by("-posto_grad")
+            militares = Militar.objects.filter(subunidade=su_logada, pessoa__situacao="Ativo").order_by("-posto_grad")
             context["militares"] = militares
             return context
 
@@ -34,14 +41,24 @@ class Pesquisacadastro(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         pesquisa = self.request.GET.get("query")
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        aux_s1 = self.request.user.pessoas.militar.unidade.acesso_s1.all()
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        aux_sgte = self.request.user.pessoas.militar.subunidade.acesso_sgte.all()
         if pesquisa:
-            if self.request.user.acesso == 'Estado Maior':
+            if (pessoa == s1) or (pessoa in aux_s1):
                 om_logada = self.request.user.pessoas.militar.unidade
-                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, unidade=om_logada)
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa,
+                                                        unidade=om_logada,
+                                                        pessoa__situacao="Ativo")
                 return object_list
-            else:
+            if (pessoa == cmt_su) or (pessoa == sgte) or (pessoa in aux_sgte):
                 su_logada = self.request.user.pessoas.militar.subunidade
-                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, subunidade=su_logada)
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa,
+                                                        subunidade=su_logada,
+                                                        pessoa__situacao="Ativo")
                 return object_list
         else:
             return None
@@ -101,15 +118,14 @@ class ListConscrito(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ListConscrito, self).get_context_data(**kwargs)
-        if self.request.user.acesso == 'Estado Maior':
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        aux_s1 = self.request.user.pessoas.militar.unidade.acesso_s1.all()
+        if (pessoa == s1) or (pessoa in aux_s1):
             om_logada = self.request.user.pessoas.militar.unidade
-            c = Militar.objects.filter(unidade=om_logada, posto_grad='Conscrito')
-            conscritos = c.order_by('-atributos__ranking_inicial')
-            context["conscritos"] = conscritos
-            return context
-        elif self.request.user.acesso == 'Sargenteante' or self.request.user.acesso == 'Comandante':
-            su_logada = self.request.user.pessoas.militar.subunidade
-            c = Militar.objects.filter(subunidade=su_logada, posto_grad='Conscrito')
+            c = Militar.objects.filter(unidade=om_logada,
+                                       posto_grad='Conscrito',
+                                       pessoa__situacao="Pré-Cadastro")
             conscritos = c.order_by('-atributos__ranking_inicial')
             context["conscritos"] = conscritos
             return context

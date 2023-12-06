@@ -24,32 +24,61 @@ class Fatosobservados(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Fatosobservados, self).get_context_data(**kwargs)
-        if self.request.user.acesso == 'Estado Maior':
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        aux_s1 = self.request.user.pessoas.militar.unidade.acesso_s1.all()
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        aux_sgte = self.request.user.pessoas.militar.subunidade.acesso_sgte.all()
+        if (pessoa == s1) or (pessoa in aux_s1):
             om_logada = self.request.user.pessoas.militar.unidade
-            militares = Militar.objects.filter(unidade=om_logada).order_by("-posto_grad")
-            context["militares"] = militares
+            soldados = Militar.objects.filter(unidade=om_logada,
+                                              pessoa__situacao="Ativo",
+                                              posto_grad__icontains="Soldado").order_by('-posto_grad')
+            cabos = Militar.objects.filter(unidade=om_logada,
+                                           pessoa__situacao="Ativo",
+                                           posto_grad__icontains="Cabo")
+            context["soldados"] = soldados
+            context["cabos"] = cabos
             return context
-        else:
+        if (pessoa == cmt_su) or (pessoa == sgte) or (pessoa in aux_sgte):
             su_logada = self.request.user.pessoas.militar.subunidade
-            militares = Militar.objects.filter(subunidade=su_logada).order_by("-posto_grad")
-            context["militares"] = militares
+            soldados = Militar.objects.filter(subunidade=su_logada,
+                                              pessoa__situacao="Ativo",
+                                              posto_grad__icontains="Soldado").order_by('-posto_grad')
+            cabos = Militar.objects.filter(subunidade=su_logada,
+                                           pessoa__situacao="Ativo",
+                                           posto_grad__icontains="Soldado")
+            context["soldados"] = soldados
+            context["cabos"] = cabos
             return context
 
 
+# TODO: solução do caso SUBUNIDADE
 class Pesquisafatosobs(LoginRequiredMixin, ListView):
     template_name = "pesquisafatosobs.html"
     model = Militar
 
     def get_queryset(self):
         pesquisa = self.request.GET.get("query")
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        aux_s1 = self.request.user.pessoas.militar.unidade.acesso_s1.all()
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        aux_sgte = self.request.user.pessoas.militar.subunidade.acesso_sgte.all()
         if pesquisa:
-            if self.request.user.acesso == 'Estado Maior':
+            if (pessoa == s1) or (pessoa in aux_s1):
                 om_logada = self.request.user.pessoas.militar.unidade
-                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, unidade=om_logada)
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa,
+                                                        unidade=om_logada,
+                                                        pessoa__situacao="Ativo")
                 return object_list
-            else:
+            if (pessoa == cmt_su) or (pessoa == sgte) or (pessoa in aux_sgte):
                 su_logada = self.request.user.pessoas.militar.subunidade
-                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa, subunidade=su_logada)
+                object_list = self.model.objects.filter(pessoa__nome_completo__icontains=pesquisa,
+                                                        subunidade=su_logada,
+                                                        pessoa__situacao="Ativo")
                 return object_list
         else:
             return None
@@ -434,7 +463,7 @@ class Verdestino(LoginRequiredMixin, ListView):
 
     def dispatch(self, request, *args, **kwargs):
         om_logada = request.user.pessoas.militar.unidade
-        militares = Militar.objects.filter(unidade=om_logada)
+        militares = Militar.objects.filter(unidade=om_logada, pessoa__situacao="Ativo")
         hoje = datetime.now(timezone.utc)
         for militar in militares:
             destinos = militar.destino.all()
@@ -459,10 +488,22 @@ class Verdestino(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Verdestino, self).get_context_data(**kwargs)
-        om_logada = self.request.user.pessoas.militar.unidade
-        destinos = Militar.objects.filter(unidade=om_logada, destino__in_force=True)
-        context["destinos"] = destinos
-        return context
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        aux_s1 = self.request.user.pessoas.militar.unidade.acesso_s1.all()
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        aux_sgte = self.request.user.pessoas.militar.subunidade.acesso_sgte.all()
+        if (pessoa == s1) or (pessoa in aux_s1):
+            om_logada = self.request.user.pessoas.militar.unidade
+            destinos = Militar.objects.filter(unidade=om_logada, destino__in_force=True, pessoa__situacao="Ativo")
+            context["destinos"] = destinos
+            return context
+        if (pessoa == cmt_su) or (pessoa == sgte) or (pessoa in aux_sgte):
+            su_logada = self.request.user.pessoas.militar.subunidade
+            destinos = Militar.objects.filter(subunidade=su_logada, destino__in_force=True, pessoa__situacao="Ativo")
+            context["destinos"] = destinos
+            return context
 
 
 class Criardestino(LoginRequiredMixin, CreateView):

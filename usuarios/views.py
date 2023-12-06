@@ -8,9 +8,6 @@ from pessoas.models import Pessoa
 from documentos.models import Documento
 from enderecos.models import Endereco
 from militares.models import Militar, Atributos
-from questionarios.models import Questionarioum, \
-    Questionariodois, \
-    Questionariotres
 
 
 class Homepage(LoginRequiredMixin, TemplateView):
@@ -201,11 +198,20 @@ class GestUsuario(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GestUsuario, self).get_context_data(**kwargs)
-        militares_om = Militar.objects.filter(unidade=self.request.user.pessoas.militar.unidade)
-        militares_su = Militar.objects.filter(subunidade=self.request.user.pessoas.militar.subunidade)
-        context["militares_om"] = militares_om
-        context["militares_su"] = militares_su
-        return context
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        if pessoa == s1:
+            om_logada = self.request.user.pessoas.militar.unidade
+            militares = Militar.objects.filter(unidade=om_logada, pessoa__usuario__acesso="novo")
+            context["militares"] = militares
+            return context
+        if (pessoa == cmt_su) or (pessoa == sgte):
+            su_logada = self.request.user.pessoas.militar.subunidade
+            militares = Militar.objects.filter(subunidade=su_logada, pessoa__usuario__acesso="novo")
+            context["militares"] = militares
+            return context
 
 
 class ConfirmUsuario(LoginRequiredMixin, UpdateView):
@@ -228,11 +234,20 @@ class AllUsuario(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AllUsuario, self).get_context_data(**kwargs)
-        militares_om = Militar.objects.filter(unidade=self.request.user.pessoas.militar.unidade)
-        militares_su = Militar.objects.filter(subunidade=self.request.user.pessoas.militar.subunidade)
-        context["militares_om"] = militares_om
-        context["militares_su"] = militares_su
-        return context
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        if pessoa == s1:
+            om_logada = self.request.user.pessoas.militar.unidade
+            militares = Militar.objects.filter(unidade=om_logada)
+            context["militares"] = militares
+            return context
+        if (pessoa == cmt_su) or (pessoa == sgte):
+            su_logada = self.request.user.pessoas.militar.subunidade
+            militares = Militar.objects.filter(subunidade=su_logada)
+            context["militares"] = militares
+            return context
 
 
 class UpdateAutoCadPessoa(LoginRequiredMixin, UpdateView):

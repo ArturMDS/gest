@@ -1,5 +1,5 @@
 from django.db import models
-from usuarios.models import Usuario
+from pessoas.models import Pessoa
 
 
 class Quartel(models.Model):
@@ -16,15 +16,15 @@ class Quartel(models.Model):
     cidade = models.CharField(max_length=70, help_text='Cidade da OM', null=True, blank=True)
     estado = models.CharField(max_length=2, help_text='Sigla do Estado da OM', null=True, blank=True)
     dados = models.FileField(upload_to="uploads/", null=True, blank=True)
-    cmt = models.OneToOneField(Usuario, related_name="quartel_cmt", on_delete=models.PROTECT, null=True, blank=True)
-    s1 = models.OneToOneField(Usuario, related_name="quartel_s1", on_delete=models.PROTECT, null=True, blank=True)
-    s2 = models.OneToOneField(Usuario, related_name="quartel_s2", on_delete=models.PROTECT, null=True, blank=True)
-    s3 = models.OneToOneField(Usuario, related_name="quartel_s3", on_delete=models.PROTECT, null=True, blank=True)
-    s4 = models.OneToOneField(Usuario, related_name="quartel_s4", on_delete=models.PROTECT, null=True, blank=True)
-    acesso_s1 = models.ManyToManyField(Usuario, related_name="acesso_s1", blank=True)
-    acesso_s2 = models.ManyToManyField(Usuario, related_name="acesso_s2", blank=True)
-    acesso_s3 = models.ManyToManyField(Usuario, related_name="acesso_s3", blank=True)
-    acesso_s4 = models.ManyToManyField(Usuario, related_name="acesso_s4", blank=True)
+    cmt = models.OneToOneField(Pessoa, related_name="quartel_cmt", on_delete=models.PROTECT, null=True, blank=True)
+    s1 = models.OneToOneField(Pessoa, related_name="quartel_s1", on_delete=models.PROTECT, null=True, blank=True)
+    s2 = models.OneToOneField(Pessoa, related_name="quartel_s2", on_delete=models.PROTECT, null=True, blank=True)
+    s3 = models.OneToOneField(Pessoa, related_name="quartel_s3", on_delete=models.PROTECT, null=True, blank=True)
+    s4 = models.OneToOneField(Pessoa, related_name="quartel_s4", on_delete=models.PROTECT, null=True, blank=True)
+    acesso_s1 = models.ManyToManyField(Pessoa, related_name="acesso_s1", blank=True)
+    acesso_s2 = models.ManyToManyField(Pessoa, related_name="acesso_s2", blank=True)
+    acesso_s3 = models.ManyToManyField(Pessoa, related_name="acesso_s3", blank=True)
+    acesso_s4 = models.ManyToManyField(Pessoa, related_name="acesso_s4", blank=True)
 
     def __str__(self):
         return self.abreviatura

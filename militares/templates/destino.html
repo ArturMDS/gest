@@ -56,9 +56,7 @@ Destinos da {{ request.user.pessoas.militar.subunidade }}
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                {% if request.user.acesso == 'Estado Maior' %}
                                                     {% for destino in destinos %}
-                                                        {% if destino.militar.unidade == request.user.pessoas.militar.subunidade.OM %}
                                                             <tr>
                                                                 <td>{{ destino.militar.nome_guerra }}</td>
                                                                 <td>{{ destino.check_in }}</td>
@@ -70,43 +68,7 @@ Destinos da {{ request.user.pessoas.militar.subunidade }}
                                                                     </button></a>
                                                                 </td>
                                                             </tr>
-                                                        {% endif %}
                                                     {% endfor %}
-                                                {% endif %}
-                                                {% if request.user.acesso == 'Comandante' %}
-                                                    {% for destino in destinos %}
-                                                        {% if destino.militar.unidade == request.user.pessoas.militar.subunidade %}
-                                                            <tr>
-                                                                <td>{{ destino.militar.nome_guerra }}</td>
-                                                                <td>{{ destino.check_in }}</td>
-                                                                <td>{{ destino.check_out }}</td>
-                                                                <td>{{ destino.motivo }}</td>
-                                                                <td>
-                                                                    <a href="{% url 'militares:updatedestino' destino.id %}">
-                                                                        <button type="button" class="btn btn-success btn-xs">Atualizar
-                                                                    </button></a>
-                                                                </td>
-                                                            </tr>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                {% endif %}
-                                                {% if request.user.acesso == 'Sargenteante' %}
-                                                    {% for destino in destinos %}
-                                                        {% if destino.militar.unidade == request.user.pessoas.militar.subunidade %}
-                                                            <tr>
-                                                                <td>{{ destino.militar.nome_guerra }}</td>
-                                                                <td>{{ destino.check_in }}</td>
-                                                                <td>{{ destino.check_out }}</td>
-                                                                <td>{{ destino.motivo }}</td>
-                                                                <td>
-                                                                    <a href="{% url 'militares:updatedestino' destino.id %}">
-                                                                        <button type="button" class="btn btn-success btn-xs">Atualizar
-                                                                    </button></a>
-                                                                </td>
-                                                            </tr>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                {% endif %}
                                             </tbody>
                                         </table>
                                     </div>

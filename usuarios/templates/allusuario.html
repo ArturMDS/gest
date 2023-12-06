@@ -39,8 +39,7 @@ Gestão de Usuários
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% if request.user.acesso == 'Estado Maior' %}
-                                                {% for militar in militares_om %}
+                                                {% for militar in militares %}
                                                     {% if militar.pessoa.usuario %}
                                                         <tr>
                                                             <td>{{ militar.pessoa.nome_completo }}</td>
@@ -49,17 +48,6 @@ Gestão de Usuários
                                                         </tr>
                                                     {% endif %}
                                                 {% endfor %}
-                                            {% else %}
-                                                {% for militar in militares_su %}
-                                                    {% if militar.pessoa.usuario %}
-                                                        <tr>
-                                                            <td>{{ militar.pessoa.nome_completo }}</td>
-                                                            <td>{{ militar.nome_guerra }}</td>
-                                                            <td>{{ militar.pessoa.usuario.acesso }}</td>
-                                                        </tr>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
                                             </tbody>
                                         </table>
                                     </div>

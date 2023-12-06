@@ -43,7 +43,6 @@ Conscritos
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% if request.user.acesso == 'Estado Maior' %}
                                                 {% for conscrito in conscritos %}
                                                     <tr>
                                                         <td>{{ conscrito.pessoa.nome_completo }}</td>
@@ -79,7 +78,6 @@ Conscritos
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
-                                            {% endif %}
                                             </tbody>
                                         </table>
                                     </div>
