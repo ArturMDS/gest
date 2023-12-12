@@ -19,9 +19,12 @@ Destinos da {{ request.user.pessoas.militar.subunidade }}
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>Destinos da {{ request.user.pessoas.militar.subunidade }}</h2>
+                    {% if request.user.pessoas == s1 or request.user.pessoas in aux_s1 %}
+                        <h2>Destinos {{ request.user.pessoas.militar.unidade }}</h2>
+                    {% else %}
+                        <h2>Destinos {{ request.user.pessoas.militar.subunidade }}</h2>
+                    {% endif %}
                     </div>
-
                 </div>
             </div>
             <!-- row -->
@@ -30,7 +33,11 @@ Destinos da {{ request.user.pessoas.militar.subunidade }}
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <div class="heading1 margin_0">
+                            {% if request.user.pessoas == s1 or request.user.pessoas in aux_s1 %}
+                                <h2>{{ request.user.pessoas.militar.unidade }}</h2>
+                            {% else %}
                                 <h2>{{ request.user.pessoas.militar.subunidade }}</h2>
+                            {% endif %}
                             </div>
                             <div class="bottom_list">
                                 <div class="right_button">
@@ -48,19 +55,25 @@ Destinos da {{ request.user.pessoas.militar.subunidade }}
                                         <table class="table table-striped projects">
                                             <thead class="thead-dark">
                                             <tr>
+                                                <th style="width: 10%">P/G</th>
                                                 <th style="width: 10%">Militar</th>
                                                 <th style="width: 10%">Início</th>
                                                 <th style="width: 10%">Final</th>
-                                                <th style="width: 60%">Motivo</th>
+                                                <th style="width: 50%">Motivo</th>
                                                 <th style="width: 10%">Atualizar</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                                     {% for destino in destinos %}
                                                             <tr>
+                                                                <td>{{ destino.militar.posto_grad }}</td>
                                                                 <td>{{ destino.militar.nome_guerra }}</td>
-                                                                <td>{{ destino.check_in }}</td>
-                                                                <td>{{ destino.check_out }}</td>
+                                                                <td>{{ destino.check_in.day }}/{{ destino.check_in.month }}/{{ destino.check_in.year }} às {{ destino.check_in.time }}</td>
+                                                                {% if destino.check_out %}
+                                                                    <td>{{ destino.check_out.day }}/{{ destino.check_out.month }}/{{ destino.check_out.year }} às {{ destino.check_out.time }}</td>
+                                                                {% else %}
+                                                                    <td>Sem previsão de retorno</td>
+                                                                {% endif %}
                                                                 <td>{{ destino.motivo }}</td>
                                                                 <td>
                                                                     <a href="{% url 'militares:updatedestino' destino.id %}">
@@ -75,7 +88,7 @@ Destinos da {{ request.user.pessoas.militar.subunidade }}
                                     <br>
                                     <div id="bot">
                                         <a type="button" class="btn cur-p btn-secondary"
-                                           href="#">Mapa da Força
+                                           href="{% url 'militares:mapa_forca' %}">Mapa da Força
                                         </a>
                                     </div>
                                 </div>

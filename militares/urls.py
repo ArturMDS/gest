@@ -2,7 +2,7 @@ from django.urls import path
 from .views import Fatosobservados, Pesquisafatosobs, Fatosobservadospessoa, \
     Criarmilitar, Criarobservacao, Perfilmilitar, \
     Updateobservacao, Criardestino, Verdestino, Updatedestino, \
-    Fatd, Fdi
+    Fatd, Fdi, Mapaforca
 
 app_name = 'militares'
 
@@ -19,4 +19,5 @@ urlpatterns = [
     path('destino', Verdestino.as_view(), name='destino'),
     path('destino/update/<int:pk>', Updatedestino.as_view(), name='updatedestino'),
     path('destino/novo', Criardestino.as_view(), name='criardestino'),
+    path('destino/mapa_forca', Mapaforca.as_view(), name='mapa_forca'),
 ]

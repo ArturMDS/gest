@@ -12,7 +12,8 @@ LISTA_COMB = (
 SIT_VTR = (
     ("Disponível", "Disp"),
     ("Indisponível", "Insdisp"),
-    ("Descarregada", "Descarregada"),
+    ("Descarregado", "Descarregado"),
+    ("Recolhido", "Recolhido"),
 )
 
 LISTA_ARMT = (

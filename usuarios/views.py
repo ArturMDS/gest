@@ -8,6 +8,7 @@ from pessoas.models import Pessoa
 from documentos.models import Documento
 from enderecos.models import Endereco
 from militares.models import Militar, Atributos
+from .function_usuarios import troca_su, acesso_om, acesso_su
 
 
 class Homepage(LoginRequiredMixin, TemplateView):
@@ -298,4 +299,59 @@ class UpdateAutoCadMilitar(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('usuarios:autocad', kwargs={"pk": self.request.user.pessoas.pk})
+
+
+# TODO: acertar a automação funções/acessos
+class GestFuncao(LoginRequiredMixin, TemplateView):
+    template_name = "gestfuncao.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(GestFuncao, self).get_context_data(**kwargs)
+        pessoa = self.request.user.pessoas
+        s1 = self.request.user.pessoas.militar.unidade.s1
+        cmt_su = self.request.user.pessoas.militar.subunidade.cmt
+        sgte = self.request.user.pessoas.militar.subunidade.sgte
+        if pessoa == s1:
+            om_logada = self.request.user.pessoas.militar.unidade
+            subunidades = om_logada.subunidade.all()
+            militares = Militar.objects.filter(unidade=om_logada, pessoa__situacao='Ativo')
+            context["subunidades"] = subunidades
+            context["militares"] = militares
+            context["unidade"] = om_logada
+            context["s1"] = s1
+            context["cmt_su"] = cmt_su
+            context["sgte"] = sgte
+            return context
+        if (pessoa == cmt_su) or (pessoa == sgte):
+            su_logada = self.request.user.pessoas.militar.subunidade
+            subunidades = self.request.user.pessoas.militar.unidade.subunidade.all()
+            militares = Militar.objects.filter(subunidade=su_logada, pessoa__situacao='Ativo')
+            context["subunidades"] = subunidades
+            context["militares"] = militares
+            context["subunidade"] = su_logada
+            context["s1"] = s1
+            context["cmt_su"] = cmt_su
+            context["sgte"] = sgte
+            return context
+
+    def post(self, *args, **kwargs):
+        dados = self.request.POST
+        for dado in dados:
+            if "_" in dado:
+                if "subunidade" in dado:
+                    if self.request.POST[dado] != '----------':
+                        id_su = int(self.request.POST[dado])
+                        id_mil = int(dado[dado.find("_")+1:])
+                        troca_su(id_su, id_mil)
+                elif "acessoom" in dado:
+                    if self.request.POST[dado] != '----------':
+                        id_mil = int(dado[dado.find("_")+1:])
+                        funcao = self.request.POST[dado]
+                        acesso_om(id_mil, funcao)
+                elif "acessosu" in dado:
+                    if self.request.POST[dado] != '----------':
+                        id_mil = int(dado[dado.find("_")+1:])
+                        funcao = self.request.POST[dado]
+                        acesso_su(id_mil, funcao)
+        return redirect('usuarios:gestfuncao')
 

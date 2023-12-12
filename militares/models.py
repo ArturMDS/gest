@@ -22,7 +22,7 @@ LISTA_PG = (
     ("2º Sargento", "2º Sgt"),
     ("3º Sargento", "3º Sgt"),
     ("Cabo", "Cabo"),
-    ("Solcado NB", "Sd NB"),
+    ("Soldado NB", "Sd NB"),
     ("Soldado EV", "Sd EV"),
     ("Conscrito", "Conscrito")
 )
@@ -335,7 +335,7 @@ class Destino(models.Model):
     check_out = models.DateTimeField(auto_now=False, help_text='dd/mm/aaaa hh:mm:ss', null=True, blank=True)
     motivo = models.CharField(max_length=200)
     in_force = models.BooleanField(default=True)
-    militar = models.ForeignKey('Militar', related_name="destino", on_delete=models.PROTECT)
+    militar = models.ForeignKey(Militar, related_name="destino", on_delete=models.PROTECT)
 
     def __str__(self):
         return str(self.militar) + " - " + str(self.check_in)

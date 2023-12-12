@@ -119,9 +119,8 @@ class ListConscrito(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ListConscrito, self).get_context_data(**kwargs)
         pessoa = self.request.user.pessoas
-        s1 = self.request.user.pessoas.militar.unidade.s1
-        aux_s1 = self.request.user.pessoas.militar.unidade.acesso_s1.all()
-        if (pessoa == s1) or (pessoa in aux_s1):
+        quadros = self.request.user.pessoas.militar.unidade.quadros.all()
+        if pessoa == quadros:
             om_logada = self.request.user.pessoas.militar.unidade
             c = Militar.objects.filter(unidade=om_logada,
                                        posto_grad='Conscrito',

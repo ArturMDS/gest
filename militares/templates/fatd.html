@@ -115,23 +115,24 @@
         <p><b>CIENTE DO MILITAR ARROLADO</b><br><br><br>
         _________________________________________<br>
         {{observacao.arrolado.pessoa.nome_completo.upper}} – {{observacao.arrolado.posto_grad}}<br><br>
-        {{observacao.arrolado.pessoa.militar.unidade.cidade}}-{{observacao.arrolado.pessoa.militar.unidade.estado}},
+        {{observacao.arrolado.unidade.cidade}}-{{observacao.arrolado.unidade.estado}},
             {{hoje}}.</p>
     </div>
     <P id="QuebraAqui">
     <div id="justificativa">
         <p><b>JUSTIFICATIVAS / RAZÕES DE DEFESA</b><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            {{observacao.arrolado.pessoa.militar.unidade.cidade}}-{{observacao.arrolado.pessoa.militar.unidade.estado}},
+            {{observacao.arrolado.unidade.cidade}}-{{observacao.arrolado.unidade.estado}},
             ______, de ______________ de {{hoje.year}}.<br><br><br>
         _________________________________________<br>
         {{observacao.arrolado.pessoa.nome_completo.upper}} – {{observacao.arrolado.posto_grad}}</p>
     </div>
     <div id="decisao">
         <p><b>DECISÃO DA AUTORIDADE COMPETENTE</b><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            {{observacao.arrolado.pessoa.militar.unidade.cidade}}-{{observacao.arrolado.pessoa.militar.unidade.estado}},
+            {{observacao.arrolado.unidade.cidade}}-{{observacao.arrolado.unidade.estado}},
             ______, de ______________ de {{hoje.year}}.<br><br><br>
         _________________________________________<br>
-        XXXXXXXXXXXXXX – Cap</p>
+        {{observacao.arrolado.subunidade.cmt.nome_completo.upper}} – {{observacao.arrolado.subunidade.cmt.militar.posto_grad}}
+        <br> Cmt - {{observacao.arrolado.subunidade.abreviatura}}</p>
     </div>
 
 </body>

@@ -4,7 +4,7 @@ from pessoas.models import Pessoa
 from contatos.models import Contato
 from enderecos.models import Endereco
 from documentos.models import Documento
-from militares.models import Militar
+from militares.models import Militar, Atributos
 import pandas as pd
 
 
@@ -18,6 +18,7 @@ def create_dados(request):
     list_enderecos = []
     list_documentos = []
     list_militares = []
+    list_atributos = []
     for dado in d_records:
         p = Pessoa(nome_completo=dado['NOME'], data_nasc=dado['DT_NASCIMENTO'], situacao='Ativo')
         list_pessoas.append(p)
@@ -35,13 +36,16 @@ def create_dados(request):
         m = Militar(nome_guerra=dado['NOME_GUERRA'], identidade=dado['IDENTIDADE'],
                     data_praca=dado['DT_PRACA'], unidade=quartel, pessoa=pessoa,
                     posto_grad=dado['PGRAD'].strip())
+        a = Atributos(militar=m)
         list_contatos.append(c)
         list_enderecos.append(e)
         list_documentos.append(d)
         list_militares.append(m)
+        list_atributos.append(a)
     Contato.objects.bulk_create(list_contatos)
     Endereco.objects.bulk_create(list_enderecos)
     Documento.objects.bulk_create(list_documentos)
     Militar.objects.bulk_create(list_militares)
+    Atributos.objects.bulk_create(list_atributos)
     return redirect('homepage')
 

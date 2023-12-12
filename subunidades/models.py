@@ -11,6 +11,8 @@ class Subunidade(models.Model):
     enc_mat = models.OneToOneField(Pessoa, related_name="su_encmat", on_delete=models.PROTECT, null=True, blank=True)
     acesso_sgte = models.ManyToManyField(Pessoa, related_name="su_acesso_sgte", blank=True)
     acesso_encmat = models.ManyToManyField(Pessoa, related_name="su_acesso_encmat", blank=True)
+    oficiais = models.ManyToManyField(Pessoa, related_name="su_oficiais", blank=True)
+    quadros = models.ManyToManyField(Pessoa, related_name="su_quadros", blank=True)
     abreviatura = models.CharField(max_length=40, default="Coloque a abreviatura")
 
     def __str__(self):

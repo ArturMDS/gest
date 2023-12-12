@@ -35,8 +35,17 @@ class PerfilMilitarForm(ModelForm):
 
 class CriarDestinoForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
-        super(CriarDestinoForm, self).__init__(*args, **kwargs)
-        self.fields['militar'].queryset = Militar.objects.filter(subunidade=user.pessoas.militar.subunidade)
+        pessoa = user.pessoas
+        s1 = user.pessoas.militar.unidade.s1
+        aux_s1 = user.pessoas.militar.unidade.acesso_s1.all()
+        cmt_su = user.pessoas.militar.subunidade.cmt
+        quadros_su = user.pessoas.militar.subunidade.quadros.all()
+        if (pessoa == s1) or (pessoa in aux_s1):
+            super(CriarDestinoForm, self).__init__(*args, **kwargs)
+            self.fields['militar'].queryset = Militar.objects.filter(unidade=user.pessoas.militar.unidade)
+        elif (pessoa == cmt_su) or (pessoa in quadros_su):
+            super(CriarDestinoForm, self).__init__(*args, **kwargs)
+            self.fields['militar'].queryset = Militar.objects.filter(subunidade=user.pessoas.militar.subunidade)
 
     class Meta:
         model = Destino

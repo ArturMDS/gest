@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% block titulo %}
+Gestão de Funções
+{% endblock %}
+{% block main %}
+
+{% include 'sidebar.html' %}
+<div id="content">
+    {% include 'topbar.html' %}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Funções do {{ request.user.pessoas.militar.unidade }}</h2>
+                    </div>
+
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row column1">
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Funções</h2>
+                            </div>
+                        </div>
+                        <div class="full price_table padding_infor_info">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive-sm">
+                                        <table class="table table-striped projects">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th style="width: 15%">Posto/Grad</th>
+                                                <th style="width: 40%">Nome Completo</th>
+                                                <th style="width: 15%">Nome de Guerra</th>
+                                                {% if s1 == request.user.pessoas %}
+                                                <th style="width: 15%">Subunidade</th>
+                                                {% endif %}
+                                                {% if s1 == request.user.pessoas %}
+                                                    <th style="width: 15%">Funções/Acessos OM</th>
+                                                {% endif %}
+                                                {% if cmt_su == request.user.pessoas %}
+                                                    <th style="width: 30%">Funções/Acessos SU</th>
+                                                {% endif %}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <form method="post" action="{% url 'usuarios:gestfuncao' %}">
+                                                {% csrf_token %}
+                                                    <button class="btn btn-outline-secondary btn-lg float-right" type="submit">Atualizar</button><br><br>
+                                                {% for militar in militares %}
+                                                    <tr>
+                                                        <td>{{ militar.posto_grad }}</td>
+                                                        <td>{{ militar.pessoa.nome_completo }}</td>
+                                                        <td>{{ militar.nome_guerra }}</td>
+                                                        {% if s1 == request.user.pessoas %}
+                                                        <td>
+                                                            <div id="div_{{ militar.id }}_subunidade" class="mb-2">
+                                                                <select name="subunidade_{{ militar.id }}" class="select form-select" id="{{ militar.id }}_subunidade">
+                                                                    {% for subunidade in subunidades %}
+                                                                        {% if militar.subunidade == subunidade %}
+                                                                            <option value="{{ subunidade.id }}" selected>{{ subunidade.abreviatura }}</option>
+                                                                        {% else %}
+                                                                            <option value="{{ subunidade.id }}">{{ subunidade.abreviatura }}</option>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                    {% if militar.subunidade == None %}
+                                                                        <option selected>----------</option>
+                                                                    {% else %}
+                                                                        <option>----------</option>
+                                                                    {% endif %}
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {% endif %}
+                                                        {% if s1 == request.user.pessoas %}
+                                                        <td>
+                                                            <div id="div_{{ militar.id }}_funcao_acesso_OM" class="mb-2">
+                                                                <select name="acessoom_{{ militar.id }}" class="select form-select" id="{{ militar.id }}_acessoom">
+                                                                        <option>----------</option>
+                                                                    {% if militar.unidade.cmt == militar.pessoa %}
+                                                                        <option value="cmt_om" selected>Cmt OM</option>
+                                                                    {% else %}
+                                                                        <option value="cmt_om">Cmt OM</option>
+                                                                    {% endif %}
+                                                                    {% if s1 == militar.pessoa %}
+                                                                        <option value="s1" selected>Chefe 1.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="s1">Chefe 1.ª Seção</option>
+                                                                    {% endif %}
+                                                                    {% if unidade.s2 == militar.pessoa %}
+                                                                        <option value="s2" selected>Chefe 2.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="s2">Chefe 2.ª Seção</option>
+                                                                    {% endif %}
+                                                                    {% if unidade.s3 == militar.pessoa %}
+                                                                        <option value="s3" selected>Chefe 3.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="s3">Chefe 3.ª Seção</option>
+                                                                    {% endif %}
+                                                                    {% if unidade.s4 == militar.pessoa %}
+                                                                        <option value="s4" selected>Chefe 4.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="s4">Chefe 4.ª Seção</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa.su_cmt %}
+                                                                        <option value="cmt_su" selected>Cmt SU</option>
+                                                                    {% else %}
+                                                                        <option value="cmt_su">Cmt SU</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in unidade.acesso_s1.all %}
+                                                                        <option value="aux_s1" selected>Aux 1.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="aux_s1">Aux 1.ª Seção</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in unidade.acesso_s2.all %}
+                                                                        <option value="aux_s2" selected>Aux 2.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="aux_s2">Aux 2.ª Seção</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in unidade.acesso_s3.all %}
+                                                                        <option value="aux_s3" selected>Aux 3.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="aux_s3">Aux 3.ª Seção</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in unidade.acesso_s4.all %}
+                                                                        <option value="aux_s4" selected>Aux 4.ª Seção</option>
+                                                                    {% else %}
+                                                                        <option value="aux_s4">Aux 4.ª Seção</option>
+                                                                    {% endif %}
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {% endif %}
+                                                        {% if cmt_su == request.user.pessoas %}
+                                                        <td>
+                                                            <div id="div_{{ militar.id }}_funcao_acesso_SU" class="mb-2">
+                                                                <select name="acessosu_{{ militar.id }}" class="select form-select" id="{{ militar.id }}_acessosu">
+                                                                        <option>----------</option>
+                                                                    {% if cmt_su == militar.pessoa %}
+                                                                        <option value="cmt_su" selected>Cmt SU</option>
+                                                                    {% else %}
+                                                                        <option value="cmt_su">Cmt SU</option>
+                                                                    {% endif %}
+                                                                    {% if sgte == militar.pessoa %}
+                                                                        <option value="sgte" selected>Sargenteante</option>
+                                                                    {% else %}
+                                                                        <option value="sgte">Sargenteante</option>
+                                                                    {% endif %}
+                                                                    {% if subunidade.enc_mat == militar.pessoa %}
+                                                                        <option value="enc_mat" selected>Enc Mat</option>
+                                                                    {% else %}
+                                                                        <option value="enc_mat">Enc Mat</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in subunidade.acesso_sgte.all %}
+                                                                        <option value="aux_sgte" selected>Aux Sgte</option>
+                                                                    {% else %}
+                                                                        <option value="aux_sgte">Aux Sgte</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in subunidade.acesso_encmat.all %}
+                                                                        <option value="aux_enc_mat" selected>Aux Enc Mat</option>
+                                                                    {% else %}
+                                                                        <option value="aux_enc_mat">Aux Enc Mat</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in subunidade.oficiais.all %}
+                                                                        <option value="ten_su" selected>Of Subalt</option>
+                                                                    {% else %}
+                                                                        <option value="ten_su">Of Subalt</option>
+                                                                    {% endif %}
+                                                                    {% if militar.pessoa in subunidade.quadros.all and militar.pessoa not in subunidade.oficiais.all and militar.pessoa != subunidade.enc_mat and militar.pessoa != subunidade.sgte %}
+                                                                        <option value="sgt_su" selected>Sgt SU</option>
+                                                                    {% else %}
+                                                                        <option value="sgt_su">Sgt SU</option>
+                                                                    {% endif %}
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                                </form>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+{% endblock %}

@@ -25,6 +25,8 @@ class Quartel(models.Model):
     acesso_s2 = models.ManyToManyField(Pessoa, related_name="acesso_s2", blank=True)
     acesso_s3 = models.ManyToManyField(Pessoa, related_name="acesso_s3", blank=True)
     acesso_s4 = models.ManyToManyField(Pessoa, related_name="acesso_s4", blank=True)
+    oficiais = models.ManyToManyField(Pessoa, related_name="oficiais", blank=True)
+    quadros = models.ManyToManyField(Pessoa, related_name="quadros", blank=True)
 
     def __str__(self):
         return self.abreviatura

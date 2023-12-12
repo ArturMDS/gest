@@ -4,7 +4,8 @@ from .views import Perfilusuario, Criarusuario, Perfil, ChangeDone, Novo, \
     AutoCad, AutoCadDocumento, AutoCadEndereco, AutoCadContato, AutoCadMilitar, AutoCadDone, \
     GestUsuario, ConfirmUsuario, AllUsuario, \
     UpdateAutoCadPessoa, UpdateAutoCadContato, UpdateAutoCadDocumento, UpdateAutoCadEndereco, \
-    UpdateAutoCadMilitar
+    UpdateAutoCadMilitar, \
+    GestFuncao
 
 app_name = 'usuarios'
 
@@ -32,4 +33,5 @@ urlpatterns = [
     path('autocad/update/endereco/<int:pk>', UpdateAutoCadEndereco.as_view(), name='update_autocadendereco'),
     path('autocad/update/documento/<int:pk>', UpdateAutoCadDocumento.as_view(), name='update_autocaddocumento'),
     path('autocad/update/militar/<int:pk>', UpdateAutoCadMilitar.as_view(), name='update_autocadmilitar'),
+    path('gestfuncao', GestFuncao.as_view(), name='gestfuncao'),
 ]
