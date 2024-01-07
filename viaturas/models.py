@@ -115,7 +115,7 @@ class Armamento(models.Model):
         choices=SIT_VTR,
         default="Disponível",
     )
-    outros_nr_serie = models.CharField(max_length=50, null=True, blank=True)
+    outros_nr_serie = models.TextField(null=True, blank=True)
     historico = models.TextField(null=True, blank=True)
     aes = models.TextField("Acessórios e Sobressalentes", null=True, blank=True)
     unidade = models.ForeignKey(Quartel, related_name="armamento", on_delete=models.PROTECT)
