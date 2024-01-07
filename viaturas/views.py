@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Viatura, Armamento, Municao, ConsumoMun, Alteracao
 from .forms import ViaturaForm, ArmamentoForm, MunicaoForm
 from quarteis.models import Quartel
+from subunidades.models import Subunidade
 from math import ceil
 
 
@@ -179,38 +180,41 @@ class DashboardArmt(LoginRequiredMixin, TemplateView):
         context = super(DashboardArmt, self).get_context_data(**kwargs)
         unidade = self.request.user.pessoas.militar.unidade.id
         quartel = Quartel.objects.get(id=unidade)
-        subunidades = quartel.subunidade.all()
-        pst_su0 = Armamento.objects.filter(subunidade=subunidades[0], classificacao="Pistola 9mm")
-        fz_su0 = Armamento.objects.filter(subunidade=subunidades[0], classificacao="Fuzil 7,62mm")
-        fac_su0 = Armamento.objects.filter(subunidade=subunidades[0], classificacao="FAC")
-        faca_su0 = Armamento.objects.filter(subunidade=subunidades[0], classificacao="Faca")
-        epg_su0 = Armamento.objects.filter(subunidade=subunidades[0], classificacao="Espingarda 12")
-        pst_su1 = Armamento.objects.filter(subunidade=subunidades[1], classificacao="Pistola 9mm")
-        fz_su1 = Armamento.objects.filter(subunidade=subunidades[1], classificacao="Fuzil 7,62mm")
-        fac_su1 = Armamento.objects.filter(subunidade=subunidades[1], classificacao="FAC")
-        faca_su1 = Armamento.objects.filter(subunidade=subunidades[1], classificacao="Faca")
-        dt_su1 = Armamento.objects.filter(subunidade=subunidades[1],
+        bc = Subunidade.objects.get(nome="Bateria Comando")
+        pbia = Subunidade.objects.get(nome="1ª Bateria de Obuses")
+        sbia = Subunidade.objects.get(nome="2ª Bateria de Obuses")
+        tbia = Subunidade.objects.get(nome="3ª Bateria de Morteiros")
+        pst_su0 = Armamento.objects.filter(subunidade=bc, classificacao="Pistola 9mm")
+        fz_su0 = Armamento.objects.filter(subunidade=bc, classificacao="Fuzil 7,62mm")
+        fac_su0 = Armamento.objects.filter(subunidade=bc, classificacao="FAC")
+        faca_su0 = Armamento.objects.filter(subunidade=bc, classificacao="Faca")
+        epg_su0 = Armamento.objects.filter(subunidade=bc, classificacao="Espingarda 12")
+        pst_su1 = Armamento.objects.filter(subunidade=pbia, classificacao="Pistola 9mm")
+        fz_su1 = Armamento.objects.filter(subunidade=pbia, classificacao="Fuzil 7,62mm")
+        fac_su1 = Armamento.objects.filter(subunidade=pbia, classificacao="FAC")
+        faca_su1 = Armamento.objects.filter(subunidade=pbia, classificacao="Faca")
+        dt_su1 = Armamento.objects.filter(subunidade=pbia,
                                           modelo="DISPOSITIVO DE TREINAMENTO DE ARTILHARIA")
-        pcq_su1 = Armamento.objects.filter(subunidade=subunidades[1], classificacao="Metralhadora .50")
-        fap_su1 = Armamento.objects.filter(subunidade=subunidades[1], classificacao="FAP")
-        psti_su2 = Armamento.objects.filter(subunidade=subunidades[2],
+        pcq_su1 = Armamento.objects.filter(subunidade=pbia, classificacao="Metralhadora .50")
+        fap_su1 = Armamento.objects.filter(subunidade=pbia, classificacao="FAP")
+        psti_su2 = Armamento.objects.filter(subunidade=sbia,
                                             classificacao="Pistola 9mm", fabricante="IMBEL")
-        pstb_su2 = Armamento.objects.filter(subunidade=subunidades[2],
+        pstb_su2 = Armamento.objects.filter(subunidade=sbia,
                                             classificacao="Pistola 9mm", fabricante="Beretta")
-        fzfal_su2 = Armamento.objects.filter(subunidade=subunidades[2], modelo="FAL M964")
-        fzpfal_su2 = Armamento.objects.filter(subunidade=subunidades[2], modelo="Para-FAL M964 A1 MD")
-        fac_su2 = Armamento.objects.filter(subunidade=subunidades[2], classificacao="FAC")
-        faca_su2 = Armamento.objects.filter(subunidade=subunidades[2], classificacao="Faca")
-        epg_su2 = Armamento.objects.filter(subunidade=subunidades[2], classificacao="Espingarda 12")
-        dt_su2 = Armamento.objects.filter(subunidade=subunidades[2],
+        fzfal_su2 = Armamento.objects.filter(subunidade=sbia, modelo="FAL M964")
+        fzpfal_su2 = Armamento.objects.filter(subunidade=sbia, modelo="Para-FAL M964 A1 MD")
+        fac_su2 = Armamento.objects.filter(subunidade=sbia, classificacao="FAC")
+        faca_su2 = Armamento.objects.filter(subunidade=sbia, classificacao="Faca")
+        epg_su2 = Armamento.objects.filter(subunidade=sbia, classificacao="Espingarda 12")
+        dt_su2 = Armamento.objects.filter(subunidade=sbia,
                                           modelo="DISPOSITIVO DE TREINAMENTO DE ARTILHARIA")
-        am_su2 = Armamento.objects.filter(subunidade=subunidades[2],
+        am_su2 = Armamento.objects.filter(subunidade=sbia,
                                           modelo="LANÇADOR DE GRANADA: AM-600")
-        pst_su3 = Armamento.objects.filter(subunidade=subunidades[3], classificacao="Pistola 9mm")
-        fz_su3 = Armamento.objects.filter(subunidade=subunidades[3], classificacao="Fuzil 7,62mm")
-        fac_su3 = Armamento.objects.filter(subunidade=subunidades[3], classificacao="FAC")
-        faca_su3 = Armamento.objects.filter(subunidade=subunidades[3], classificacao="Faca")
-        #numero = ceil(ri / 3)
+        pst_su3 = Armamento.objects.filter(subunidade=tbia, classificacao="Pistola 9mm")
+        fz_su3 = Armamento.objects.filter(subunidade=tbia, classificacao="Fuzil 7,62mm")
+        fac_su3 = Armamento.objects.filter(subunidade=tbia, classificacao="FAC")
+        faca_su3 = Armamento.objects.filter(subunidade=tbia, classificacao="Faca")
+
         context["pst_su0"] = pst_su0
         context["fz_su0"] = fz_su0
         context["fac_su0"] = fac_su0
