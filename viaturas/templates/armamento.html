@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 {% block titulo %}
 Armamento
 {% endblock %}
@@ -44,27 +46,43 @@ Armamento
                                             <thead class="thead-dark">
                                             <tr>
                                                 <th>Classificação</th>
-                                                <th>Tipo</th>
+                                                <th>Modelo</th>
                                                 <th>Número de Série</th>
+                                                <th>Fabricante</th>
                                                 <th>Tiros</th>
                                                 <th>Situação</th>
                                                 <th>Subunidade</th>
-                                                <th>Atualizar</th>
+                                                {% if request.user.pessoas == request.user.pessoas.militar.unidade.s4 %}
+                                                    <th>Atualizar</th>
+                                                {% endif %}
+                                                <th>Cadastrar Alteração</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             {% for armamento in armamentos %}
                                                 <tr>
                                                     <td>{{ armamento.classificacao }}</td>
-                                                    <td>{{ armamento.tipo }}</td>
+                                                    <td>{{ armamento.modelo }}</td>
                                                     <td>{{ armamento.nr_serie }}</td>
+                                                    <td>{{ armamento.fabricante }}</td>
                                                     <td>{{ armamento.qtde_tiros }}</td>
                                                     <td>{{ armamento.situacao }}</td>
                                                     <td>{{ armamento.subunidade }}</td>
+                                                    {% if request.user.pessoas == request.user.pessoas.militar.unidade.s4 %}
+                                                        <td>
+                                                            <a href="{% url 'viaturas:updatearmamento' armamento.id %}">
+                                                                <button type="button" class="btn cur-p btn-outline-info"><i class="fa fa-pencil"></i>
+                                                            </button></a>
+                                                        </td>
+                                                    {% endif %}
                                                     <td>
-                                                        <a href="{% url 'viaturas:updatearmamento' armamento.id %}">
-                                                            <button type="button" class="btn btn-success btn-xs">Atualizar
-                                                        </button></a>
+                                                        <form method="get" action="{% url 'viaturas:criaralteracao' %}">
+                                                            {{ form|crispy }}
+                                                            <input name="armt_id" type="hidden" value="{{armamento.id}}">
+                                                            <button class="btn cur-p btn-outline-info" type="submit">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             {% endfor %}

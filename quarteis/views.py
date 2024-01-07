@@ -1,5 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from .models import Quartel
+from subunidades.models import Subunidade
+from viaturas.models import Armamento
 from pessoas.models import Pessoa
 from contatos.models import Contato
 from enderecos.models import Endereco
@@ -47,5 +49,41 @@ def create_dados(request):
     Documento.objects.bulk_create(list_documentos)
     Militar.objects.bulk_create(list_militares)
     Atributos.objects.bulk_create(list_atributos)
+    return redirect('homepage')
+
+
+def create_armt(request):
+    unidade = request.user.pessoas.militar.unidade.id
+    quartel = Quartel.objects.get(id=unidade)
+    bc = Subunidade.objects.get(nome="Bateria Comando")
+    pbia = Subunidade.objects.get(nome="1ª Bateria de Obuses")
+    sbia = Subunidade.objects.get(nome="2ª Bateria de Obuses")
+    dataframebc = pd.read_csv('media/uploads/bc_armt.csv', sep=';', encoding='latin1', engine='python')
+    dataframepbia = pd.read_csv('media/uploads/1bia_armt.csv', sep=';', encoding='latin1', engine='python')
+    dataframesbia = pd.read_csv('media/uploads/2bia_armt.csv', sep=';', encoding='latin1', engine='python')
+    bc_records = dataframebc.to_dict("records")
+    pbia_records = dataframepbia.to_dict("records")
+    sbia_records = dataframesbia.to_dict("records")
+    list_armt_bc = []
+    list_armt_pbia = []
+    list_armt_sbia = []
+    for dado in bc_records:
+        a = Armamento(classificacao=dado['Classificação'], modelo=dado['Modelo'], calibre=dado['Calibre'],
+                      fabricante=dado['Fabricante'], nr_serie=dado['Nr serie'], outros_nr_serie=dado['Outros'],
+                      unidade=quartel, subunidade=bc)
+        list_armt_bc.append(a)
+    Armamento.objects.bulk_create(list_armt_bc)
+    for dado in pbia_records:
+        a = Armamento(classificacao=dado['Classificação'], modelo=dado['Modelo'], calibre=dado['Calibre'],
+                      fabricante=dado['Fabricante'], nr_serie=dado['Nr serie'], outros_nr_serie=dado['Outros'],
+                      unidade=quartel, subunidade=pbia)
+        list_armt_pbia.append(a)
+    Armamento.objects.bulk_create(list_armt_pbia)
+    for dado in sbia_records:
+        a = Armamento(classificacao=dado['Classificação'], modelo=dado['Modelo'], calibre=dado['Calibre'],
+                      fabricante=dado['Fabricante'], nr_serie=dado['Nr serie'], outros_nr_serie=dado['Outros'],
+                      unidade=quartel, subunidade=sbia)
+        list_armt_sbia.append(a)
+    Armamento.objects.bulk_create(list_armt_sbia)
     return redirect('homepage')
 

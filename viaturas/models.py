@@ -19,10 +19,10 @@ SIT_VTR = (
 LISTA_ARMT = (
     ("Fuzil 7,62mm", "Fuzil 7,62mm"),
     ("Pistola 9mm", "Pistola 9mm"),
-    ("Metrlhadora MAG", "Metrlhadora MAG"),
+    ("Metralhadora MAG", "Metralhadora MAG"),
     ("FAP", "FAP"),
     ("FAC", "FAC"),
-    ("Metrlhadora .50", "Metrlhadora .50"),
+    ("Metralhadora .50", "Metralhadora .50"),
     ("Fuzil 5,56mm", "Fuzil 5,56mm"),
     ("Espingarda 12", "Espingarda 12"),
     ("Morteiro Pesado 120mm", "Morteiro Pesado 120mm"),
@@ -91,6 +91,7 @@ class Viatura(models.Model):
         choices=SIT_VTR,
         default="Disponível",
     )
+    observacoes = models.TextField(null=True, blank=True)
     unidade = models.ForeignKey(Quartel, related_name="viatura", on_delete=models.PROTECT)
     subunidade = models.ForeignKey(Subunidade, related_name="viatura", on_delete=models.PROTECT, null=True, blank=True)
 
@@ -104,7 +105,9 @@ class Armamento(models.Model):
         choices=LISTA_ARMT,
         default="Outros",
     )
-    tipo = models.CharField(max_length=100)
+    modelo = models.CharField(max_length=100, null=True, blank=True)
+    calibre = models.CharField(max_length=100, null=True, blank=True)
+    fabricante = models.CharField(max_length=100, null=True, blank=True)
     nr_serie = models.CharField("Número de série", max_length=50)
     qtde_tiros = models.IntegerField("Quantidade de tiros", default=0)
     situacao = models.CharField(
@@ -119,7 +122,7 @@ class Armamento(models.Model):
     subunidade = models.ForeignKey(Subunidade, related_name="armamento", on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.tipo + ' - ' + self.nr_serie + ' - ' + self.unidade
+        return self.classificacao + ' - ' + self.modelo + ' - ' + self.nr_serie + ' - ' + self.unidade.abreviatura
 
 
 class Municao(models.Model):
@@ -136,5 +139,35 @@ class Municao(models.Model):
     unidade = models.ForeignKey(Quartel, related_name="municao", on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.tipo + ' - ' + self.lote + ' - ' + self.unidade
+        return self.tipo + ' - ' + self.lote + ' - ' + self.unidade.abreviatura
+
+
+# TODO: data não está funcionando
+class ConsumoMun(models.Model):
+    atividade = models.CharField(max_length=100)
+    municao = models.ForeignKey(Municao, related_name="consumo", on_delete=models.CASCADE)
+    quantidade = models.IntegerField("Munição Consumida", default=0)
+    data = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.atividade + ' - ' + self.municao.tipo + ' - ' + \
+               self.municao.lote + ' - ' + self.municao.unidade.abreviatura
+
+
+# TODO: data não está funcionando
+class Alteracao(models.Model):
+    disparos = models.IntegerField("Disparos efetuados", default=0)
+    situacao = models.CharField(
+        "Situação do Armamento",
+        max_length=20,
+        choices=SIT_VTR,
+        default="Disponível",
+    )
+    data = models.DateField(auto_now=True)
+    alteracao = models.TextField("Ocorrência observada", null=True, blank=True)
+    armamento = models.ForeignKey(Armamento, related_name="alteracao", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.alteracao + ' - ' + self.armamento.tipo + ' - ' + \
+               self.armamento.nr_serie + ' - ' + self.armamento.unidade.abreviatura
 

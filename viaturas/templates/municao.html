@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 {% block titulo %}
 Munição
 {% endblock %}
@@ -49,7 +51,10 @@ Munição
                                                 <th>Vencimento</th>
                                                 <th>Código Virola</th>
                                                 <th>Quantidade</th>
-                                                <th>Atualizar</th>
+                                                {% if request.user.pessoas == request.user.pessoas.militar.unidade.s4 %}
+                                                    <th>Atualizar</th>
+                                                {% endif %}
+                                                <th>Registrar Consumo</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -61,10 +66,21 @@ Munição
                                                     <td>{{ municao.vencimento }}</td>
                                                     <td>{{ municao.codigo_virola }}</td>
                                                     <td>{{ municao.quantidade }}</td>
+                                                    {% if request.user.pessoas == request.user.pessoas.militar.unidade.s4 %}
+                                                        <td>
+                                                            <a href="{% url 'viaturas:updatemunicao' municao.id %}">
+                                                                <button type="button" class="btn cur-p btn-outline-info"><i class="fa fa-pencil"></i>
+                                                            </button></a>
+                                                        </td>
+                                                    {% endif %}
                                                     <td>
-                                                        <a href="{% url 'viaturas:updatemunicao' municao.id %}">
-                                                            <button type="button" class="btn btn-success btn-xs">Atualizar
-                                                        </button></a>
+                                                        <form method="get" action="{% url 'viaturas:criarconsumo' %}">
+                                                            {{ form|crispy }}
+                                                            <input name="municao_id" type="hidden" value="{{municao.id}}">
+                                                            <button class="btn cur-p btn-outline-info" type="submit">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -83,3 +99,4 @@ Munição
 </div>
 
 {% endblock %}
+

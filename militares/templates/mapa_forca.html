@@ -9,7 +9,7 @@
             background-color: lightblue;
             border: 1px solid #000;
             font-family: "Times New Roman";
-            font-size: 15px;
+            font-size: 14px;
             padding: 2px, 2px, 0px, 2px;
             bottom: 0px;
         }
@@ -19,7 +19,7 @@
             background-color: #909bad;
             border: 1px solid #000;
             font-family: "Times New Roman";
-            font-size: 12px;
+            font-size: 11px;
             padding: 2px, 2px, 0px, 2px;
             bottom: 0px;
         }
@@ -28,7 +28,7 @@
             text-align: center;
             border: 1px solid #000;
             font-family: "Times New Roman";
-            font-size: 10px;
+            font-size: 9px;
             padding: 1px, 1px, 0px, 1px;
             bottom: 0px;
         }
@@ -38,7 +38,7 @@
             background-color: red;
             border: 1px solid #000;
             font-family: "Times New Roman";
-            font-size: 12px;
+            font-size: 9px;
             padding: 2px, 2px, 0px, 2px;
             bottom: 0px;
         }
@@ -51,7 +51,7 @@
 <body>
     <div style="width:100%">
         <table style="width:100%">
-            <tr><th id="1" style="width:100%"><b>MAPA DA FORÇA - {{su.abreviatura.upper}} - {{hoje}}</b></th></tr>
+            <tr><th id="1" style="width:100%"><b>MAPA DA FORÇA - {{su.abreviatura.upper}} - {{hoje.day}}/{{hoje.month}}/{{hoje.year}} - {{hoje.time}}</b></th></tr>
         </table>
     </div>
     <div style="width:100%">
@@ -59,18 +59,55 @@
             <tr>
                 <td id="2" style="width:8%">P/G</td>
                 <td id="2" style="width:7%">Nr</td>
+                <td id="2" style="width:10%">Idt</td>
+                <td id="2" style="width:15%">Qualificação</td>
                 <td id="2" style="width:20%">Nome</td>
                 <td id="2" style="width:10%">Situação</td>
                 <td id="2" style="width:30%">Motivo</td>
             </tr>
-            {% for militar in militares_cel %}
+            {% for militar in militares_1 %}
             <tr>
                 {% if militar.posto_grad == "Coronel" %}
                     <td id="3" style="width:8%">Cel</td>
-                {% else %}
+                {% elif militar.posto_grad == "Tenente Coronel" %}
                     <td id="3" style="width:8%">Ten Cel</td>
+                {% elif militar.posto_grad == "Major" %}
+                    <td id="3" style="width:8%">Maj</td>
+                {% elif militar.posto_grad == "Capitão" %}
+                    <td id="3" style="width:8%">Cap</td>
+                {% elif militar.posto_grad == "1º Tenente" %}
+                    <td id="3" style="width:8%">1º Ten</td>
+                {% elif militar.posto_grad == "2º Tenente" %}
+                    <td id="3" style="width:8%">2º Ten</td>
+                {% elif militar.posto_grad == "Aspirante à Oficial" %}
+                    <td id="3" style="width:8%">Asp Of</td>
+                {% elif militar.posto_grad == "Subtenente" %}
+                    <td id="3" style="width:8%">S Ten</td>
+                {% elif militar.posto_grad == "1º Sargento" %}
+                    <td id="3" style="width:8%">1º Sgt</td>
+                {% elif militar.posto_grad == "2º Sargento" %}
+                    <td id="3" style="width:8%">2º Sgt</td>
+                {% elif militar.posto_grad == "3º Sargento" %}
+                    <td id="3" style="width:8%">3º Sgt</td>
+                {% elif militar.posto_grad == "Cabo" %}
+                    <td id="3" style="width:8%">Cabo</td>
+                {% elif militar.posto_grad == "Soldado NB" %}
+                    <td id="3" style="width:8%">Sd NB</td>
+                {% elif militar.posto_grad == "Soldado EV" %}
+                    <td id="3" style="width:8%">Sd EV</td>
                 {% endif %}
-                <td id="3" style="width:20%">{{militar}}</td>
+                {% if militar.numero %}
+                    <td id="3" style="width:7%">{{ militar.numero }}</td>
+                {% else %}
+                    <td id="3" style="width:7%">---</td>
+                {% endif %}
+                <td id="3" style="width:10%">{{militar.identidade}}</td>
+                {% if militar.qualificacao %}
+                    <td id="3" style="width:15%">{{ militar.qualificacao }}</td>
+                {% else %}
+                    <td id="3" style="width:15%">---</td>
+                {% endif %}
+                <td id="3" style="width:20%">{{militar.nome_guerra.upper}}</td>
                 {% if militar.is_present %}
                     <td id="3" style="width:10%">Presente</td>
                 {% else %}
@@ -87,147 +124,48 @@
                 {% endif %}
             </tr>
             {% endfor %}
-            {% for militar in militares_maj %}
+        </table>
+    </div>
+    <P id="QuebraAqui">
+    <div style="width:100%">
+        <table style="width:100%">
             <tr>
-                <td id="3" style="width:8%">Maj</td>
-                <td id="3" style="width:20%">{{militar}}</td>
-                {% if militar.is_present %}
-                    <td id="3" style="width:10%">Presente</td>
-                {% else %}
-                    <td id="4" style="width:10%">Ausente</td>
-                {% endif %}
-                {% if militar.is_present %}
-                    <td id="3" style="width:30%">------</td>
-                {% else %}
-                    {% for destino in militar.destino.all %}
-                        {% if destino.in_force %}
-                            <td id="3" style="width:30%">{{destino.motivo}}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+                <td id="2" style="width:8%">P/G</td>
+                <td id="2" style="width:7%">Nr</td>
+                <td id="2" style="width:10%">Idt</td>
+                <td id="2" style="width:15%">Qualificação</td>
+                <td id="2" style="width:20%">Nome</td>
+                <td id="2" style="width:10%">Situação</td>
+                <td id="2" style="width:30%">Motivo</td>
             </tr>
-            {% endfor %}
-            {% for militar in militares_cap %}
+            {% for militar in militares_2 %}
             <tr>
-                <td id="3" style="width:8%">Cap</td>
-                <td id="3" style="width:20%">{{militar}}</td>
+                {% if militar.posto_grad == "Cabo" %}
+                    <td id="3" style="width:8%">Cabo</td>
+                {% elif militar.posto_grad == "Soldado NB" %}
+                    <td id="3" style="width:8%">Sd NB</td>
+                {% elif militar.posto_grad == "Soldado EV" %}
+                    <td id="3" style="width:8%">Sd EV</td>
+                {% endif %}
+                {% if militar.numero %}
+                    <td id="3" style="width:7%">{{ militar.numero }}</td>
+                {% else %}
+                    <td id="3" style="width:7%">---</td>
+                {% endif %}
+                <td id="3" style="width:10%">{{militar.identidade}}</td>
+                {% if militar.qualificacao %}
+                    <td id="3" style="width:15%">{{ militar.qualificacao }}</td>
+                {% else %}
+                    <td id="3" style="width:15%">---</td>
+                {% endif %}
+                <td id="3" style="width:20%">{{militar.nome_guerra.upper}}</td>
                 {% if militar.is_present %}
                     <td id="3" style="width:10%">Presente</td>
                 {% else %}
                     <td id="4" style="width:10%">Ausente</td>
                 {% endif %}
                 {% if militar.is_present %}
-                    <td id="3" style="width:30%">------</td>
-                {% else %}
-                    {% for destino in militar.destino.all %}
-                        {% if destino.in_force %}
-                            <td id="3" style="width:30%">{{destino.motivo}}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </tr>
-            {% endfor %}
-            {% for militar in militares_ten %}
-            <tr>
-                {% if militar.posto_grad == "1º Tenente" %}
-                    <td id="3" style="width:8%">1º Ten</td>
-                {% else %}
-                    <td id="3" style="width:8%">2º Ten</td>
-                {% endif %}
-                <td id="3" style="width:20%">{{militar}}</td>
-                {% if militar.is_present %}
-                    <td id="3" style="width:10%">Presente</td>
-                {% else %}
-                    <td id="4" style="width:10%">Ausente</td>
-                {% endif %}
-                {% if militar.is_present %}
-                    <td id="3" style="width:30%">------</td>
-                {% else %}
-                    {% for destino in militar.destino.all %}
-                        {% if destino.in_force %}
-                            <td id="3" style="width:30%">{{destino.motivo}}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </tr>
-            {% endfor %}
-            {% for militar in militares_asp %}
-            <tr>
-                <td id="3" style="width:8%">Asp</td>
-                <td id="3" style="width:20%">{{militar}}</td>
-                {% if militar.is_present %}
-                    <td id="3" style="width:10%">Presente</td>
-                {% else %}
-                    <td id="4" style="width:10%">Ausente</td>
-                {% endif %}
-                {% if militar.is_present %}
-                    <td id="3" style="width:30%">------</td>
-                {% else %}
-                    {% for destino in militar.destino.all %}
-                        {% if destino.in_force %}
-                            <td id="3" style="width:30%">{{destino.motivo}}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </tr>
-            {% endfor %}
-            {% for militar in militares_st %}
-            <tr>
-                <td id="3" style="width:8%">ST</td>
-                <td id="3" style="width:20%">{{militar}}</td>
-                {% if militar.is_present %}
-                    <td id="3" style="width:10%">Presente</td>
-                {% else %}
-                    <td id="4" style="width:10%">Ausente</td>
-                {% endif %}
-                {% if militar.is_present %}
-                    <td id="3" style="width:30%">------</td>
-                {% else %}
-                    {% for destino in militar.destino.all %}
-                        {% if destino.in_force %}
-                            <td id="3" style="width:30%">{{destino.motivo}}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </tr>
-            {% endfor %}
-            {% for militar in militares_sgt %}
-            <tr>
-                {% if militar.posto_grad == "1º Sargento" %}
-                    <td id="3" style="width:8%">1º Sgt</td>
-                {% elif militar.posto_grad == "2º Sargento" %}
-                    <td id="3" style="width:8%">2º Sgt</td>
-                {% else %}
-                    <td id="3" style="width:8%">3º Sgt</td>
-                {% endif %}
-                <td id="3" style="width:20%">{{militar}}</td>
-                {% if militar.is_present %}
-                    <td id="3" style="width:10%">Presente</td>
-                {% else %}
-                    <td id="4" style="width:10%">Ausente</td>
-                {% endif %}
-                {% if militar.is_present %}
-                    <td id="3" style="width:30%">------</td>
-                {% else %}
-                    {% for destino in militar.destino.all %}
-                        {% if destino.in_force %}
-                            <td id="3" style="width:30%">{{destino.motivo}}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </tr>
-            {% endfor %}
-            {% for militar in militares_cb1 %}
-            <tr>
-                <td id="3" style="width:8%">Cb</td>
-                <td id="3" style="width:20%">{{militar}}</td>
-                {% if militar.is_present %}
-                    <td id="3" style="width:10%">Presente</td>
-                {% else %}
-                    <td id="4" style="width:10%">Ausente</td>
-                {% endif %}
-                {% if militar.is_present %}
-                    <td id="3" style="width:30%">------</td>
+                    <td id="3" style="width:30%">-------</td>
                 {% else %}
                     {% for destino in militar.destino.all %}
                         {% if destino.in_force %}
@@ -239,106 +177,175 @@
             {% endfor %}
         </table>
     </div>
-        <div>
-            <table>
-                <tr>
-                    <td id="2" style="width:5%">P/G</td>
-                    <td id="2" style="width:10%">Nome</td>
-                    <td id="2" style="width:8%">Situação</td>
-                    <td id="2" style="width:width:10.33%">Motivo</td>
-                </tr>
-                {% for militar in militares_cb2 %}
-                <tr>
-                    <td id="3" style="width:5%">Cb</td>
-                    <td id="3" style="width:10%">{{militar}}</td>
-                    {% if militar.is_present %}
-                        <td id="3" style="width:8%">Presente</td>
-                    {% else %}
-                        <td id="3" style="width:8%">Ausente</td>
-                    {% endif %}
-                    {% if militar.is_present %}
-                        <td id="3" style="width:10.33%">-</td>
-                    {% else %}
-                        {% for destino in militar.destino.all %}
-                            {% if destino.in_force %}
-                                <td id="3" style="width:10.33%">{{destino.motivo}}</td>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                {% for militar in militares_sdnb %}
-                <tr>
-                    <td id="3" style="width:5%">Sd NB</td>
-                    <td id="3" style="width:10%">{{militar}}</td>
-                    {% if militar.is_present %}
-                        <td id="3" style="width:8%">Presente</td>
-                    {% else %}
-                        <td id="3" style="width:8%">Ausente</td>
-                    {% endif %}
-                    {% if militar.is_present %}
-                        <td id="3" style="width:10.33%">-</td>
-                    {% else %}
-                        {% for destino in militar.destino.all %}
-                            {% if destino.in_force %}
-                                <td id="3" style="width:10.33%">{{destino.motivo}}</td>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                {% for militar in militares_sdev1 %}
-                <tr>
-                    <td id="3" style="width:5%">Sd EV</td>
-                    <td id="3" style="width:10%">{{militar}}</td>
-                    {% if militar.is_present %}
-                        <td id="3" style="width:8%">Presente</td>
-                    {% else %}
-                        <td id="3" style="width:8%">Ausente</td>
-                    {% endif %}
-                    {% if militar.is_present %}
-                        <td id="3" style="width:10.33%">-</td>
-                    {% else %}
-                        {% for destino in militar.destino.all %}
-                            {% if destino.in_force %}
-                                <td id="3" style="width:10.33%">{{destino.motivo}}</td>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div>
-            <table>
-                <tr>
-                    <td id="2" style="width:5%">P/G</td>
-                    <td id="2" style="width:10%">Nome</td>
-                    <td id="2" style="width:8%">Situação</td>
-                    <td id="2" style="width:width:10.33%%">Motivo</td>
-                </tr>
-                {% for militar in militares_sdev2 %}
-                <tr>
-                    <td id="3" style="width:5%">Sd EV</td>
-                    <td id="3" style="width:10%">{{militar}}</td>
-                    {% if militar.is_present %}
-                        <td id="3" style="width:8%">Presente</td>
-                    {% else %}
-                        <td id="3" style="width:8%">Ausente</td>
-                    {% endif %}
-                    {% if militar.is_present %}
-                        <td id="3" style="width:width:10.33%">-</td>
-                    {% else %}
-                        {% for destino in militar.destino.all %}
-                            {% if destino.in_force %}
-                                <td id="3" style="width:width:10.33%">{{destino.motivo}}</td>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
+    <P id="QuebraAqui">
+    <div style="width:100%">
+        <table style="width:100%">
+            <tr>
+                <td id="2" style="width:8%">P/G</td>
+                <td id="2" style="width:7%">Nr</td>
+                <td id="2" style="width:10%">Idt</td>
+                <td id="2" style="width:15%">Qualificação</td>
+                <td id="2" style="width:20%">Nome</td>
+                <td id="2" style="width:10%">Situação</td>
+                <td id="2" style="width:30%">Motivo</td>
+            </tr>
+            {% for militar in militares_3 %}
+            <tr>
+                {% if militar.posto_grad == "Cabo" %}
+                    <td id="3" style="width:8%">Cabo</td>
+                {% elif militar.posto_grad == "Soldado NB" %}
+                    <td id="3" style="width:8%">Sd NB</td>
+                {% elif militar.posto_grad == "Soldado EV" %}
+                    <td id="3" style="width:8%">Sd EV</td>
+                {% endif %}
+                {% if militar.numero %}
+                    <td id="3" style="width:7%">{{ militar.numero }}</td>
+                {% else %}
+                    <td id="3" style="width:7%">---</td>
+                {% endif %}
+                <td id="3" style="width:10%">{{militar.identidade}}</td>
+                {% if militar.qualificacao %}
+                    <td id="3" style="width:15%">{{ militar.qualificacao }}</td>
+                {% else %}
+                    <td id="3" style="width:15%">---</td>
+                {% endif %}
+                <td id="3" style="width:20%">{{militar.nome_guerra.upper}}</td>
+                {% if militar.is_present %}
+                    <td id="3" style="width:10%">Presente</td>
+                {% else %}
+                    <td id="4" style="width:10%">Ausente</td>
+                {% endif %}
+                {% if militar.is_present %}
+                    <td id="3" style="width:30%">-------</td>
+                {% else %}
+                    {% for destino in militar.destino.all %}
+                        {% if destino.in_force %}
+                            <td id="3" style="width:30%">{{destino.motivo}}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <br><br>
+    <div style="width:30%">
+        <table style="width:30%">
+            <tr><th id="1" style="width:30%"><b>EFETIVO - {{su.abreviatura.upper}}</b></th></tr>
+        </table>
+    </div>
+    <div style="width:30%">
+        <table style="width:30%">
+            <tr>
+                <td id="2" style="width:10%">P/G</td>
+                <td id="2" style="width:10%">Existente</td>
+                <td id="2" style="width:10%">Em forma</td>
+            </tr>
+            {% if nr_cel != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Cel</td>
+                <td id="3" style="width:10%">{{ nr_cel }}</td>
+                <td id="3" style="width:10%">{{ a_cel }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_tc != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Ten Cel</td>
+                <td id="3" style="width:10%">{{ nr_tc }}</td>
+                <td id="3" style="width:10%">{{ a_tc }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_maj != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Maj</td>
+                <td id="3" style="width:10%">{{ nr_maj }}</td>
+                <td id="3" style="width:10%">{{ a_maj }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_cap != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Cap</td>
+                <td id="3" style="width:10%">{{ nr_cap }}</td>
+                <td id="3" style="width:10%">{{ a_cap }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_1ten != 0 %}
+            <tr>
+                <td id="3" style="width:10%">1º Ten</td>
+                <td id="3" style="width:10%">{{ nr_1ten }}</td>
+                <td id="3" style="width:10%">{{ a_1ten }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_2ten != 0 %}
+            <tr>
+                <td id="3" style="width:10%">2º Ten</td>
+                <td id="3" style="width:10%">{{ nr_2ten }}</td>
+                <td id="3" style="width:10%">{{ a_2ten }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_asp != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Asp Of</td>
+                <td id="3" style="width:10%">{{ nr_asp }}</td>
+                <td id="3" style="width:10%">{{ a_asp }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_st != 0 %}
+            <tr>
+                <td id="3" style="width:10%">S Ten</td>
+                <td id="3" style="width:10%">{{ nr_st }}</td>
+                <td id="3" style="width:10%">{{ a_st }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_1sgt != 0 %}
+            <tr>
+                <td id="3" style="width:10%">1º Sgt</td>
+                <td id="3" style="width:10%">{{ nr_1sgt }}</td>
+                <td id="3" style="width:10%">{{ a_1sgt }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_2sgt != 0 %}
+            <tr>
+                <td id="3" style="width:10%">2º Sgt</td>
+                <td id="3" style="width:10%">{{ nr_2sgt }}</td>
+                <td id="3" style="width:10%">{{ a_2sgt }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_3sgt != 0 %}
+            <tr>
+                <td id="3" style="width:10%">3º Sgt</td>
+                <td id="3" style="width:10%">{{ nr_3sgt }}</td>
+                <td id="3" style="width:10%">{{ a_3sgt }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_cb != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Cb</td>
+                <td id="3" style="width:10%">{{ nr_cb }}</td>
+                <td id="3" style="width:10%">{{ a_cb }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_sdnb != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Sd NB</td>
+                <td id="3" style="width:10%">{{ nr_sdnb }}</td>
+                <td id="3" style="width:10%">{{ a_sdnb }}</td>
+            </tr>
+            {% endif %}
+            {% if nr_sdev != 0 %}
+            <tr>
+                <td id="3" style="width:10%">Sd EV</td>
+                <td id="3" style="width:10%">{{ nr_sdev }}</td>
+                <td id="3" style="width:10%">{{ a_sdev }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td id="3" style="width:10%"><b>TOTAL</b></td>
+                <td id="3" style="width:10%"><b>{{ mil_exist }}</b></td>
+                <td id="3" style="width:10%"><b>{{ mil_forma }}</b></td>
+            </tr>
+
+        </table>
     </div>
 
 </body>

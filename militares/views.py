@@ -363,40 +363,104 @@ class Mapaforca(ListView):
 
     def get(self, request, *args, **kwargs):
         su = self.request.user.pessoas.militar.subunidade
-        militares = Militar.objects.filter(subunidade=su)
         militares_1 = []
         militares_2 = []
         militares_3 = []
-
-        for militar in militares:
-            if (militar.posto_grad == "Coronel") or \
-               (militar.posto_grad == "Tenente Coronel") or \
-               (militar.posto_grad == "Major") or \
-               (militar.posto_grad == "Capitão") or \
-               (militar.posto_grad == "1º Tenente") or \
-               (militar.posto_grad == "2º Tenente") or \
-               (militar.posto_grad == "Aspirante à Oficial") or \
-               (militar.posto_grad == "Subtenente") or \
-               (militar.posto_grad == "1º Sargento") or \
-               (militar.posto_grad == "2º Sargento") or \
-               (militar.posto_grad == "3º Sargento"):
+        mil_exist = Militar.objects.filter(subunidade=su)
+        mil_forma = Militar.objects.filter(subunidade=su, is_present=True)
+        mil_cel = Militar.objects.filter(subunidade=su, posto_grad="Coronel")
+        mil_tc = Militar.objects.filter(subunidade=su, posto_grad="Tenente Coronel")
+        mil_maj = Militar.objects.filter(subunidade=su, posto_grad="Major")
+        mil_cap = Militar.objects.filter(subunidade=su, posto_grad="Capitão")
+        mil_1ten = Militar.objects.filter(subunidade=su, posto_grad="1º Tenente")
+        mil_2ten = Militar.objects.filter(subunidade=su, posto_grad="2º Tenente")
+        mil_asp = Militar.objects.filter(subunidade=su, posto_grad__icontains="à")
+        mil_st = Militar.objects.filter(subunidade=su, posto_grad="Subtenente")
+        mil_1sgt = Militar.objects.filter(subunidade=su, posto_grad="1º Sargento")
+        mil_2sgt = Militar.objects.filter(subunidade=su, posto_grad="2º Sargento")
+        mil_3sgt = Militar.objects.filter(subunidade=su, posto_grad="3º Sargento")
+        mil_cb = Militar.objects.filter(subunidade=su, posto_grad="Cabo")
+        mil_sdnb = Militar.objects.filter(subunidade=su, posto_grad="Soldado NB")
+        mil_sdev = Militar.objects.filter(subunidade=su, posto_grad="Soldado EV")
+        for militar in mil_cel:
+            militares_1.append(militar)
+        for militar in mil_tc:
+            militares_1.append(militar)
+        for militar in mil_maj:
+            militares_1.append(militar)
+        for militar in mil_cap:
+            militares_1.append(militar)
+        for militar in mil_1ten:
+            militares_1.append(militar)
+        for militar in mil_2ten:
+            militares_1.append(militar)
+        for militar in mil_asp:
+            militares_1.append(militar)
+        for militar in mil_st:
+            militares_1.append(militar)
+        for militar in mil_1sgt:
+            militares_1.append(militar)
+        for militar in mil_2sgt:
+            militares_1.append(militar)
+        for militar in mil_3sgt:
+            militares_1.append(militar)
+        for militar in mil_cb:
+            if len(militares_1) <= 62:
                 militares_1.append(militar)
-        for militar in militares:
-            if (militar.posto_grad == "Cabo") or \
-               (militar.posto_grad == "Soldado NB") or \
-               (militar.posto_grad == "Soldado EV"):
-                if len(militares_1) <= 57:
-                    militares_1.append(militar)
-                elif (len(militares_1) > 57) and (len(militares_2) <= 144):
-                    militares_2.append(militar)
-                else:
-                    militares_3.append(militar)
+            elif (len(militares_1) == 63) and (len(militares_2) <= 64):
+                militares_2.append(militar)
+            else:
+                militares_3.append(militar)
+        for militar in mil_sdnb:
+            if len(militares_1) <= 62:
+                militares_1.append(militar)
+            elif (len(militares_1) == 63) and (len(militares_2) <= 64):
+                militares_2.append(militar)
+            else:
+                militares_3.append(militar)
+        for militar in mil_sdev:
+            if len(militares_1) <= 62:
+                militares_1.append(militar)
+            elif (len(militares_1) == 63) and (len(militares_2) <= 64):
+                militares_2.append(militar)
+            else:
+                militares_3.append(militar)
         hoje = datetime.now()
         params = {
             'su': su,
             'militares_1': militares_1,
             'militares_2': militares_2,
             'militares_3': militares_3,
+            'nr_cel': int(len(mil_cel)),
+            'nr_tc': int(len(mil_tc)),
+            'nr_maj': int(len(mil_maj)),
+            'nr_cap': int(len(mil_cap)),
+            'nr_1ten': int(len(mil_1ten)),
+            'nr_2ten': int(len(mil_2ten)),
+            'nr_asp': int(len(mil_asp)),
+            'nr_st': int(len(mil_st)),
+            'nr_1sgt': int(len(mil_1sgt)),
+            'nr_2sgt': int(len(mil_2sgt)),
+            'nr_3sgt': int(len(mil_3sgt)),
+            'nr_cb': int(len(mil_cb)),
+            'nr_sdnb': int(len(mil_sdnb)),
+            'nr_sdev': int(len(mil_sdev)),
+            'a_cel': int(len(mil_cel)) - int(len(mil_cel.filter(is_present=False))),
+            'a_tc': int(len(mil_tc)) - int(len(mil_tc.filter(is_present=False))),
+            'a_maj': int(len(mil_maj)) - int(len(mil_maj.filter(is_present=False))),
+            'a_cap': int(len(mil_cap)) - int(len(mil_cap.filter(is_present=False))),
+            'a_1ten': int(len(mil_1ten)) - int(len(mil_1ten.filter(is_present=False))),
+            'a_2ten': int(len(mil_2ten)) - int(len(mil_2ten.filter(is_present=False))),
+            'a_asp': int(len(mil_asp)) - int(len(mil_asp.filter(is_present=False))),
+            'a_st': int(len(mil_st)) - int(len(mil_st.filter(is_present=False))),
+            'a_1sgt': int(len(mil_1sgt)) - int(len(mil_1sgt.filter(is_present=False))),
+            'a_2sgt': int(len(mil_2sgt)) - int(len(mil_2sgt.filter(is_present=False))),
+            'a_3sgt': int(len(mil_3sgt)) - int(len(mil_3sgt.filter(is_present=False))),
+            'a_cb': int(len(mil_cb)) - int(len(mil_cb.filter(is_present=False))),
+            'a_sdnb': int(len(mil_sdnb)) - int(len(mil_sdnb.filter(is_present=False))),
+            'a_sdev': int(len(mil_sdev)) - int(len(mil_sdev.filter(is_present=False))),
+            'mil_exist': len(mil_exist),
+            'mil_forma': len(mil_forma),
             'hoje': hoje,
             'request': request,
         }

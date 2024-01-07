@@ -30,6 +30,10 @@
                                 </span></a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{% url 'usuarios:perfil' user.id %}">Meu Perfil</a>
+                                    {% if request.user.is_superuser %}
+                                        <a class="dropdown-item" href="{% url 'quarteis:create_dados' %}">Criar Pessoas</a>
+                                        <a class="dropdown-item" href="{% url 'quarteis:create_armt' %}">Criar Armamentos</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="{% url 'usuarios:logout' %}"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                 </div>
                             </li>
